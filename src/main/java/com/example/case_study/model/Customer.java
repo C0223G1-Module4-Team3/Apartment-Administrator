@@ -1,65 +1,42 @@
 package com.example.case_study.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "employee")
-public class Employee implements Serializable {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private String name;
 
     private boolean gender;
 
     private String citizenId;
 
-    @Column(name = "phone_number", nullable = false,unique = true)
     private String phoneNumber;
 
-    private String image;
-
     private Date dayOfBirth;
-    @OneToOne(mappedBy = "employee")
-    private User user;
 
-
-    @ManyToOne
-    @JoinColumn(name = "roles_id")
-    private Roles roles;
+    private String image;
 
     private String email;
 
     private boolean flagDelete;
 
-
-    public Employee() {
+    public Customer() {
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Employee(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Employee(Integer id, String name, boolean gender, String citizenId, String phoneNumber,
-                    String image, Date dayOfBirth, Roles roles, String email, boolean flagDelete) {
+    public Customer(Integer id, String name, boolean gender, String citizenId, String phoneNumber,
+                    Date dayOfBirth, String image, String email, boolean flagDelete) {
         this.id = id;
         this.name = name;
         this.gender = gender;
         this.citizenId = citizenId;
         this.phoneNumber = phoneNumber;
-        this.image = image;
         this.dayOfBirth = dayOfBirth;
-        this.roles = roles;
+        this.image = image;
         this.email = email;
         this.flagDelete = flagDelete;
     }
@@ -118,14 +95,6 @@ public class Employee implements Serializable {
 
     public void setDayOfBirth(Date dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
-    }
-
-    public Roles getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Roles roles) {
-        this.roles = roles;
     }
 
     public String getEmail() {
