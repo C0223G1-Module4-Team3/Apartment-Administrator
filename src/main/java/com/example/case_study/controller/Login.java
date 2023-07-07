@@ -1,5 +1,6 @@
 package com.example.case_study.controller;
 
+import com.example.case_study.model.AccountUser;
 import com.example.case_study.service.IAccountService;
 import com.example.case_study.untils.WebUltils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,13 @@ public class Login {
 
     @GetMapping("")
     public String formLogin(Model model) {
+        model.addAttribute("accountUser",new AccountUser());
         return "login";
     }
-
+    @GetMapping("/logoutSuccessful")
+    public String logout(Model model) {
+        return "login";
+    }
    @GetMapping("/dashboard")
     public String userInfo(Model model, Principal principal) {
 
