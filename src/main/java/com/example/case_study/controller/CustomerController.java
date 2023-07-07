@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @Controller
@@ -125,6 +124,6 @@ public class CustomerController {
                          @RequestParam(value = "citizenId", defaultValue = "") String citizenId) {
         Page<Customer> customers = customerService.search(pageable, name, phoneNumber, citizenId);
         model.addAttribute("customers", customers);
-        return "redirect:/customer";
+        return "customer/list";
     }
 }
