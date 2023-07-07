@@ -29,7 +29,7 @@ public class FacilityControler {
         detailRoomDto.setRoomId(roomService.detailRoom(id).getId());
         model.addAttribute("detailRoomDto", detailRoomDto);
         model.addAttribute("facilityList", facilityService.display());
-        return "update";
+        return "detail_room/update";
     }
 
     @PostMapping("create")
