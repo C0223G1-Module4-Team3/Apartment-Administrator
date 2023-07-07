@@ -39,7 +39,7 @@ public class Login {
 
        String userInfo = WebUltils.toString(loginedUser);
        model.addAttribute("userInfo", userInfo);
-        return "layout";
+        return "home";
     }
 
     @GetMapping("/400")
