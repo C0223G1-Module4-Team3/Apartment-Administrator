@@ -1,34 +1,41 @@
-package com.example.case_study.model;
+package com.example.case_study.dto;
 
-import javax.persistence.*;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-@Entity
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+public class CustomerDto implements Validator {
     private Integer id;
-
+    @NotBlank(message = "Không được để trống")
+    @Pattern(regexp = "^[\\p{Lu}][\\p{Ll}]{1,8}(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",
+            message = "Tên phải bắt đầu bằng chữ hoa và theo sau là chữ thường")
     private String name;
 
     private boolean gender;
-
+    @NotBlank(message = "Không được để trống")
+    @Pattern(regexp = "^[0-9]{12}$", message = "cmnd phải đủ 12 số")
     private String citizenId;
-
+    @NotBlank(message = "Không được để trống")
+    @Pattern(regexp = "^0[0-9]{9}$", message = "số điện thoại phải bắt đầu bằng 0 và đủ 10 số ")
     private String phoneNumber;
-
+    @NotBlank(message = "Không được để trống")
     private String dayOfBirth;
 
     private String image;
-
+    @NotBlank(message = "Không được để trống")
+    @Email(message = "Email phải đúng định dạng")
     private String email;
 
     private boolean flagDelete;
 
-    public Customer() {
+    public CustomerDto() {
     }
 
-    public Customer(Integer id, String name, boolean gender, String citizenId, String phoneNumber,
-                    String dayOfBirth, String image, String email, boolean flagDelete) {
+    public CustomerDto(Integer id, String name, boolean gender, String citizenId, String phoneNumber, String dayOfBirth,
+                       String image, String email, boolean flagDelete) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -38,14 +45,6 @@ public class Customer {
         this.image = image;
         this.email = email;
         this.flagDelete = flagDelete;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public Integer getId() {
@@ -96,6 +95,14 @@ public class Customer {
         this.dayOfBirth = dayOfBirth;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -110,5 +117,15 @@ public class Customer {
 
     public void setFlagDelete(boolean flagDelete) {
         this.flagDelete = flagDelete;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }
