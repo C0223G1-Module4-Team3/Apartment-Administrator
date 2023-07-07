@@ -106,6 +106,6 @@ public class CustomerController {
                          @RequestParam(value = "citizenId", defaultValue = "") String citizenId) {
         Page<Customer> customers = customerService.search(pageable, name, phoneNumber, citizenId);
         model.addAttribute("customers", customers);
-        return "list";
+        return "customer/list";
     }
 }
