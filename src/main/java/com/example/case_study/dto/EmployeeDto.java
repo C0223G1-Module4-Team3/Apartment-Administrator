@@ -1,7 +1,6 @@
 package com.example.case_study.dto;
 
-import com.example.case_study.model.Roles;
-import com.example.case_study.model.User;
+import com.example.case_study.model.Position;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -25,10 +24,8 @@ public class EmployeeDto implements Validator {
 
     private String dayOfBirth;
 
-    private User user;
-//    @ManyToOne
-//    @JoinColumn(name = "roles_id")
-    private Roles roles;
+    @ManyToOne
+    private Position position;
 
     private String email;
 
@@ -37,7 +34,7 @@ public class EmployeeDto implements Validator {
     public EmployeeDto() {
     }
 
-    public EmployeeDto(Integer id, String name, boolean gender, String citizenId, String phoneNumber, String image, String dayOfBirth, User user, Roles roles, String email, boolean flagDelete) {
+    public EmployeeDto(Integer id, String name, boolean gender, String citizenId, String phoneNumber, String image, String dayOfBirth, Position position, String email, boolean flagDelete) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -45,8 +42,7 @@ public class EmployeeDto implements Validator {
         this.phoneNumber = phoneNumber;
         this.image = image;
         this.dayOfBirth = dayOfBirth;
-        this.user = user;
-        this.roles = roles;
+        this.position = position;
         this.email = email;
         this.flagDelete = flagDelete;
     }
@@ -107,20 +103,12 @@ public class EmployeeDto implements Validator {
         this.dayOfBirth = dayOfBirth;
     }
 
-    public User getUser() {
-        return user;
+    public Position getPosition() {
+        return position;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Roles getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Roles roles) {
-        this.roles = roles;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public String getEmail() {

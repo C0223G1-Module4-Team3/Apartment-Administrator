@@ -84,9 +84,9 @@
                                 <label for="position" class="form-label">Position<span
                                         class="text-danger">*</span></label><br>
                                 <!--                            <input type="text" class="form-control" id="position" value="" required>-->
-                                <select th:field="*{roles}" id="position">
-                                    <option th:each="roles, iterStats : ${rolesList}"
-                                            th:text="${roles.position}" th:value="${roles.id}"></option>
+                                <select th:field="*{position}" id="position">
+                                    <option th:each="position, iterStats : ${positionList}"
+                                            th:text="${position.name}" th:value="${position.id}"></option>
                                 </select>
 
                             </div>

@@ -1,7 +1,6 @@
 package com.example.case_study.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class Customer {
@@ -17,7 +16,7 @@ public class Customer {
 
     private String phoneNumber;
 
-    private Date dayOfBirth;
+    private String dayOfBirth;
 
     private String image;
 
@@ -29,7 +28,7 @@ public class Customer {
     }
 
     public Customer(Integer id, String name, boolean gender, String citizenId, String phoneNumber,
-                    Date dayOfBirth, String image, String email, boolean flagDelete) {
+                    String dayOfBirth, String image, String email, boolean flagDelete) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -89,11 +88,11 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDayOfBirth() {
+    public String getDayOfBirth() {
         return dayOfBirth;
     }
 
-    public void setDayOfBirth(Date dayOfBirth) {
+    public void setDayOfBirth(String dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
     }
 

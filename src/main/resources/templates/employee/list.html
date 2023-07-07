@@ -72,11 +72,11 @@
         </td>
         <!--Phone-->
         <td th:text="${employee.phoneNumber}">
-            <!--            <span class="badge badge-success rounded-pill d-inline bg-primary">Active</span>-->
-            <!--            <p th:text="${employee.employeeNumber}"></p>-->
+<!--                        <span class="badge badge-success rounded-pill d-inline bg-primary">Active</span>-->
+<!--                        <p th:text="${employee.employeeNumber}"></p>-->
         </td>
         <!--Position-->
-        <td th:text="${employee.roles.position}"></td>
+        <td th:text="${employee.position.name}"></td>
         <!--Action-->
         <td>
             <button type="button" class="btn btn-link btn-sm btn-rounded">

@@ -3,7 +3,7 @@ package com.example.case_study.controller;
 import com.example.case_study.dto.EmployeeDto;
 import com.example.case_study.model.Employee;
 import com.example.case_study.service.employee.IEmployeeService;
-import com.example.case_study.service.employee.IRolesService;
+import com.example.case_study.service.employee.IPositionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +23,7 @@ public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
     @Autowired
-    private IRolesService rolesService;
+    private IPositionService positionService;
 
     @GetMapping()
     public String showListEmployee(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
@@ -36,7 +36,7 @@ public class EmployeeController {
     @GetMapping("create")
     public String showFormCreate(Model model) {
       model.addAttribute("employeeDto",new EmployeeDto());
-      model.addAttribute("rolesList",rolesService.displayListRole());
+      model.addAttribute("positionList",positionService.displayListRole());
         return "employee/create";
     }
 
@@ -45,7 +45,7 @@ public class EmployeeController {
                                     Model model, RedirectAttributes redirectAttributes) {
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("rolesList",rolesService.displayListRole());
+            model.addAttribute("positionList",positionService.displayListRole());
 //            model.addAttribute("employeeDto",employeeDto);
                 return "employee/create";
         }
@@ -73,7 +73,7 @@ public class EmployeeController {
             EmployeeDto employeeDto = new EmployeeDto();
             BeanUtils.copyProperties(employeeService.getEmployeeById(id),employeeDto);
             model.addAttribute("employeeDto",employeeDto);
-            model.addAttribute("rolesList",rolesService.displayListRole());
+            model.addAttribute("positionList",positionService.displayListRole());
             return "employee/edit";
         }
     }

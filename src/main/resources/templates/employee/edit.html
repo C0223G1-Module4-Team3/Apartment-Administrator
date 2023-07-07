@@ -5,10 +5,10 @@
     <title>$Title$</title>
     <link rel="stylesheet" href="https://unpkg.com/bs-brain/bsb.css"/>
 </head>
-<body>
+<body class="container-fluid">
 <!-- Contact 1 - Bootstrap Brain Component -->
 <section class="bg-light py-5 py-xl-8">
-    <div class="container mb-5 mb-md-6">
+    <div class="container mb-1 mb-md-2">
         <div class="row justify-content-md-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6 text-center">
                 <h2 class="mb-4 display-5">New Employee</h2>
@@ -84,9 +84,9 @@
                                 <label for="position" class="form-label">Position<span
                                         class="text-danger">*</span></label><br>
                                 <!--                            <input type="text" class="form-control" id="position" value="" required>-->
-                                <select th:field="*{roles}" id="position">
-                                    <option th:each="roles, iterStats : ${rolesList}"
-                                            th:text="${roles.position}" th:value="${roles.id}"></option>
+                                <select th:field="*{position}" id="position" class="form-control">
+                                    <option th:each="position, iterStats : ${positionList}"
+                                            th:text="${position.name}" th:value="${position.id}"></option>
                                 </select>
 
                             </div>
@@ -213,9 +213,14 @@
 
                             <!--                            button Create-->
 
-                            <div class="col-12">
+                            <div class="col-12 m-1">
                                 <div class="d-grid">
-                                    <button class="btn btn-primary btn-lg" type="submit">Create</button>
+                                    <button class="btn btn-primary btn-lg" type="submit">Edit</button>
+                                </div>
+                            </div>
+                            <div class="col-12 m-1">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" type="submit">Back To Menu</button>
                                 </div>
                             </div>
                         </div>
