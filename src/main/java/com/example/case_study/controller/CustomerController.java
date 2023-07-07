@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -72,21 +73,24 @@ public class CustomerController {
             redirectAttributes.addAttribute("msg", "Đối tượng không tồn tại. ");
             return "customer/edit";
         } else {
-//            List<Customer> customers = customerService.displayListCustomer();
-//            for (int i = 0; i < customers.size(); i++) {
-//                if (customerDto.getCitizenId().equals(customers.get(i).getCitizenId())) {
-//                    model.addAttribute("msg", "cmnd đã tồn tại. ");
-//                    return "customer/add";
-//                }
-//                if (customerDto.getPhoneNumber().equals(customers.get(i).getPhoneNumber())) {
-//                    model.addAttribute("msg", " số điện thoại đã tồn tại. ");
-//                    return "customer/add";
-//                }
-//                if (customerDto.getEmail().equals(customers.get(i).getEmail())) {
-//                    model.addAttribute("msg", "email đã tồn tại. ");
-//                    return "customer/add";
-//                }
-//            }
+            List<Customer> customers = customerService.displayListCustomer();
+            for (int i = 0; i < customers.size(); i++) {
+                if (customerDto.getCitizenId().equals(customers.get(i).getCitizenId())) {
+                    model.addAttribute("customer", customerDto);
+                    model.addAttribute("msg", "cmnd đã tồn tại. ");
+                    return "customer/add";
+                }
+                if (customerDto.getPhoneNumber().equals(customers.get(i).getPhoneNumber())) {
+                    model.addAttribute("customer", customerDto);
+                    model.addAttribute("msg", " số điện thoại đã tồn tại. ");
+                    return "customer/add";
+                }
+                if (customerDto.getEmail().equals(customers.get(i).getEmail())) {
+                    model.addAttribute("customer", customerDto);
+                    model.addAttribute("msg", "email đã tồn tại. ");
+                    return "customer/add";
+                }
+            }
             Customer customer = new Customer();
             BeanUtils.copyProperties(customerDto, customer);
             customerService.add(customer);
@@ -115,7 +119,7 @@ public class CustomerController {
     }
 
     @GetMapping("/search")
-    public String search(Model model, @PageableDefault(size = 8) Pageable pageable,
+    public String search(Model model, @PageableDefault(size = 6) Pageable pageable,
                          @RequestParam(value = "name", defaultValue = "")
                          String name, @RequestParam(value = "phoneNumber", defaultValue = "") String phoneNumber,
                          @RequestParam(value = "citizenId", defaultValue = "") String citizenId) {
