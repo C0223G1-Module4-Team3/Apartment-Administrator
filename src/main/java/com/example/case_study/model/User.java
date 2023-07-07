@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "phone_number", referencedColumnName = "phone_number")
+    @JoinColumn(name = "id", referencedColumnName = "id")
     private Employee employee;
     @Column(name = "pass_word")
     private String password;
