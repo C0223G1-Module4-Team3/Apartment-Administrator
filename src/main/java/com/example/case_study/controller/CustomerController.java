@@ -28,7 +28,7 @@ public class CustomerController {
     public String display(Model model, @PageableDefault(size = 6, sort = "name") Pageable pageable) {
         Page<Customer> customers = customerService.display(pageable);
         model.addAttribute("customers", customers);
-        return "customer/list";
+        return "/customer/list";
     }
 
     @GetMapping("/create")
@@ -122,6 +122,6 @@ public class CustomerController {
                          @RequestParam(value = "citizenId", defaultValue = "") String citizenId) {
         Page<Customer> customers = customerService.search(pageable, name, phoneNumber, citizenId);
         model.addAttribute("customers", customers);
-        return "customer/list";
+        return "list";
     }
 }
