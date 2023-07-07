@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/", "/login").permitAll();
 //        http.authorizeRequests().antMatchers("/dashboard")
 //                .access("hasAnyRole('GĐ','TPNS','TPKD','NVKD','QLTN')");
+
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/400");
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/j_spring_security_check") // submit url
