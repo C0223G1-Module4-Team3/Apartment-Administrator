@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Title</title>
+</head>
+<body>
+<a th:if="${msg}" th:text="${msg}"></a>
+<form action="/contract/create" method="post" th:object="${contractCreationDto}">
+Input room id: <input th:field="*{room.id}" type="number"><button type="button">Detail room</button><br>
+Input customer id: <input th:field="*{customer.id}"><button type="button">Detail customer</button><br>
+Input employee id: <input th:field="*{employee.id}"><button type="button">Detail employee</button><br>
+   <select th:field="*{kindContract.id}">
+        <option th:each="kc, iterStats : ${kindContracts}" th:text="${kc.name}" th:value="${kc.id}"></option>
+   </select>
+Input period <input th:field="*{period}" type="number">
+    Input date <input th:field="*{date_start}" type="date">
+    <input th:field="*{managerConfirm}" th:value="false" hidden>
+    <input th:field="*{directorConfirm}" th:value="false" hidden>
+    <input th:field="*{flagDelete}" th:value="false" hidden>
+
+    <button type="submit">CREATE</button>
+</form>
+</body>
+</html>

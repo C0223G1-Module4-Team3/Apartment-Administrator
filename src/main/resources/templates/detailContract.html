@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th colspan="2">Room</th>
+    </tr>
+    <tr>
+        <td>Room ID</td>
+        <td th:text="${contract.room.id}"></td>
+    </tr>
+    <tr>
+        <td>Price per month</td>
+        <td th:text="${contract.room.price}"></td>
+    </tr>
+    <tr>
+        <td>Area</td>
+        <td th:text="${contract.room.area}"></td>
+    </tr>
+    <tr>
+        <td>Numbers of bedroom</td>
+        <td th:text="${contract.room.bedroom}"></td>
+    </tr>
+    <tr>
+        <td>Floor</td>
+        <td th:text="${contract.room.floor}"></td>
+    </tr>
+</table>
+<table border="1">
+    <tr>
+        <th colspan="2">Employee</th>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td th:text="${contract.employee.name}"></td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td id="genderE" th:text="${contract.employee.gender}"></td>
+    </tr>
+    <tr>
+        <td>Citizen Id</td>
+        <td th:text="${contract.employee.citizenId}"></td>
+    </tr>
+    <tr>
+        <td>Day of birth</td>
+        <td th:text="${contract.employee.dayOfBirth}"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td th:text="${contract.employee.email}"></td>
+    </tr>
+    <tr>
+        <td>Phone number</td>
+        <td th:text="${contract.employee.phoneNumber}"></td>
+    </tr>
+    <tr>
+        <td>Position</td>
+        <td th:text="${contract.employee.roles.position}"></td>
+    </tr>
+</table>
+<table border="1">
+    <tr>
+        <th colspan="2">Customer</th>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td th:text="${contract.customer.name}"></td>
+    </tr>
+    <tr>
+        <td>Gender</td>
+        <td id="genderC" th:text="${contract.customer.gender}"></td>
+    </tr>
+    <tr>
+        <td>Citizen Id</td>
+        <td th:text="${contract.customer.citizenId}"></td>
+    </tr>
+    <tr>
+        <td>Day of birth</td>
+        <td th:text="${contract.customer.dayOfBirth}"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td th:text="${contract.customer.email}"></td>
+    </tr>
+    <tr>
+        <td>Phone number</td>
+        <td th:text="${contract.customer.phoneNumber}"></td>
+    </tr>
+</table>
+<table border="1">
+    <tr>
+        <th colspan="2">Contract</th>
+    </tr>
+    <tr>
+        <td>Date start</td>
+        <td id="dateStart" th:text="${contract.date_start}"></td>
+    </tr>
+    <tr>
+        <td>Kind of contract</td>
+        <td id="kindContract" th:text="${contract.kindContract.name}"></td>
+    </tr>
+    <tr>
+        <td>Period</td>
+        <td id="period" th:text="${contract.period}"></td>
+    </tr>
+    <tr>
+        <td>Date end</td>
+        <td id="dateEnd"></td>
+    </tr>
+    <tr>
+        <td>Manager confirm</td>
+        <td id="managerConfirm" th:text="${contract.managerConfirm}"></td>
+    </tr>
+    <tr>
+        <td>Director confirm</td>
+        <td id="directorConfirm" th:text="${contract.directorConfirm}"></td>
+    </tr>
+</table>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    getDateEnd();
+    getGender("genderC");
+    getGender("genderE");
+    getConfirm("directorConfirm");
+    getConfirm("managerConfirm");
+
+    function getDateEnd() {
+        let dateStart = new Date(document.getElementById("dateStart").innerText);
+        let kindContract;
+        let period = document.getElementById("period").innerText * 1;
+        switch (document.getElementById("kindContract").innerText) {
+            case "Month":
+                kindContract = 1;
+                break;
+            case "Quarter":
+                kindContract = 3;
+                break;
+            case "Year":
+                kindContract = 12;
+                break;
+            default:
+                break;
+        }
+        let dateEnd = dateStart
+        dateEnd.setMonth(dateStart.getMonth() + kindContract * period);
+        let a = dateEnd.getMonth() * 1 + 1
+        document.getElementById("dateEnd").innerText = dateEnd.getFullYear() + "-" + a + "-" + dateEnd.getDate();
+    }
+
+    function getGender(id) {
+        switch (document.getElementById(id).innerText) {
+            case "true":
+                document.getElementById(id).innerText = "Male";
+                break;
+            case "false":
+                document.getElementById(id).innerText = "Female";
+                break;
+            default:
+                break;
+        }
+    }
+    function getConfirm(id) {
+        switch (document.getElementById(id).innerText) {
+            case "true":
+                document.getElementById(id).innerText = "Confirmed";
+                break;
+            case "false":
+                document.getElementById(id).innerText = "Unconfirmed";
+                break;
+            default:
+                break;
+        }
+    }
+</script>
+</body>
+</html>
