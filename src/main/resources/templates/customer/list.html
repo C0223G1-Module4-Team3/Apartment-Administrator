@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách khách hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <style>
+        table {
+            border: 1px solid #dee2e6;
+        }
+
+        body {
+            background-color: #e8e9e9;
+        }
+
+        .my-style {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .my-style h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .my-style a {
+            color: #3f6ad8;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .my-style form {
+            margin-bottom: 2rem;
+        }
+
+        .my-style input[type="text"] {
+            width: 200px;
+            padding: 0.5rem 1rem;
+            margin-right: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .my-style button[type="submit"] {
+            background-color: #3f6ad8;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .my-style .table {
+            margin-bottom: 2rem;
+        }
+
+        .my-style .table th {
+            /*background-color: #007bff;*/
+            /*color: white;*/
+            /*font-weight: bold;*/
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .my-style .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .my-style .btn-primary {
+            background-color: #3f6ad8;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .my-style .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .my-style .pagination {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .my-style .pagination li {
+            margin-right: 0.5rem;
+        }
+
+        .my-style .pagination li a {
+            color: #3f6ad8;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: 1px solid #3f6ad8;
+        }
+
+        .my-style .pagination li.active a {
+            background-color: #3f6ad8;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body class="my-style">
+<div class="container">
+    <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
+    <h1 class="my-4">Danh sách khách hàng</h1>
+    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white" th:href="@{/customer/create}"><i
+            class="fa-solid fa-plus"></i></a></button>
+    <form action="/customer/search" method="get">
+        <div class="form-group row">
+            <div class="col-md-4">
+                <input type="text" placeholder="Nhập tên" name="name" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Nhập số điện thoại" name="phoneNumber" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <input type="text" placeholder="Nhập cmnd " name="citizenId" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Họ tên</th>
+            <th>Giới tính</th>
+            <th>Số CMND</th>
+            <th>Số điện thoại</th>
+            <th>Ngày sinh</th>
+            <th>Email</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}" th:if="${!customer.flagDelete}">
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.gender ? 'Nam' : 'Nữ'}"></td>
+            <td th:text="${customer.citizenId}"></td>
+            <td th:text="${customer.phoneNumber}"></td>
+            <td th:text="${customer.dayOfBirth}"></td>
+            <td th:text="${customer.email}"></td>
+            <td>
+                <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
+                        class="fa-regular fa-pen-to-square"></i></a>
+            </td>
+            <td>
+                <a th:href="@{/customer/delete/{id}(id=${customer.id})}" class="btn btn-danger"><i
+                        class="fa-regular fa-trash-can"></i></a>
+            </td>
+            <!--            <td>-->
+            <!--                <button type="button" class="btn btn-danger" data-bs-toggle="modal"-->
+            <!--                        data-bs-target="#confirmModal" data-id="${customer.id}">-->
+            <!--                    Delete-->
+            <!--                </button>-->
+            <!--            </td>-->
+            <!--        </tr>-->
+            <!--        <div class="modal fade" th:id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"-->
+            <!--             aria-hidden="true">-->
+            <!--            <div class="modal-dialog">-->
+            <!--                <div class="modal-content">-->
+            <!--                    <div class="modal-header">-->
+            <!--                        <h5 class="modal-title" id="confirmModalLabel">Accept Delete</h5>-->
+            <!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            <!--                    </div>-->
+            <!--                    <form th:action="@{/customer/delete}" method="post">-->
+            <!--                        <input type="hidden" name="id" id="customerId"/>-->
+            <!--                        <div class="modal-footer">-->
+            <!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>-->
+            <!--                            <button type="submit" class="btn btn-danger">Delete</button>-->
+            <!--                        </div>-->
+            <!--                    </form>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <ul>
+            <li th:if="${customers.hasPrevious()}">
+                <a th:href="@{${url}(page=${customers.previousPageable().pageNumber})}">Trang trước</a>
+            </li>
+            <li th:if="${customers.hasNext()}">
+                <a th:href="@{${url}(page=${customers.nextPageable().pageNumber})}">Trang sau</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<!--<script>-->
+<!--    // Lắng nghe sự kiện nhấn button xóa-->
+<!--    $('#confirmModal').on('show.bs.modal', function (event) {-->
+<!--        var button = $(event.relatedTarget) // Button đã kích hoạt modal-->
+<!--        var id = button.data('id') // Lấy giá trị id từ data-id của button-->
+<!--        var modal = $(this)-->
+<!--        modal.find('#customerId').val(id) // Set giá trị id vào input hidden-->
+<!--    })-->
+<!--</script>-->
+<!-- Kết thúc thay đổi -->
+</body>
+</html>

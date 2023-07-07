@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm mới khách hàng</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .div{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+        .form-container {
+            position: relative;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 50px;
+            margin-left: 10px;
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body><h1 class="text-center">Thêm mới khách hàng</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-container">
+
+                <form action="/customer/edit" th:object="${customer}" method="post">
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name"><strong>Họ tên:</strong></label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}"
+                                   placeholder="Nhập họ tên"
+                                   pattern="^[\p{Lu}][\p{Ll}]{1,8}(\s([\p{Lu}]|[\p{Lu}][\p{Ll}]{1,10})){0,5}$"
+                                   required title="Tên phải bắt đầu bằng chữ hoa và theo sau là chữ thường">
+                            <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gender"><strong>Giới tính:</strong></label>
+                            <div class="input-group">
+                                <input type="checkbox" class="form-control" id="gender" th:field="*{gender}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="citizenId"><strong>Số CMND:</strong></label>
+                            <input type="text" class="form-control" id="citizenId" th:field="*{citizenId}"
+                                   placeholder="Nhập số CMND"
+                                   required pattern="^[0-9]{12}$" title="cmnd phải đủ 12 số">
+                            <span style="color: red" th:if="${#fields.hasErrors('citizenId')}"
+                                  th:errors="*{citizenId}"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="phoneNumber"><strong>Số điện thoại:</strong></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"
+                                       placeholder="Nhập số điện thoại"
+                                       required pattern="^0[0-9]{9}$"
+                                       title="số điện thoại phải bắt đầu bằng 0 và đủ 10 số ">
+                                <span style="color: red" th:if="${#fields.hasErrors('phoneNumber')}"
+                                      th:errors="*{phoneNumber}"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="dayOfBirth"><strong>Ngày sinh:</strong></label>
+                            <input type="datetime-local" class="form-control" id="dayOfBirth" th:field="*{dayOfBirth}"
+                                   required>
+                            <span style="color: red" th:if="${#fields.hasErrors('dayOfBirth')}"
+                                  th:errors="*{dayOfBirth}"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email"><strong>Email:</strong></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                </div>
+                                <input type="email" class="form-control" id="email" th:field="*{email}"
+                                       placeholder="Nhập email"
+                                       required title="email không đúng định dạng">
+                                <span style="color: red" th:if="${#fields.hasErrors('email')}"
+                                      th:errors="*{email}"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="div">
+                        <button type="submit" class="btn btn-primary mr-2">Lưu</button>
+                        <button type="button" class="btn btn-secondary" > <a style="color: white" th:href="@{/customer}">Hủy bỏ</a></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Bootstrap JS scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
