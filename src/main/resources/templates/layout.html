@@ -192,7 +192,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a th:href="@{/contract}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Hợp đồng</p>
                                 </a>
@@ -241,6 +241,23 @@
                                 <a th:href="@{/employee}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Nhân viên</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Tài Chính
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a th:href="@{/contract/accountant}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Revenue</p>
                                 </a>
                             </li>
                         </ul>
