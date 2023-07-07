@@ -126,8 +126,8 @@
 <div class="container">
     <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
     <h1 class="my-4">Danh sách khách hàng</h1>
-    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white" th:href="@{/customer/create}"><i
-            class="fa-solid fa-plus"></i></a></button>
+    <a style="color: white" th:href="@{/customer/create}"><button title="Thêm mới khách hàng" class="btn-primary"><i
+            class="fa-solid fa-plus"></i></button></a>
     <form action="/customer/search" method="get">
         <div class="form-group row">
             <div class="col-md-4">
