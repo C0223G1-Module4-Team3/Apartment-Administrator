@@ -8,14 +8,11 @@ import java.util.List;
 @Table(name = "facility")
 public class Facility {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "facility_id")
     private Integer id;
 
     private String name;
-
-    @ManyToMany(mappedBy = "facilityList")
-    private List<Room> roomList = new ArrayList<>();
 
     public Facility() {
     }
@@ -25,18 +22,8 @@ public class Facility {
         this.name = name;
     }
 
-    public Facility(Integer id, String name, List<Room> roomList) {
-        this.id = id;
+    public Facility(String name) {
         this.name = name;
-        this.roomList = roomList;
-    }
-
-    public List<Room> getRoomList() {
-        return roomList;
-    }
-
-    public void setRoomList(List<Room> roomList) {
-        this.roomList = roomList;
     }
 
     public String getName() {

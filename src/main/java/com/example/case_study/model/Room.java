@@ -8,14 +8,14 @@ import java.util.List;
 @Table(name = "room")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_room")
     private Integer id;
 
     private Integer floor;
 
     private Double price;
-
+    @Column(name = "max_people")
     private Integer maxPeople;
 
     private Integer bedroom;
@@ -23,13 +23,6 @@ public class Room {
     private Double area;
 
     private boolean maintenance;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "details_room",
-            joinColumns = { @JoinColumn(name = "id_room")},
-            inverseJoinColumns = {@JoinColumn(name = "facility_id")}
-    )
-    private List<Facility> facilityList = new ArrayList<>();
-
     public Room() {
     }
 
@@ -42,16 +35,13 @@ public class Room {
         this.area = area;
     }
 
-    public Room(Integer id, Integer floor, Double price, Integer maxPeople, Integer bedroom,
-                Double area, boolean maintenance, List<Facility> facilityList) {
-        this.id = id;
+    public Room(Integer floor, Double price, Integer maxPeople, Integer bedroom, Double area, boolean maintenance) {
         this.floor = floor;
         this.price = price;
         this.maxPeople = maxPeople;
         this.bedroom = bedroom;
         this.area = area;
         this.maintenance = maintenance;
-        this.facilityList = facilityList;
     }
 
     public boolean isMaintenance() {
@@ -60,14 +50,6 @@ public class Room {
 
     public void setMaintenance(boolean maintenance) {
         this.maintenance = maintenance;
-    }
-
-    public List<Facility> getFacilityList() {
-        return facilityList;
-    }
-
-    public void setFacilityList(List<Facility> facilityList) {
-        this.facilityList = facilityList;
     }
 
     public Integer getMaxPeople() {

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create</title>
+</head>
+<body>
+<form th:action="@{/room/facility/update}" method="post" th:object="${detailRoomUpdate}">
+    <h1 th:text="${detailRoomUpdate.facility.getName()}"></h1>
+    <input th:field="*{id}" th:value="${detailRoomUpdate.id}" hidden>
+    <input th:field="*{room}" th:value="${detailRoomUpdate.room}" hidden >
+    <input th:field="*{facility.id}" th:value="${detailRoomUpdate.facility}" hidden>
+    <label for="amount" class="col-sm-3 col-form-label"><strong>Amount of facility:</strong></label>
+    <input type="number" class="form-control" id="amount" th:field="*{amount}">
+    <button type="submit" class="btn btn-primary-save">Save</button>
+    <button type="button" class="btn btn-secondary">Cancel</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List room</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="datatables/css/dataTables.bootstrap5.min.css"/>
+</head>
+<body style="background-color: #fad7da" >
+<div class="container-fluid" >
+    <div class="row ">
+        <div class="col-2 col-md-2 col-lg-2" style="background-color: white">Bỏ thanh header dọc</div>
+        <div class="col-10 col-md-10 col-lg-10" style="background-color:#ECECEC">
+            <div class="row" style="background-color: white">-----Bỏ thanh header vào-------</div>
+            <div class="container">
+                <div class="row" style="margin-top:30px">
+                    <div class="col-4 col-md-4 col-lg-4" style="background-color: bisque;margin-left:20px;width:350px">
+                        a
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4" style="background-color: bisque;margin-left:20px;width:350px">
+                        a
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4" style="background-color: bisque;margin-left:20px;width:350px">
+                        a
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row" style="margin-left: 9px;margin-top:60px">
+                    <div class="row">
+                        <div class="col-9 col-md-9 col-lg-9" style="background-color: #FFFFFF">Toa nha/Phong</div>
+                        <div class="col-1 col-md-1 col-lg-1" style="background-color: #FFFFFF">Toa nha/Phong</div>
+                        <div class="col-1 col-md-1 col-lg-1" style="background-color: #FFFFFF">Toa nha/Phong</div>
+                        <div class="col-1 col-md-1 col-lg-1" style="background-color: #FFFFFF">Toa nha/Phong</div>
+                    </div>
+                    <table class="table table-bordered" id="tableStudent" style="width:100%;background-color: #dee6ee">
+                        <thead style="background-color: #FFFFFF">
+                        <tr>
+                            <th>Id</th>
+                            <th>Floor</th>
+                            <th>Price</th>
+                            <th>People Limit</th>
+                            <th>Bedroom</th>
+                            <th>Area</th>
+                            <th>Detail Room</th>
+                            <th>Update</th>
+                            <th>Set Maintenance</th>
+                        </tr>
+                        </thead>
+                        <tbody style="background-color: #F9F9FA">
+                        <tr th:each="room,iterStats : ${roomList}" th:if="${!room.isMaintenance()}">
+                            <td th:text="${room.id}"></td>
+                            <td th:text="${room.floor}"></td>
+                            <td th:text="${room.price}"></td>
+                            <td th:text="${room.maxPeople}"></td>
+                            <td th:text="${room.bedroom}"></td>
+                            <td th:text="${room.area}"></td>
+                            <td>
+                                <a th:href="@{/room/detail/{id}(id=${room.getId()})}">
+                                    Detail
+                                </a>
+                            </td>
+                            <td>
+                                <a th:href="@{/room/update/{id}(id=${room.getId()})}">
+                                    <button>Update</button>
+                                </a>
+                            </td>
+                            <td>
+                                <a th:href="@{/room/maintenance/{id}(id=${room.getId()})}">
+                                    <button>Update</button>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+<script src="datatables/js/dataTables.bootstrap5.min.js"></script>
+</body>
+</html>
