@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+  <tr>
+    <td>Room</td>
+    <td>Customer</td>
+    <td>Employee</td>
+    <td>Date</td>
+    <td>Kind contract</td>
+    <td>Period</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tbody id="listContract"></tbody>
+</table>
+<button onclick="getPreviousPage()">Previous page</button>
+<button onclick="getNextPage()">Next page</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  let page = 0;
+
+
+  function getContractList() {
+    $.ajax({
+      url: 'http://localhost:8080/contracts/accountant/' + page,
+      type: 'GET',
+      success: function (data) {
+        console.log(JSON.stringify(data))
+        if (data.content.length == 0) {
+          page--;
+          return
+        }
+
+        let contractStr = '';
+        for (let c of data.content) {
+          contractStr += `
+                 <tr id="${c.id}">
+        <td>${c.room.id}</td>
+        <td>${c.customer.name}</td>
+        <td>${c.employee.name}</td>
+        <td id="dateStart${c.id}">${c.date_start}</td>
+        <td>${c.kindContract.name}</td>
+        <td>${c.period}</td>
+        <td>
+            <form method="post" action="/contract/detail">
+                <input name="id" value="${c.id}" hidden>
+                <button type="submit">Detail</button>
+            </form>
+        </td>
+        <td id="deadline${c.id}"></td>
+    </tr>
+                `;
+
+        }
+
+        $("#listContract").html(contractStr);
+        for (let c of data.content) {
+          getPayment(c.id)
+        }
+      },
+      error: function (error) {
+      }
+    })
+
+  }
+  function getPayment(id){
+    $.ajax({
+      url: 'http://localhost:8080/payments/'+id,
+      type: 'GET',
+      success: function (data) {
+        console.log(JSON.stringify(data))
+        let b=0;
+        for(let p of data){
+          if(p.paided){
+            b++;
+          }
+        }
+        let dateStart = new Date(document.getElementById("dateStart"+id).innerText);
+        let day = dateStart
+        day.setMonth(dateStart.getMonth() + b);
+        let a = day.getMonth() * 1 + 1
+        document.getElementById("deadline"+id).innerText = day.getFullYear() + "-" + a + "-" + day.getDate();
+        if(day<new Date()){
+          document.getElementById(id).style.backgroundColor="red";
+        }
+      },
+      error: function (error) {
+      }
+    })
+
+  }
+
+  function getPreviousPage() {
+    if (page == 0) {
+      return;
+    }
+    page--;
+    getContractList(page);
+
+  }
+
+  function getNextPage() {
+    page++;
+    getContractList(page);
+  }
+
+  $(document).ready(function () {
+    getContractList(page);
+  })
+
+</script>
+</body>
+</html>

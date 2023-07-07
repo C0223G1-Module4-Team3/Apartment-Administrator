@@ -2,13 +2,12 @@ package com.example.case_study.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "employee")
 public class Employee implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
@@ -21,7 +20,7 @@ public class Employee implements Serializable {
 
     private String image;
 
-    private Date dayOfBirth;
+    private String dayOfBirth;
     @OneToOne(mappedBy = "employee")
     private User user;
 
@@ -51,7 +50,7 @@ public class Employee implements Serializable {
     }
 
     public Employee(Integer id, String name, boolean gender, String citizenId, String phoneNumber,
-                    String image, Date dayOfBirth, Roles roles, String email, boolean flagDelete) {
+                    String image, String dayOfBirth, Roles roles, String email, boolean flagDelete) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -62,6 +61,10 @@ public class Employee implements Serializable {
         this.roles = roles;
         this.email = email;
         this.flagDelete = flagDelete;
+    }
+
+    public Employee(Integer id) {
+        this.id = id;
     }
 
     public String getImage() {
@@ -112,11 +115,11 @@ public class Employee implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDayOfBirth() {
+    public String getDayOfBirth() {
         return dayOfBirth;
     }
 
-    public void setDayOfBirth(Date dayOfBirth) {
+    public void setDayOfBirth(String dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
     }
 
