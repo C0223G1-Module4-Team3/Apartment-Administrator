@@ -1,44 +1,28 @@
-package com.example.case_study.model;
+package com.example.case_study.dto;
 
-import javax.persistence.*;
+import com.example.case_study.model.Customer;
+import com.example.case_study.model.Employee;
+import com.example.case_study.model.KindContract;
+import com.example.case_study.model.Room;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-@Entity
-@Table(name = "contracts")
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractCreationDto implements Validator {
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "id_room")
     private Room room;
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    //    @Column(name = "customer_id")
     private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
-
-    @ManyToOne
-    @JoinColumn(name = "kind_contract_id", referencedColumnName = "id")
     private KindContract kindContract;
-
     private Integer period;
-
     private String date_start;
-
     private boolean directorConfirm;
-
     private boolean managerConfirm;
 
     private boolean flagDelete;
 
-    public Contract() {
-    }
-
-    public Contract(Integer id, Room room, Customer customer, Employee employee, KindContract kindContract,
-                    Integer period, String date_start, boolean directorConfirm, boolean managerConfirm, boolean flagDelete) {
+    public ContractCreationDto(Integer id, Room room, Customer customer, Employee employee,
+                               KindContract kindContract, Integer period, String date_start,
+                               boolean directorConfirm, boolean managerConfirm, boolean flagDelete) {
         this.id = id;
         this.room = room;
         this.customer = customer;
@@ -49,6 +33,23 @@ public class Contract {
         this.directorConfirm = directorConfirm;
         this.managerConfirm = managerConfirm;
         this.flagDelete = flagDelete;
+    }
+
+    public ContractCreationDto(Room room, Customer customer, Employee employee,
+                               KindContract kindContract, Integer period, String date_start,
+                               boolean directorConfirm, boolean managerConfirm, boolean flagDelete) {
+        this.room = room;
+        this.customer = customer;
+        this.employee = employee;
+        this.kindContract = kindContract;
+        this.period = period;
+        this.date_start = date_start;
+        this.directorConfirm = directorConfirm;
+        this.managerConfirm = managerConfirm;
+        this.flagDelete = flagDelete;
+    }
+
+    public ContractCreationDto() {
     }
 
     public Integer getId() {
@@ -129,5 +130,15 @@ public class Contract {
 
     public void setFlagDelete(boolean flagDelete) {
         this.flagDelete = flagDelete;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
     }
 }

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:if="${msg}" th:text="${msg}"></p>
+<form action="/find" method="post">
+</form>
+<table border="1">
+    <tr>
+        <td>Room</td>
+        <td>Customer</td>
+        <td>Employee</td>
+        <td>Date</td>
+        <td>Kind contract</td>
+        <td>Period</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tbody id="listContract"></tbody>
+</table>
+<button onclick="getPreviousPage()">Previous page</button>
+<button onclick="getNextPage()">Next page</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    let page = 0;
+
+
+    function getContractList() {
+        $.ajax({
+            url: 'http://localhost:8080/contracts/' + page,
+            type: 'GET',
+            success: function (data) {
+                console.log(JSON.stringify(data))
+                if (data.content.length == 0) {
+                    page--;
+                    return
+                }
+
+                let contractStr = '';
+                for (let c of data.content) {
+                    contractStr += `
+                 <tr id="${c.id}">
+        <td>${c.room.id}</td>
+        <td>${c.customer.name}</td>
+        <td>${c.employee.name}</td>
+        <td>${c.date_start}</td>
+        <td>${c.kindContract.name}</td>
+        <td>${c.period}</td>
+        <td>
+            <form method="post" action="/contract/detail">
+                <input name="id" value="${c.id}" hidden>
+                <button type="submit">Detail</button>
+            </form>
+        </td>
+        <td>
+           <button id="mc${c.id}" onclick="managerConfirm(${c.id})" type="button">Manager confirm</button>
+        </td>
+        <td>
+           <button id="dc${c.id}" onclick="directorConfirm(${c.id})" type="button">Director confirm</button>
+        </td>
+    </tr>
+                `;
+
+                }
+
+                $("#listContract").html(contractStr);
+
+                for (let c of data.content) {
+                    if(c.managerConfirm) {
+                        document.getElementById("mc" + c.id).style.display="none"
+                        document.getElementById(c.id).style.backgroundColor="blue"
+
+                    }
+                    if(c.directorConfirm) {
+                        document.getElementById("dc" + c.id).style.display="none"
+                        document.getElementById(c.id).style.backgroundColor="yellow"
+                    }
+
+
+                }
+
+            },
+            error: function (error) {
+            }
+        })
+
+    }
+
+    function getPreviousPage() {
+        if (page == 0) {
+            return;
+        }
+        page--;
+        getContractList(page);
+
+    }
+
+    function getNextPage() {
+        page++;
+        getContractList(page);
+    }
+
+    $(document).ready(function () {
+        getContractList(page);
+    })
+
+    function managerConfirm(id) {
+        $.ajax({
+            url: 'http://localhost:8080/contracts/manager-confirm/' + id,
+            type: 'POST',
+            success: function (data) {
+                getContractList();
+            },
+            error: function (error) {
+                getContractList();
+            }
+        })
+    }
+
+    function directorConfirm(id) {
+        $.ajax({
+            url: 'http://localhost:8080/contracts/director-confirm/' + id,
+            type: 'POST',
+            success: function (data) {
+                getContractList();
+            },
+            error: function (error) {
+                getContractList();
+            }
+        })
+    }
+</script>
+
+</body>
+</html>
