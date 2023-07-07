@@ -71,3 +71,4 @@ public class DetailRoom {
         this.id = id;
     }
 }
+

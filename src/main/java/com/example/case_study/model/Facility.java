@@ -8,18 +8,21 @@ import java.util.List;
 @Table(name = "facility")
 public class Facility {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "facility_id")
     private Integer id;
 
     private String name;
-
 
     public Facility() {
     }
 
     public Facility(Integer id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public Facility(String name) {
         this.name = name;
     }
 

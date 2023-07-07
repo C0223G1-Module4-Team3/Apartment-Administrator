@@ -8,14 +8,14 @@ import java.util.List;
 @Table(name = "room")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_room")
     private Integer id;
 
     private Integer floor;
 
     private Double price;
-
+    @Column(name = "max_people")
     private Integer maxPeople;
 
     private Integer bedroom;
@@ -23,13 +23,7 @@ public class Room {
     private Double area;
 
     private boolean maintenance;
-
-
     public Room() {
-    }
-
-    public Room(Integer id) {
-        this.id = id;
     }
 
     public Room(Integer id, Integer floor, Double price, Integer maxPeople, Integer bedroom, Double area) {
@@ -41,6 +35,14 @@ public class Room {
         this.area = area;
     }
 
+    public Room(Integer floor, Double price, Integer maxPeople, Integer bedroom, Double area, boolean maintenance) {
+        this.floor = floor;
+        this.price = price;
+        this.maxPeople = maxPeople;
+        this.bedroom = bedroom;
+        this.area = area;
+        this.maintenance = maintenance;
+    }
 
     public boolean isMaintenance() {
         return maintenance;
@@ -49,7 +51,6 @@ public class Room {
     public void setMaintenance(boolean maintenance) {
         this.maintenance = maintenance;
     }
-
 
     public Integer getMaxPeople() {
         return maxPeople;
