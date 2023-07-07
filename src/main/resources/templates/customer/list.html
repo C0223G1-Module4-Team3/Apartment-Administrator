@@ -1,167 +1,172 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page Quản Trị</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page Quản Trị</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/css/adminlte.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
 </head>
 <body class="hold-transition sidebar-mini">
+
 <div class="wrapper">
-  <nav th:replace="/layout :: navbar"></nav>
-  <aside th:replace="/layout :: sidebar"></aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Admin Page</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Admin Page</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+    <nav th:replace="/layout :: navbar"></nav>
+    <aside th:replace="/layout :: sidebar"></aside>
 
-    <!-- Viết bảng ở đây -->
-    <section class="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Admin Page</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Admin Page</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
 
-      <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Danh sách khách hàng</h3>
+        <!-- Viết bảng ở đây -->
+        <section class="content">
 
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <div class="card-body">
-          <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
-          <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white" th:href="@{/customer/create}"><i
-                  class="fa-solid fa-plus"></i></a></button>
-          <form action="/customer/search" method="get">
-            <div class="form-group row">
-              <div class="col-md-4">
-                <input type="text" placeholder="Nhập tên" name="name" class="form-control">
-              </div>
-              <div class="col-md-4">
-                <input type="text" placeholder="Nhập số điện thoại" name="phoneNumber" class="form-control">
-              </div>
-              <div class="col-md-4">
-                <input type="text" placeholder="Nhập cmnd " name="citizenId" class="form-control">
-              </div>
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Danh sách khách hàng</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
+                    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"
+                                                                               th:href="@{/customer/create}"><i
+                            class="fa-solid fa-plus"></i></a></button>
+                    <form action="/customer/search" method="get">
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <input type="text" placeholder="Nhập tên" name="name" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="Nhập số điện thoại" name="phoneNumber"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="Nhập cmnd " name="citizenId" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--          viet bảng ở đây-->
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Họ tên</th>
+                            <th>Giới tính</th>
+                            <th>Số CMND</th>
+                            <th>Số điện thoại</th>
+                            <th>Ngày sinh</th>
+                            <th>Email</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="customer : ${customers}" th:if="${!customer.flagDelete}">
+                            <td th:text="${customer.id}"></td>
+                            <td th:text="${customer.name}"></td>
+                            <td th:text="${customer.gender ? 'Nam' : 'Nữ'}"></td>
+                            <td th:text="${customer.citizenId}"></td>
+                            <td th:text="${customer.phoneNumber}"></td>
+                            <td th:text="${customer.dayOfBirth}"></td>
+                            <td th:text="${customer.email}"></td>
+                            <td>
+                                <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
+                                        class="fa-regular fa-pen-to-square"></i></a>
+                            </td>
+                            <td>
+                                <a th:href="@{/customer/delete/{id}(id=${customer.id})}" class="btn btn-danger"><i
+                                        class="fa-regular fa-trash-can"></i></a>
+                            </td>
+                            <!--            <td>-->
+                            <!--                <button type="button" class="btn btn-danger" data-bs-toggle="modal"-->
+                            <!--                        data-bs-target="#confirmModal" data-id="${customer.id}">-->
+                            <!--                    Delete-->
+                            <!--                </button>-->
+                            <!--            </td>-->
+                            <!--        </tr>-->
+                            <!--        <div class="modal fade" th:id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"-->
+                            <!--             aria-hidden="true">-->
+                            <!--            <div class="modal-dialog">-->
+                            <!--                <div class="modal-content">-->
+                            <!--                    <div class="modal-header">-->
+                            <!--                        <h5 class="modal-title" id="confirmModalLabel">Accept Delete</h5>-->
+                            <!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                            <!--                    </div>-->
+                            <!--                    <form th:action="@{/customer/delete}" method="post">-->
+                            <!--                        <input type="hidden" name="id" id="customerId"/>-->
+                            <!--                        <div class="modal-footer">-->
+                            <!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>-->
+                            <!--                            <button type="submit" class="btn btn-danger">Delete</button>-->
+                            <!--                        </div>-->
+                            <!--                    </form>-->
+                            <!--                </div>-->
+                            <!--            </div>-->
+                            <!--        </div>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <ul>
+                            <li th:if="${customers.hasPrevious()}">
+                                <a th:href="@{${url}(page=${customers.previousPageable().pageNumber})}">Trang trước</a>
+                            </li>
+                            <li th:if="${customers.hasNext()}">
+                                <a th:href="@{${url}(page=${customers.nextPageable().pageNumber})}">Trang sau</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    Footer
+                </div>
+                <!-- /.card-footer-->
             </div>
-            <div class="form-group row">
-              <div class="col-md-12">
-                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm kiếm</button>
-              </div>
-            </div>
-          </form>
-<!--          viet bảng ở đây-->
-          <table class="table table-striped">
-            <thead>
-            <tr>
-              <th>ID</th>
-              <th>Họ tên</th>
-              <th>Giới tính</th>
-              <th>Số CMND</th>
-              <th>Số điện thoại</th>
-              <th>Ngày sinh</th>
-              <th>Email</th>
-              <th></th>
-              <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="customer : ${customers}" th:if="${!customer.flagDelete}">
-              <td th:text="${customer.id}"></td>
-              <td th:text="${customer.name}"></td>
-              <td th:text="${customer.gender ? 'Nam' : 'Nữ'}"></td>
-              <td th:text="${customer.citizenId}"></td>
-              <td th:text="${customer.phoneNumber}"></td>
-              <td th:text="${customer.dayOfBirth}"></td>
-              <td th:text="${customer.email}"></td>
-              <td>
-                <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
-                        class="fa-regular fa-pen-to-square"></i></a>
-              </td>
-              <td>
-                <a th:href="@{/customer/delete/{id}(id=${customer.id})}" class="btn btn-danger"><i
-                        class="fa-regular fa-trash-can"></i></a>
-              </td>
-              <!--            <td>-->
-              <!--                <button type="button" class="btn btn-danger" data-bs-toggle="modal"-->
-              <!--                        data-bs-target="#confirmModal" data-id="${customer.id}">-->
-              <!--                    Delete-->
-              <!--                </button>-->
-              <!--            </td>-->
-              <!--        </tr>-->
-              <!--        <div class="modal fade" th:id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"-->
-              <!--             aria-hidden="true">-->
-              <!--            <div class="modal-dialog">-->
-              <!--                <div class="modal-content">-->
-              <!--                    <div class="modal-header">-->
-              <!--                        <h5 class="modal-title" id="confirmModalLabel">Accept Delete</h5>-->
-              <!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-              <!--                    </div>-->
-              <!--                    <form th:action="@{/customer/delete}" method="post">-->
-              <!--                        <input type="hidden" name="id" id="customerId"/>-->
-              <!--                        <div class="modal-footer">-->
-              <!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>-->
-              <!--                            <button type="submit" class="btn btn-danger">Delete</button>-->
-              <!--                        </div>-->
-              <!--                    </form>-->
-              <!--                </div>-->
-              <!--            </div>-->
-              <!--        </div>-->
-            </tr>
-            </tbody>
-          </table>
-          <div>
-            <ul>
-              <li th:if="${customers.hasPrevious()}">
-                <a th:href="@{${url}(page=${customers.previousPageable().pageNumber})}">Trang trước</a>
-              </li>
-              <li th:if="${customers.hasNext()}">
-                <a th:href="@{${url}(page=${customers.nextPageable().pageNumber})}">Trang sau</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
-        </div>
-        <!-- /.card-footer-->
-      </div>
-      <!-- /.card -->
-    </section>
-  </div>
+            <!-- /.card -->
+        </section>
+    </div>
 
 
-  <footer th:replace="/layout::footer"></footer>
+    <footer th:replace="/layout::footer"></footer>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
