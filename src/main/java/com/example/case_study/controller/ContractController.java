@@ -27,14 +27,14 @@ public class ContractController {
     @GetMapping("")
     String displayContractList(Pageable pageable, Model model) {
         model.addAttribute("list", contractService.displayList(pageable));
-        return "/displayContractList";
+        return "/contract/displayContractList";
     }
 
     @GetMapping("/create")
     String addContract(Model model) {
         model.addAttribute("contractCreationDto", new ContractCreationDto());
         model.addAttribute("kindContracts", kindContractService.getList());
-        return "/createContract";
+        return "/contract/createContract";
     }
 
     @PostMapping("/create")
@@ -56,7 +56,7 @@ public class ContractController {
     String detailContract(@RequestParam Integer id, Model model, RedirectAttributes redirectAttributes) {
         if (contractService.getContractById(id).isPresent()) {
             model.addAttribute("contract", contractService.getContractById(id).get());
-            return "/detailContract";
+            return "/contract/detailContract";
         }
         redirectAttributes.addFlashAttribute("msg", "can't find");
         return "redirect:/contract";
@@ -64,7 +64,7 @@ public class ContractController {
 
     @GetMapping("/accountant")
     String displayContractList() {
-        return "/accountant";
+        return "/contract/accountant";
     }
 
 
