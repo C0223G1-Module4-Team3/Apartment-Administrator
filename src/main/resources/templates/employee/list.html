@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>cinema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div class="col-12 d-flex">
+    <div style="height: 50%">
+        <button class="bg-primary" style="height: 38px;width: 200px"><a style="color: white" th:href="@{/employee/create}">Create New Employee</a></button>
+    </div>
+    <!--search by name-->
+    <div class="input-group "style="border-radius:25px;height: 50% ">
+        <button name="search" type="submit" class="bg-primary" style="-moz-border-radius-bottomright: 25px;-moz-border-radius-topright: 25px">Search</button>
+        <input type="text" class="form-control" id="search" placeholder="Input Name">
+
+    </div>
+<!--    search by citizen id-->
+    <div class="input-group " style="border-radius:25px;height: 50% ">
+        <button name="searchId" type="submit" class="bg-primary" style="-moz-border-radius-bottomright: 25px;-moz-border-radius-topright: 25px">Search</button>
+        <input type="text" class="form-control" id="searchId" placeholder="Input Citizen Id ">
+
+    </div>
+</div>
+
+
+<h1 class="bg-primary " style="text-align: center">Employee List</h1>
+<p style="color: #4CAF50" th:text="${message}"></p>
+<table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+    <tr class="bg-success">
+        <!--        <th>STT</th>-->
+        <th>Name</th>
+        <th>ID/BirthOfDay</th>
+        <th>Number Phone</th>
+        <th>Position</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee,look: ${employees}">
+        <!--        stt-->
+        <!--        <td th:text="${look.count}"></td>-->
+        <!--Name-->
+        <td>
+            <div class="d-flex align-items-center">
+                <!--image-->
+                <!--                src="https://mdbootstrap.com/img/new/avatars/8.jpg"-->
+
+                <img th:src="${employee.image}"
+                     alt=""
+                     style="width: 45px; height: 45px"
+                     class="rounded-circle"
+                />
+                <!--name and mail-->
+                <div class="ms-3">
+                    <p class="fw-bold mb-1" th:text="${employee.name}"></p>
+                    <!--                    <td th:text="${employee.employeeName}"></td>-->
+                    <p class="text-muted mb-0" th:text="${employee.email}"></p>
+                </div>
+            </div>
+        </td>
+        <!--tittle-->
+        <td>
+
+            <!--part-->
+            <p class="fw-normal mb-1" th:text="${employee.citizenId}"></p>
+            <!--specialize-->
+            <p class="text-muted mb-0" th:text="${employee.dayOfBirth}">IT department</p>
+        </td>
+        <!--Phone-->
+        <td th:text="${employee.phoneNumber}">
+<!--                        <span class="badge badge-success rounded-pill d-inline bg-primary">Active</span>-->
+<!--                        <p th:text="${employee.employeeNumber}"></p>-->
+        </td>
+        <!--Position-->
+        <td th:text="${employee.position.name}"></td>
+        <!--Action-->
+        <td>
+            <button type="button" class="btn btn-link btn-sm btn-rounded">
+                <a th:href="@{/employee/edit/{id}(id = ${employee.id})}">Edit</a>
+            </button>
+            <button type="button" class="btn btn-link btn-sm btn-rounded">
+                <a th:href="@{/employee/delete/{id}(id = ${employee.id})}"> Delete</a>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+<tr>
+    <a th:if="${employees.hasPrevious()}"
+       th:href="@{/employee(page=${employees.number-1})}">Previous</a>
+
+    <a th:if="${employees.hasNext()}"
+       th:href="@{/employee(page=${employees.number+1})}">Next</a>
+</tr>
+</body>
+</html>

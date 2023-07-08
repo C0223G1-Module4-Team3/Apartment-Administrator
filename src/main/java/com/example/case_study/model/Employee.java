@@ -1,36 +1,62 @@
 package com.example.case_study.model;
 
 import javax.persistence.*;
-import java.util.Date;
-
 
 @Entity
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nameEmployee;
+    private String name;
     private String image;
     private boolean gender;
     private String citizenId;
-    private Date dayOfBirth;
+    private String dayOfBirth;
     private String email;
+
+    private String phoneNumber;
     @ManyToOne
     private AccountUser accountUser;
+
+    @ManyToOne
+    private Position position;
     private boolean flagDelete;
     public Employee() {
     }
 
-    public Employee(Integer id, String nameEmployee, String image, boolean gender, String citizenId, Date dayOfBirth, String email, AccountUser accountUser, boolean flagDelete) {
+    public Employee(Integer id, String name, String image, boolean gender, String citizenId, String dayOfBirth, String email, String phoneNumber, AccountUser accountUser, Position position, boolean flagDelete) {
         this.id = id;
-        this.nameEmployee = nameEmployee;
+        this.name = name;
+        this.image = image;
+        this.gender = gender;
+        this.citizenId = citizenId;
+        this.dayOfBirth = dayOfBirth;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.accountUser = accountUser;
+        this.position = position;
+        this.flagDelete = flagDelete;
+    }
+
+    public Employee(Integer id, String name, String image, boolean gender, String citizenId, String dayOfBirth, String email, AccountUser accountUser, Position position, boolean flagDelete) {
+        this.id = id;
+        this.name = name;
         this.image = image;
         this.gender = gender;
         this.citizenId = citizenId;
         this.dayOfBirth = dayOfBirth;
         this.email = email;
         this.accountUser = accountUser;
+        this.position = position;
         this.flagDelete = flagDelete;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public Integer getId() {
@@ -41,14 +67,21 @@ public class Employee {
         this.id = id;
     }
 
-    public String getNameEmployee() {
-        return nameEmployee;
+    public String getName() {
+        return name;
     }
 
-    public void setNameEmployee(String nameEmployee) {
-        this.nameEmployee = nameEmployee;
+    public void setName(String nameEmployee) {
+        this.name = nameEmployee;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getImage() {
         return image;
@@ -74,11 +107,11 @@ public class Employee {
         this.citizenId = citizenId;
     }
 
-    public Date getDayOfBirth() {
+    public String getDayOfBirth() {
         return dayOfBirth;
     }
 
-    public void setDayOfBirth(Date dayOfBirth) {
+    public void setDayOfBirth(String dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
     }
 

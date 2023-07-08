@@ -64,7 +64,7 @@ public class ContractController {
 
     @GetMapping("/accountant")
     String displayContractList() {
-        return "/accountant";
+        return "acountant";
     }
 
 
