@@ -93,7 +93,7 @@
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="dayOfBirth"><strong>Ngày sinh:</strong></label>
-                            <input type="datetime-local" class="form-control" id="dayOfBirth" th:field="*{dayOfBirth}"
+                            <input type="date" class="form-control" id="dayOfBirth" th:field="*{dayOfBirth}"
                                    required>
                             <span style="color: red" th:if="${#fields.hasErrors('dayOfBirth')}"
                                   th:errors="*{dayOfBirth}"></span>
