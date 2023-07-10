@@ -115,7 +115,7 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th></th>
+
                             <th>Name</th>
                             <th>Gender</th>
                             <th>Citizen ID</th>
@@ -127,29 +127,19 @@
                         <tbody>
                         <tr th:each="customer : ${customers}" th:if="${!customer.flagDelete}">
                             <td th:text="${customer.id}"></td>
-                            <td>
-                                <img th:src="${customer.image}"
-                                     alt=""
-                                     style="width: 45px; height: 45px"
-                                     class="rounded-circle"
-                                />
-                            </td>
                             <td th:text="${customer.name}"></td>
                             <td th:text="${customer.gender ? 'Male' : 'Female'}"></td>
                             <td th:text="${customer.citizenId}"></td>
-                            <td th:text="${customer.phoneNumber}"></td>
-                            <td th:text="${customer.dayOfBirth}"></td>
-                            <td th:text="${customer.email}"></td>
                             <td>
                                 <a th:href="@{/customer/detail/{id}(id=${customer.id})}" class="btn btn-primary"><i
                                         class="fa-solid fa-circle-info"></i></a>
                             </td>
+<!--                            <td>-->
+<!--                                <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i-->
+<!--                                        class="fa-regular fa-pen-to-square"></i></a>-->
+<!--                            </td>-->
                             <td>
-                                <a sec:authorize="hasAnyRole('Director','SaleManager')" th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
-                                        class="fa-regular fa-pen-to-square"></i></a>
-                            </td>
-                            <td>
-                                <a sec:authorize="hasAnyRole('Director','SaleManager')" href="#" class="btn btn-danger" data-toggle="modal"
+                                <a href="#" class="btn btn-danger" data-toggle="modal"
                                    th:data-target="'#deleteCustomerModal-' + ${customer.id}"><i
                                         class="fa-regular fa-trash-can"></i></a>
                             </td>
