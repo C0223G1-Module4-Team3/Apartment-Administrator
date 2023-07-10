@@ -23,7 +23,6 @@ public class AccountServiceImpl implements IAccountService {
             return null;
         }
         return accountRepository.findAccountUserByPhone(phone);
-
     }
 
     @Override
