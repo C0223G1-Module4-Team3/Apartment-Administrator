@@ -79,11 +79,12 @@ public class DetailRoomService implements IDetailRoomService{
 
     @Override
     public void delete(Integer id) {
-        for (DetailRoom d:detailRoomRepository.findAll()) {
-            if (d.getId().equals(id)){
-                detailRoomRepository.delete(d);
-                break;
-            }
-        }
+//        for (DetailRoom d:detailRoomRepository.findAll()) {
+//            if (d.getId().equals(id)){
+//                detailRoomRepository.delete(d);
+//                break;
+//            }
+//        }
+        detailRoomRepository.isDelete(id);
     }
 }

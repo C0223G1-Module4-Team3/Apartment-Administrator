@@ -48,23 +48,28 @@ public class DetailRoomControler {
         return "redirect:/room/detail/" + detailRoomDto.getRoomId();
     }
 
-    @GetMapping("update/{id}")
-    public String showFormUpdate(@PathVariable Integer id, Model model) {
-        model.addAttribute("detailRoomUpdate", detailRoomService.findById(id));
-        return "detail_room/update";
-    }
+//    @GetMapping("update/{id}")
+//    public String showFormUpdate(@PathVariable Integer id, Model model) {
+//        model.addAttribute("detailRoomUpdate", detailRoomService.findById(id));
+//        return "detail_room/update";
+//    }
 
     @PostMapping("update")
-    public String update(@ModelAttribute DetailRoom detailRoom, RedirectAttributes redirectAttributes) {
+    public String update(@RequestParam("id") Integer id,@RequestParam("roomId") Integer roomId, @RequestParam("facilityId") Integer facilityId,
+                         @RequestParam("amount") Integer amount, RedirectAttributes redirectAttributes) {
+       DetailRoom detailRoom = detailRoomService.findById(id);
+       detailRoom.setRoom(roomService.detailRoom(roomId));
+       detailRoom.setFacility(facilityService.detailFacility(facilityId));
+       detailRoom.setAmount(amount);
         detailRoomService.edit(detailRoom);
         redirectAttributes.addFlashAttribute("msg", "Update Success");
-        return "redirect:/room/detail/" + detailRoom.getRoom().getId();
+        return "redirect:/room/detail/" +roomId;
     }
 
     @PostMapping("delete/{id}")
-    public String delete(@PathVariable Integer id,@RequestParam("idRoom") Integer idRoom, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable Integer id, @RequestParam("idRoom") Integer idRoom, RedirectAttributes redirectAttributes) {
         detailRoomService.delete(id);
-        redirectAttributes.addFlashAttribute("msg","Delete success");
+        redirectAttributes.addFlashAttribute("msg", "Delete success");
         return "redirect:/room/detail/" + idRoom;
     }
 }
