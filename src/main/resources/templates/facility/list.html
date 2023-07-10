@@ -12,13 +12,18 @@
     <link rel="stylesheet" href="/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/css/adminlte.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="bootstrap520/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="datatables/css/dataTables.bootstrap5.min.css"/>
 
 </head>
 <body class="hold-transition sidebar-mini">
 
 <div class="wrapper">
     <!-- Navbar -->
-    <nav th:fragment="navbar"  class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -160,7 +165,7 @@
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside th:fragment="sidebar" class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <span style="text-align: center" class="brand-text font-weight-light">Admin Page</span>
@@ -192,7 +197,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a th:href="@{/contract}" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Hợp đồng</p>
                                 </a>
@@ -215,7 +220,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a th:href="@{/facility}" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Cơ sở vật chất</p>
                                 </a>
@@ -238,26 +243,9 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a th:href="@{/employee}" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Nhân viên</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Tài Chính
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a th:href="@{/contract/accountant}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Revenue</p>
                                 </a>
                             </li>
                         </ul>
@@ -311,7 +299,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Title</h3>
+                    <h3 class="card-title">List Facility</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -323,7 +311,44 @@
                     </div>
                 </div>
                 <div class="card-body" >
-                    Start creating your amazing application!
+                    <div class="form-group row">
+                        <div class="col-12 col-md-12 col-lg-12"
+                             style="background-color: #FFFFFF;text-align:right;position: relative;">
+                            <button class="btn btn-primary" title="Create or Update Facility" data-bs-toggle="modal"
+                                    data-bs-target="#createFacilityModal">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
+                        <thead style="background-color: #FFFFFF">
+                        <tr>
+                            <th>Id</th>
+                            <th>Floor</th>
+                            <th>Update</th>
+                            <th>Set Maintenance</th>
+                        </tr>
+                        </thead>
+                        <tbody style="background-color: #F9F9FA">
+                        <tr th:each="facility,iterStats : ${facilityList}">
+                            <td th:text="${facility.id}"></td>
+                            <td th:text="${facility.name}"></td>
+                            <td>
+                                <a  class="btn btn-primary"
+                                   title="Edit">
+                                    <i
+                                            class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a
+                                   class="btn btn-danger" title="Maintenance">
+                                    <i class="fas fa-wrench"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
@@ -335,7 +360,8 @@
         </section>
     </div>
 
-    <footer class="main-footer" th:fragment="footer">
+
+    <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 3.2.0
         </div>
