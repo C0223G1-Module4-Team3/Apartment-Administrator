@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa khách hàng</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/adminlte.min.css">
+    <style>
+        .div {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .form-container {
+            position: relative;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 50px;
+            margin-left: 10px;
+            width: 800px;
+            height: 400px;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            margin-bottom: 10px;
+            margin-top: 50px;
+        }
+
+        /*.image-container {*/
+        /*    position: relative;*/
+        /*    width: 100%;*/
+        /*    height: 200px;*/
+        /*    overflow: hidden;*/
+        /*}*/
+
+        /*.image-container::before {*/
+        /*    content: "";*/
+        /*    display: block;*/
+        /*    padding-top: 75%; !* Tỷ lệ khung hình 4:3 *!*/
+        /*}*/
+
+        /*.image-container img {*/
+        /*    position: absolute;*/
+        /*    top: 0;*/
+        /*    left: 0;*/
+        /*    bottom: 0;*/
+        /*    right: 0;*/
+        /*    margin: auto;*/
+        /*    width: auto;*/
+        /*    height: 100%;*/
+        /*}*/
+    </style>
+</head>
+<body><h1 class="text-center">Sửa khách hàng</h1>
+<p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <div class="image-container">
+                <img id="imagePreview" th:src="${customer.image}" alt="">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th></th>
+                    <th>Họ tên</th>
+                    <th>Giới tính</th>
+                    <th>Số CMND</th>
+                    <th>Số điện thoại</th>
+                    <th>Ngày sinh</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${customer.id}"></td>
+                    <td th:text="${customer.name}"></td>
+                    <td th:text="${customer.gender ? 'Nam' : 'Nữ'}"></td>
+                    <td th:text="${customer.citizenId}"></td>
+                    <td th:text="${customer.phoneNumber}"></td>
+                    <td th:text="${customer.dayOfBirth}"></td>
+                    <td th:text="${customer.email}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Add Bootstrap JS scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/js/demo.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script>
+    document.getElementById('btnThumbnailURL').addEventListener('change', function () {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var preview = document.getElementById('imagePreview');
+            preview.src = reader.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    //paste here your copied configuration code
+    const firebaseConfig = {
+        apiKey: "AIzaSyDFIFtviHbm8hKCtidU9nVSlcD9fcQSvN4",
+        authDomain: "employeecasestudy.firebaseapp.com",
+        projectId: "employeecasestudy",
+        storageBucket: "employeecasestudy.appspot.com",
+        messagingSenderId: "562015708192",
+        appId: "1:562015708192:web:07cf40d25a6339b95d0845",
+        measurementId: "G-CGWJ0KZSJM"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // const analytics = getAnalytics(app);
+    let uploader = document.getElementById('uploader');
+    let fileButton = document.getElementById('btnThumbnailURL');
+    fileButton.addEventListener('change', function (e) {
+        let file = e.target.files[0];
+        let storageRef = firebase.storage().ref('img/' + file.name);
+        let task = storageRef.put(file);
+        task.on('state_changed', function progress(snapshot) {
+            let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            uploader.value = percentage;
+            //  lúc chưa load xong thì thì ko cho submit
+            if (percentage === 100) {
+                document.getElementById('createButton').removeAttribute('disabled');
+            } else {
+                document.getElementById('createButton').setAttribute('disabled', 'disabled');
+            }
+        });
+        //   getDownloadURL() để lấy URL của file đã được lưu trữ trên Firebase Storage.
+        //   Sau khi URL được lấy thành công, nó được sử dụng để đặt giá trị cho thuộc tính value của phần tử HTML có id là thumbnailURL.
+        //   Điều này có nghĩa là URL được gán cho giá trị của trường input có tên là thumbnailURL.
+        //   Sau đó, URL này có thể được sử dụng để hiển thị hình ảnh hoặc thực hiện các thao tác khác liên quan đến hình ảnh trong code JavaScript và HTML.
+        task.then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+                document.getElementById('thumbnailURL').setAttribute("value", url);
+                // tải hình ảnh
+                previewImage.style.display = 'none';
+                newImage.src = url;
+                newImage.style.display = 'block';
+            });
+    });
+</script>
+</body>
+</html>

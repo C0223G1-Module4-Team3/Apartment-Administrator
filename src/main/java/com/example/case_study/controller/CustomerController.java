@@ -42,23 +42,34 @@ public class CustomerController {
     public String showFormEdit(@PathVariable int id, Model model) {
         Customer customer = customerService.showCustomerEdit(id);
         if (customer == null) {
-            model.addAttribute("msg", "Không tìm thấy id. ");
+            model.addAttribute("msg", "ID not found.  ");
             return "customer/list";
         } else {
             model.addAttribute("customer", customer);
             return "customer/edit";
         }
     }
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable int id, Model model) {
+        Customer customer = customerService.showCustomerEdit(id);
+        if (customer == null) {
+            model.addAttribute("msg", "ID not found.  ");
+            return "customer/list";
+        } else {
+            model.addAttribute("customer", customer);
+            return "customer/detail";
+        }
+    }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
         Customer customer = customerService.showCustomerEdit(id);
         if (customer == null) {
-            redirectAttributes.addFlashAttribute("msg", "Không tìm thấy id.");
+            redirectAttributes.addFlashAttribute("msg", "ID not found. ");
             return "customer/list";
         } else {
             customerService.delete(id);
-            redirectAttributes.addFlashAttribute("msg", "xoa thanh cong");
+            redirectAttributes.addFlashAttribute("msg", "Successfully deleted ");
             return "redirect:/customer";
         }
     }
@@ -70,31 +81,31 @@ public class CustomerController {
             return "customer/add";
         }
         if (customerDto == null) {
-            redirectAttributes.addAttribute("msg", "Đối tượng không tồn tại. ");
-            return "customer/edit";
+            redirectAttributes.addAttribute("msg", "Object does not exist.  ");
+            return "customer/add";
         } else {
             List<Customer> customers = customerService.displayListCustomer();
             for (int i = 0; i < customers.size(); i++) {
                 if (customerDto.getCitizenId().equals(customers.get(i).getCitizenId())) {
                     model.addAttribute("customer", customerDto);
-                    model.addAttribute("msg", "cmnd đã tồn tại. ");
+                    model.addAttribute("msg", "ID card already exists. ");
                     return "customer/add";
                 }
                 if (customerDto.getPhoneNumber().equals(customers.get(i).getPhoneNumber())) {
                     model.addAttribute("customer", customerDto);
-                    model.addAttribute("msg", " số điện thoại đã tồn tại. ");
+                    model.addAttribute("msg", "Phone number already exists. ");
                     return "customer/add";
                 }
                 if (customerDto.getEmail().equals(customers.get(i).getEmail())) {
                     model.addAttribute("customer", customerDto);
-                    model.addAttribute("msg", "email đã tồn tại. ");
+                    model.addAttribute("msg", "Email already exists.  ");
                     return "customer/add";
                 }
             }
             Customer customer = new Customer();
             BeanUtils.copyProperties(customerDto, customer);
             customerService.add(customer);
-            redirectAttributes.addFlashAttribute("msg", "them moi thanh cong");
+            redirectAttributes.addFlashAttribute("msg", "Successfully added");
             return "redirect:/customer";
         }
     }
@@ -107,13 +118,13 @@ public class CustomerController {
             return "customer/edit";
         }
         if (customerDto == null) {
-            redirectAttributes.addAttribute("msg", "Không tìm thấy id. ");
+            redirectAttributes.addAttribute("msg", "ID not found. ");
             return "customer/edit";
         } else {
             Customer customer = new Customer();
             BeanUtils.copyProperties(customerDto, customer);
             customerService.edit(customer);
-            redirectAttributes.addFlashAttribute("msg", "sua moi thanh cong");
+            redirectAttributes.addFlashAttribute("msg", "Successfully edited");
             return "redirect:/customer";
         }
     }
