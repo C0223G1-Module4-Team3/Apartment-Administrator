@@ -27,6 +27,6 @@ public class AcountUserController {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUltils.toString(loginedUser);
         model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
-        return "account";
+        return "/account/account";
     }
 }
