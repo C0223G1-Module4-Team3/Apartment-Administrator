@@ -4,11 +4,13 @@ import com.example.case_study.model.DetailRoom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IDetailRoomService {
-    Page<DetailRoom> display(Pageable pageable);
+    List<DetailRoom> display();
     void save(DetailRoom detailRoom);
     void edit(DetailRoom detailRoom);
-    Page<DetailRoom> findByRoomId(Integer id,Pageable pageable);
+    List<DetailRoom> findByRoomId(Integer id);
     void editAmount(DetailRoom detailRoom);
     boolean checkFacilityId(DetailRoom detailRoom);
     Integer getAllFacilityInRoom(Integer id);

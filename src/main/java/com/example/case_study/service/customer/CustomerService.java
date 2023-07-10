@@ -48,4 +48,14 @@ public class CustomerService implements ICustomerService {
     public void edit(Customer customer) {
         customerRepository.save(customer);
     }
+
+    @Override
+    public List<Customer> showMaleCustomer() {
+        return customerRepository.findAllByFlagDeleteFalseAndGenderIsTrue();
+    }
+
+    @Override
+    public List<Customer> showFemaleCustomer() {
+        return customerRepository.findAllByFlagDeleteFalseAndGenderIsFalse();
+    }
 }

@@ -17,7 +17,7 @@ public class EmployeeSevice implements IEmployeeService {
     @Override
     public Page<Employee> displayListEmployee(Pageable pageable) {
 //        return employeeRepository.findAll(pageable);
-        return employeeRepository.findAllByFlagDeleteIsFalse(pageable);
+        return employeeRepository.findAllByFlagDeleteIsFalseAndAccountUserIsNull(pageable);
     }
 
 
@@ -40,12 +40,37 @@ public class EmployeeSevice implements IEmployeeService {
     }
 
     @Override
-    public List<Employee> searchEmployeeByName(String name) {
-        return null;
+    public Page<Employee> searchEmployeeByName(Pageable pageable ,String namer,String citizenId, String phoneNumbe) {
+        return employeeRepository.findAllByNameOrPhoneNumberOrCitizenId(pageable, namer,citizenId,phoneNumbe);
     }
 
     @Override
     public Employee getEmployeeById(int id) {
         return employeeRepository.findById(id);
+    }
+
+    @Override
+    public List<Employee> displayListEmployeeHaveAccount() {
+        return employeeRepository.findAllByFlagDeleteFalseAndAccountUserIsNotNull();
+    }
+
+    @Override
+    public List<Employee> displayEmployeeHome() {
+        return employeeRepository.findAllByFlagDeleteFalseAndAccountUserIsNull();
+    }
+
+    @Override
+    public List<Employee> showMaleEmployee() {
+        return employeeRepository.findAllByFlagDeleteFalseAndAccountUserIsNullAndGenderIsTrue();
+    }
+
+    @Override
+    public List<Employee> showFemaleEmployee() {
+        return employeeRepository.findAllByFlagDeleteFalseAndAccountUserIsNullAndGenderIsFalse();
+    }
+
+    @Override
+    public Employee findByPhone(String phone) {
+        return employeeRepository.findByPhoneNumber(phone);
     }
 }

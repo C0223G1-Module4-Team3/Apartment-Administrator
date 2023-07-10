@@ -114,4 +114,19 @@ public class ContractService implements IContractService {
 
         return new PageImpl<>(modifiedList, PageRequest.of(pageNumber, pageSize), originalPage.getTotalElements());
     }
+
+    @Override
+    public List<Contract> findSuccessContract() {
+        return contractRepository.findAllByFlagDeleteFalseAndManagerConfirmIsTrueAndDirectorConfirmIsTrue();
+    }
+
+    @Override
+    public List<Contract> findNotSuccessContract() {
+        return contractRepository.findAllByFlagDeleteFalseAndManagerConfirmIsFalseOrDirectorConfirmIsFalse();
+    }
+
+    @Override
+    public List<Contract> findContractHome() {
+        return contractRepository.findAllByFlagDeleteFalse();
+    }
 }

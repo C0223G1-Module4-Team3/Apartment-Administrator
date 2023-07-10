@@ -4,6 +4,7 @@ import com.example.case_study.model.Contract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IContractService {
@@ -22,5 +23,10 @@ public interface IContractService {
     boolean getContractToDirector(int id);
 
     Page<Contract> getListToAccountant(Pageable pageable);
+
+    List<Contract> findSuccessContract();
+    List<Contract> findNotSuccessContract();
+
+    List<Contract> findContractHome();
 
 }
