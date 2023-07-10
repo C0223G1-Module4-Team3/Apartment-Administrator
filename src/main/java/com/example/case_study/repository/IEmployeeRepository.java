@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IEmployeeRepository extends JpaRepository<Employee,Integer> {
-    Page<Employee> findAllByFlagDeleteIsFalse(Pageable pageable);
+    Page<Employee> findAllByFlagDeleteIsFalseAndAccountUserIsNull(Pageable pageable);
     Employee findById(int id);
 
     List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNull();
