@@ -14,9 +14,9 @@ import javax.persistence.Converter;
 import java.util.List;
 @Repository
 public interface IDetailRoomRepository extends JpaRepository<DetailRoom, Integer> {
-    Page<DetailRoom> findAll(Pageable pageable);
+    List<DetailRoom> findAll();
     @Query(value = "SELECT * FROM details_room as dr WHERE dr.id_room =:id", nativeQuery = true)
-    Page<DetailRoom> findByRoomId(@Param(value = "id") Integer id,Pageable pageable);
+    List<DetailRoom> findByRoomId(@Param(value = "id") Integer id);
 
     @Transactional
     @Modifying

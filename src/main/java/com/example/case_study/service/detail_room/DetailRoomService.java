@@ -16,8 +16,8 @@ public class DetailRoomService implements IDetailRoomService{
     @Autowired
     private IDetailRoomRepository detailRoomRepository;
     @Override
-    public Page<DetailRoom> display(Pageable pageable) {
-        return detailRoomRepository.findAll(pageable);
+    public List<DetailRoom> display() {
+        return detailRoomRepository.findAll();
     }
 
     @Override
@@ -37,8 +37,8 @@ public class DetailRoomService implements IDetailRoomService{
     }
 
     @Override
-    public Page<DetailRoom> findByRoomId(Integer id,Pageable pageable) {
-        return detailRoomRepository.findByRoomId(id,pageable);
+    public List<DetailRoom> findByRoomId(Integer id) {
+        return detailRoomRepository.findByRoomId(id);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class DetailRoomService implements IDetailRoomService{
     @Override
     public boolean checkFacilityId(DetailRoom detailRoom) {
         for (DetailRoom d:detailRoomRepository.findAll()) {
-            if (Objects.equals(detailRoom.getFacility().getId(), d.getFacility().getId())){
+            if (detailRoom.getFacility().getId().equals(d.getFacility().getId()) && detailRoom.getRoom().getId().equals(d.getRoom().getId())){
                 return true;
             }
         }

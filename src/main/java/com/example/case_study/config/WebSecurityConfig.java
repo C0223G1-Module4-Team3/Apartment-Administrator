@@ -10,7 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -20,10 +24,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
+    @Autowired
+    private DataSource dataSource;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
     }
+
 
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
@@ -33,9 +42,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests().antMatchers("/", "/login").permitAll();
-//        http.authorizeRequests().antMatchers("/dashboard")
-//                .access("hasAnyRole('GĐ','TPNS','TPKD','NVKD','QLTN')");
-
+        http.authorizeRequests().antMatchers("/employee/create","/employee/edit/*","/employee/delete/*")
+                .access("hasAnyRole('Director','HR')");
+        http.authorizeRequests().antMatchers("/employee")
+                        .access("hasAnyRole('Director','SaleManager','HR','ApartmentManager')");
+        http.authorizeRequests().antMatchers("/customer/create")
+                        .access("hasAnyRole('Director','SaleManager','Business')");
+        http.authorizeRequests().antMatchers("/customer/edit/*","/customer/delete/*")
+                .access("hasAnyRole('Director','SaleManager')");
+        http.authorizeRequests().antMatchers("/contract/create")
+                        .access("hasAnyRole('Director','SaleManager','Business')");
+        http.authorizeRequests().antMatchers("/contract/edit/*","/contract/delete/*")
+                .access("hasAnyRole('Director','SaleManager')");
+        http.authorizeRequests().antMatchers("/room/detail/*","/room/update/*","/room/maintenance")
+                        .access("hasAnyRole('Director','ApartmentManager')");
+        http.authorizeRequests().antMatchers("/facility/create","/facility/update","/facility/delete/*")
+                        .access("hasAnyRole('Director','ApartmentManager')");
+        http.authorizeRequests().antMatchers("/account")
+                .access("hasRole('Director')");
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/400");
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/j_spring_security_check") // submit url

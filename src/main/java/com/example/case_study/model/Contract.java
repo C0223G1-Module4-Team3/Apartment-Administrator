@@ -1,13 +1,12 @@
 package com.example.case_study.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "contracts")
 public class Contract {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id_room")
@@ -27,7 +26,7 @@ public class Contract {
 
     private Integer period;
 
-    private Date date_start;
+    private String date_start;
 
     private boolean directorConfirm;
 
@@ -39,7 +38,7 @@ public class Contract {
     }
 
     public Contract(Integer id, Room room, Customer customer, Employee employee, KindContract kindContract,
-                    Integer period, Date date_start, boolean directorConfirm, boolean managerConfirm, boolean flagDelete) {
+                    Integer period, String date_start, boolean directorConfirm, boolean managerConfirm, boolean flagDelete) {
         this.id = id;
         this.room = room;
         this.customer = customer;
@@ -100,11 +99,11 @@ public class Contract {
         this.period = period;
     }
 
-    public Date getDate_start() {
+    public String getDate_start() {
         return date_start;
     }
 
-    public void setDate_start(Date date_start) {
+    public void setDate_start(String date_start) {
         this.date_start = date_start;
     }
 

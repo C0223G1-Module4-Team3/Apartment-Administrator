@@ -13,6 +13,7 @@ public class Employee {
     private String citizenId;
     private String dayOfBirth;
     private String email;
+
     private String phoneNumber;
     @ManyToOne
     private AccountUser accountUser;
@@ -20,7 +21,6 @@ public class Employee {
     @ManyToOne
     private Position position;
     private boolean flagDelete;
-
     public Employee() {
     }
 
@@ -38,6 +38,27 @@ public class Employee {
         this.flagDelete = flagDelete;
     }
 
+    public Employee(Integer id, String name, String image, boolean gender, String citizenId, String dayOfBirth, String email, AccountUser accountUser, Position position, boolean flagDelete) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.gender = gender;
+        this.citizenId = citizenId;
+        this.dayOfBirth = dayOfBirth;
+        this.email = email;
+        this.accountUser = accountUser;
+        this.position = position;
+        this.flagDelete = flagDelete;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -50,8 +71,16 @@ public class Employee {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String nameEmployee) {
+        this.name = nameEmployee;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getImage() {
@@ -86,20 +115,20 @@ public class Employee {
         this.dayOfBirth = dayOfBirth;
     }
 
+    public boolean isFlagDelete() {
+        return flagDelete;
+    }
+
+    public void setFlagDelete(boolean flagDelete) {
+        this.flagDelete = flagDelete;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setEmail(String telephone) {
+        this.email = telephone;
     }
 
     public AccountUser getAccountUser() {
@@ -109,26 +138,4 @@ public class Employee {
     public void setAccountUser(AccountUser accountUser) {
         this.accountUser = accountUser;
     }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public boolean isFlagDelete() {
-        return flagDelete;
-    }
-
-    public void setFlagDelete(boolean flagDelete) {
-        this.flagDelete = flagDelete;
-    }
 }
-
-
-
-
-
-

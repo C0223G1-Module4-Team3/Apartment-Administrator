@@ -12,6 +12,15 @@ import java.util.List;
 public interface IEmployeeRepository extends JpaRepository<Employee,Integer> {
     Page<Employee> findAllByFlagDeleteIsFalse(Pageable pageable);
     Employee findById(int id);
+
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNull();
+
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNull();
+
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNullAndGenderIsTrue();
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNullAndGenderIsFalse();
+
+    Employee findByPhoneNumber(String phone);
     @Query(value = "select * from employee as c where (c.name like concat('%', :name ,'%') or c.name='') and( c.phone_number like concat('%', :phoneNumber ,'%') or c.phone_number='')and (c.citizen_id like concat('%', :citizenId ,'%') or c.citizen_id='')", nativeQuery = true)
 
     Page<Employee> findAllByNameOrPhoneNumberOrCitizenId

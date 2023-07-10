@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
@@ -25,6 +25,10 @@ public class Customer {
     private boolean flagDelete;
 
     public Customer() {
+    }
+
+    public Customer(Integer id) {
+        this.id = id;
     }
 
     public Customer(Integer id, String name, boolean gender, String citizenId, String phoneNumber,

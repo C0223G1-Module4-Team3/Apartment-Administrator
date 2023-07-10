@@ -19,5 +19,33 @@ public class PayMent {
     public PayMent() {
     }
 
+    public PayMent(Contract contract, Integer serial, boolean paided) {
+        this.contract = contract;
+        this.serial = serial;
+        this.paided = paided;
+    }
 
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public Integer getSerial() {
+        return serial;
+    }
+
+    public void setSerial(Integer serial) {
+        this.serial = serial;
+    }
+
+    public boolean isPaided() {
+        return paided;
+    }
+
+    public void setPaided(boolean paided) {
+        this.paided = paided;
+    }
 }
