@@ -3,12 +3,19 @@ package com.example.case_study.controller;
 import com.example.case_study.dto.CustomerDto;
 import com.example.case_study.dto.EmployeeDto;
 import com.example.case_study.model.Customer;
+import com.example.case_study.model.Employee;
+import com.example.case_study.service.IAccountService;
 import com.example.case_study.service.customer.ICustomerService;
+import com.example.case_study.service.employee.IEmployeeService;
+import com.example.case_study.untils.WebUltils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 
@@ -24,12 +32,19 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
+    @Autowired
+    private IEmployeeService employeeService;
 
 
     @GetMapping("")
-    public String display(Model model, @PageableDefault(size = 6, sort = "name") Pageable pageable) {
+    public String display(Principal principal,Model model, @PageableDefault(size = 6, sort = "name") Pageable pageable) {
         Page<Customer> customers = customerService.display(pageable);
         model.addAttribute("customers", customers);
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "/customer/list";
     }
     @GetMapping("/create")

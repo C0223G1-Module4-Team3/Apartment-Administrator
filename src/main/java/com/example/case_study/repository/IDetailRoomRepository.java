@@ -22,4 +22,8 @@ public interface IDetailRoomRepository extends JpaRepository<DetailRoom, Integer
     @Modifying
     @Query (value = "insert into details_room(id_room, facility_id, amount) values (:roomId, :facilityId, :amount)", nativeQuery = true)
     void saveRoomDetail(@Param(value = "roomId")Integer roomId, @Param(value = "facilityId")Integer facilityId, @Param("amount")Integer amount);
+    @Modifying
+    @Transactional
+    @Query(value = "update details_room as dr set is_flag_delete = 1 where dr.detail_room_id = :id ", nativeQuery = true)
+    void isDelete(@Param(value = "id") Integer id);
 }

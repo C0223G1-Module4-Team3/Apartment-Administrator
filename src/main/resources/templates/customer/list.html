@@ -71,7 +71,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">List customers</h3>
+                    <h3 class="card-title"></h3>
                     <span th:if="${msg}!=null" th:text="${msg}" id="success"
                           class="tin"
                           style="float: left; background-color: #4CAF50;font-size: 30px"></span>
@@ -85,6 +85,10 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
+<!--                    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"-->
+<!--                                                                               th:href="@{/customer/create}"><i-->
+<!--                            class="fa-solid fa-plus"></i></a></button>-->
                     <form action="/customer/search" method="get">
                         <div class="form-group row">
                             <div class="col-md-3">
@@ -111,6 +115,7 @@
                         <thead>
                         <tr>
                             <th>STT</th>
+                            <th></th>
                             <th>Name</th>
                             <th>Gender</th>
                             <th>Citizen ID</th>
@@ -122,19 +127,29 @@
                         <tbody>
                         <tr th:each="customer : ${customers}" th:if="${!customer.flagDelete}">
                             <td th:text="${customer.id}"></td>
+                            <td>
+                                <img th:src="${customer.image}"
+                                     alt=""
+                                     style="width: 45px; height: 45px"
+                                     class="rounded-circle"
+                                />
+                            </td>
                             <td th:text="${customer.name}"></td>
                             <td th:text="${customer.gender ? 'Male' : 'Female'}"></td>
                             <td th:text="${customer.citizenId}"></td>
+                            <td th:text="${customer.phoneNumber}"></td>
+                            <td th:text="${customer.dayOfBirth}"></td>
+                            <td th:text="${customer.email}"></td>
                             <td>
                                 <a th:href="@{/customer/detail/{id}(id=${customer.id})}" class="btn btn-primary"><i
                                         class="fa-solid fa-circle-info"></i></a>
                             </td>
-<!--                            <td>-->
-<!--                                <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i-->
-<!--                                        class="fa-regular fa-pen-to-square"></i></a>-->
-<!--                            </td>-->
                             <td>
-                                <a href="#" class="btn btn-danger" data-toggle="modal"
+                                <a sec:authorize="hasAnyRole('Director','SaleManager')" th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
+                                        class="fa-regular fa-pen-to-square"></i></a>
+                            </td>
+                            <td>
+                                <a sec:authorize="hasAnyRole('Director','SaleManager')" href="#" class="btn btn-danger" data-toggle="modal"
                                    th:data-target="'#deleteCustomerModal-' + ${customer.id}"><i
                                         class="fa-regular fa-trash-can"></i></a>
                             </td>
