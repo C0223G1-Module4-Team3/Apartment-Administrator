@@ -86,7 +86,7 @@
               <td th:text="${room.bedroom}"></td>
               <td th:text="${room.area}"></td>
               <td>
-                <a sec:authorize="hasAnyRole('Director','ApartmentManager')" th:href="@{/room/detail/{id}(id=${room.getId()})}" class="btn btn-primary" title="Detail">
+                <a th:href="@{/room/detail/{id}(id=${room.getId()})}" class="btn btn-primary" title="Detail">
                   <i
                           class="fa-solid fa-circle-info"></i>
                 </a>

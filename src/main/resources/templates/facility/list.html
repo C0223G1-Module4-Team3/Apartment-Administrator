@@ -76,13 +76,13 @@
                         <thead style="background-color: #FFFFFF">
                         <tr>
                             <th>Id</th>
-                            <th>Floor</th>
+                            <th>Name Facility</th>
                             <th>Update</th>
                             <th>Set Maintenance</th>
                         </tr>
                         </thead>
                         <tbody style="background-color: #F9F9FA">
-                        <tr th:each="facility,iterStats : ${facilityList}">
+                        <tr th:each="facility,iterStats : ${facilityList}" th:if="${!facility.isFlagDelete()}">
                             <td th:text="${facility.id}"></td>
                             <td th:text="${facility.name}"></td>
                             <td>
