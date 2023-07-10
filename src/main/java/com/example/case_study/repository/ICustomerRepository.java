@@ -8,8 +8,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
+
+
+    List<Customer> findAllByFlagDeleteFalseAndGenderIsFalse();
+
+    List<Customer> findAllByFlagDeleteFalseAndGenderIsTrue();
     @Modifying
     @Transactional
     @Query(value = "update customer as c set flag_delete = 1 where c.id = :id ", nativeQuery = true)
