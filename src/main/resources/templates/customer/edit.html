@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Sửa khách hàng</title>
+    <title>Edit Customer</title>
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -36,6 +36,25 @@
             margin-bottom: 10px;
             margin-top: 50px;
         }
+        #success {
+            position: fixed;
+            right: 1em;
+        }
+
+        .tin {
+            contain: layout;
+            display: flex;
+            align-items: center;
+            background-color: wheat;
+            border-radius: 12px;
+            border-left: 16px #a0b4ff;
+            min-width: 10em;
+            max-width: 17em;
+            max-height: 5rem;
+            box-shadow: 0 5px 8px rgba(36, 245, 10, 0.08);
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.3s;
+        }
 
         /*.image-container {*/
         /*    position: relative;*/
@@ -62,8 +81,10 @@
         /*}*/
     </style>
 </head>
-<body><h1 class="text-center">Sửa khách hàng</h1>
-<p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
+<body><h1 class="text-center">Edit Customer</h1>
+<span th:if="${msg}!=null" th:text="${msg}" id="success"
+      class="tin"
+      style="float: left; background-color: #4CAF50;font-size: 30px"></span>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-3">
@@ -73,23 +94,20 @@
         </div>
         <div class="col-md-9">
             <div class="form-container">
-                <!--                <form action="">-->
-                <!--                    <img id="imagePreview" src="" alt="Xem trước ảnh">-->
-                <!--                </form>-->
                 <form action="/customer/edit" th:object="${customer}" method="post">
                     <input type="hidden" th:field="*{id}">
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="name"><strong>Họ tên: <span style="color:red;">*</span></strong></label>
+                            <label for="name"><strong>Name: <span style="color:red;">*</span></strong></label>
                             <input type="text" class="form-control" id="name" th:field="*{name}"
-                                   placeholder="Nhập họ tên"
+                                   placeholder="Enter your first and last name"
                                    pattern="^[\p{Lu}][\p{Ll}]{1,8}(\s([\p{Lu}]|[\p{Lu}][\p{Ll}]{1,10})){0,5}$"
-                                   required title="Tên phải bắt đầu bằng chữ hoa và theo sau là chữ thường">
+                                   required title="The name must start with an uppercase letter followed by a lowercase letter">
                             <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label><strong>Giới tính:<span style="color:red;">*</span></strong></label>
+                            <label><strong>Gender:<span style="color:red;">*</span></strong></label>
                             <div style="text-align: center" class="form-row">
                                 <div class="col-4">
                                 </div>
@@ -97,13 +115,13 @@
                                     <div class="form-check col-1">
                                         <input class="form-check-input" type="radio" name="gender" id="male" th:value="true"
                                                th:field="*{gender}">
-                                        <label class="form-check-label" for="male">Nam</label>
+                                        <label class="form-check-label" for="male">Male</label>
                                     </div>
                                     <div class="form-check col-1">
                                         <input class="form-check-input" type="radio" name="gender" id="female"
                                                th:value="false"
                                                th:field="*{gender}">
-                                        <label class="form-check-label" for="female">Nữ</label>
+                                        <label class="form-check-label" for="female">Female</label>
                                     </div>
                                 </div>
                             </div>
@@ -112,15 +130,15 @@
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="citizenId"><strong>Số CMND:<span style="color:red;">*</span></strong></label>
+                            <label for="citizenId"><strong>Citizen Id:<span style="color:red;">*</span></strong></label>
                             <input type="text" class="form-control" id="citizenId" th:field="*{citizenId}"
-                                   placeholder="Nhập số CMND"
-                                   required pattern="^[0-9]{12}$" title="cmnd phải đủ 12 số">
+                                   placeholder="Enter Citizen Id"
+                                   required pattern="^[0-9]{12}$" title="cmnd must have 12 numbers">
                             <span style="color: red" th:if="${#fields.hasErrors('citizenId')}"
                                   th:errors="*{citizenId}"></span>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="phoneNumber"><strong>Số điện thoại:<span style="color:red;">*</span></strong></label>
+                            <label for="phoneNumber"><strong>Phone number:<span style="color:red;">*</span></strong></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -128,9 +146,9 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"
-                                       placeholder="Nhập số điện thoại"
+                                       placeholder="Enter your phone number"
                                        required pattern="^0[0-9]{9}$"
-                                       title="số điện thoại phải bắt đầu bằng 0 và đủ 10 số ">
+                                       title="The phone number must start with 0 and be 10 digits">
                                 <span style="color: red" th:if="${#fields.hasErrors('phoneNumber')}"
                                       th:errors="*{phoneNumber}"></span>
                             </div>
@@ -139,9 +157,9 @@
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="dayOfBirth"><strong>Ngày sinh:<span style="color:red;">*</span></strong></label>
+                            <label for="dayOfBirth"><strong>Birthday:<span style="color:red;">*</span></strong></label>
                             <input type="date" class="form-control" id="dayOfBirth" th:field="*{dayOfBirth}"
-                                   required>
+                                   required title="Customers must be 16 years or older ">
                             <span style="color: red" th:if="${#fields.hasErrors('dayOfBirth')}"
                                   th:errors="*{dayOfBirth}"></span>
                         </div>
@@ -154,8 +172,8 @@
                                     </div>
                                 </div>
                                 <input type="email" class="form-control" id="email" th:field="*{email}"
-                                       placeholder="Nhập email"
-                                       required title="email không đúng định dạng">
+                                       placeholder="Enter email"
+                                       required title="Email invalidate">
                                 <span style="color: red" th:if="${#fields.hasErrors('email')}"
                                       th:errors="*{email}"></span>
                             </div>
@@ -168,10 +186,9 @@
                         <progress id="uploader" value="0" max="100">0%</progress>
                     </div>
                     <div class="div">
-                        <button type="submit" class="btn btn-primary mr-2">Lưu</button>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
                         <a style="color: white" th:href="@{/customer}">
-                            <button type="button" class="btn btn-secondary">Hủy
-                                bỏ
+                            <button type="button" class="btn btn-secondary">Cancel
                             </button>
                         </a>
                     </div>

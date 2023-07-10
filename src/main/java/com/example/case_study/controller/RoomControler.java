@@ -45,7 +45,7 @@ public class RoomControler {
         return "/room/list";
     }
     @GetMapping("detail/{id}")
-    public String detailRoom(@PathVariable Integer id,Model model){
+    public String detailRoom(@PathVariable Integer id,Model model,Principal principal){
         model.addAttribute("roomList",roomService.findAll());
         model.addAttribute("detailRoom",roomService.detailRoom(id));
         model.addAttribute("detailRoomByIdRoom",detailRoomService.findByRoomId(id));
@@ -56,6 +56,11 @@ public class RoomControler {
         detailRoomDto.setFlagDelete(false);
         model.addAttribute("detailRoomDto", detailRoomDto);
         model.addAttribute("facilityList", facilityService.display());
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "/room/detail";
     }
 }
