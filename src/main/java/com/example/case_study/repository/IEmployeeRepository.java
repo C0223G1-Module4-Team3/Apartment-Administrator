@@ -8,6 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IEmployeeRepository extends JpaRepository<Employee,Integer> {
-    Page<Employee> findAllByFlagDeleteIsFalse(Pageable pageable);
+    Page<Employee> findAllByFlagDeleteIsFalseAndAccountUserIsNull(Pageable pageable);
     Employee findById(int id);
+
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNull();
+
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNull();
+
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNullAndGenderIsTrue();
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNullAndGenderIsFalse();
+
+    Employee findByPhoneNumber(String phone);
 }

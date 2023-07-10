@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +14,7 @@
     <link rel="stylesheet" href="/css/adminlte.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -30,7 +30,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Customer List</h1>
+                        <h1>Admin List</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -60,62 +60,31 @@
                 </div>
                 <div class="card-body">
                     <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
-                    <button sec:authorize="hasAnyRole('Director','SaleManager','Business')" title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"
-                                                                               th:href="@{/customer/create}"><i
-                            class="fa-solid fa-plus"></i></a></button>
-                    <form action="/customer/search" method="get">
-                        <div class="form-group row">
-                            <div class="col-md-4">
-                                <input type="text" placeholder="Nhập tên" name="name" class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" placeholder="Nhập số điện thoại" name="phoneNumber"
-                                       class="form-control">
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" placeholder="Nhập cmnd " name="citizenId" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm kiếm
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                     <!--          viet bảng ở đây-->
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>STT</th>
                             <th>Name</th>
                             <th>Gender</th>
                             <th>Citizen ID</th>
                             <th>Phone</th>
                             <th>DayOfBirth</th>
                             <th>Email</th>
-                            <th></th>
-                            <th></th>
+                            <th>Account Type</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="customer : ${customers}" th:if="${!customer.flagDelete}">
-                            <td th:text="${customer.id}"></td>
-                            <td th:text="${customer.name}"></td>
-                            <td th:text="${customer.gender ? 'Nam' : 'Nữ'}"></td>
-                            <td th:text="${customer.citizenId}"></td>
-                            <td th:text="${customer.phoneNumber}"></td>
-                            <td th:text="${customer.dayOfBirth}"></td>
-                            <td th:text="${customer.email}"></td>
-                            <td>
-                                <a sec:authorize="hasAnyRole('Director','SaleManager')" th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
-                                        class="fa-regular fa-pen-to-square"></i></a>
+                        <tr th:each="accounts : ${account}">
+                            <td th:text="${accounts.id}"></td>
+                            <td th:text="${accounts.name}"></td>
+                            <td th:text="${accounts.gender ? 'Nam' : 'Nữ'}"></td>
+                            <td th:text="${accounts.citizenId}"></td>
+                            <td th:text="${accounts.phoneNumber}"></td>
+                            <td th:text="${accounts.dayOfBirth}"></td>
+                            <td th:text="${accounts.email}"></td>
+                            <td th:text="${accounts.accountUser.roleUser.name}"></td>
 
-                            </td>
-                            <td>
-                                <a sec:authorize="hasAnyRole('Director','SaleManager')" th:href="@{/customer/delete/{id}(id=${customer.id})}" class="btn btn-danger"><i
-                                        class="fa-regular fa-trash-can"></i></a>
-                            </td>
                             <!--            <td>-->
                             <!--                <button type="button" class="btn btn-danger" data-bs-toggle="modal"-->
                             <!--                        data-bs-target="#confirmModal" data-id="${customer.id}">-->
@@ -144,19 +113,8 @@
                         </tr>
                         </tbody>
                     </table>
-<!--                    <div>-->
-<!--                        <ul>-->
-<!--                            <li th:if="${customers.hasPrevious()}">-->
-<!--                                <a th:href="@{${url}(page=${customers.previousPageable().pageNumber})}">Trang trước</a>-->
-<!--                            </li>-->
-<!--                            <li th:if="${customers.hasNext()}">-->
-<!--                                <a th:href="@{${url}(page=${customers.nextPageable().pageNumber})}">Trang sau</a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </div>-->
-                <!-- /.card-body -->
                 </div>
+                <!-- /.card-body -->
                 <div class="card-footer">
                     Footer
                 </div>
