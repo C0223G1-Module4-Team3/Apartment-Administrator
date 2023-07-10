@@ -1,98 +1,231 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <meta charset="UTF-8">
-    <title>cinema</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page Quản Trị</title>
+    <style>
+        #success {
+            position: fixed;
+            right: 1em;
+        }
+
+        .tin {
+            contain: layout;
+            display: flex;
+            align-items: center;
+            background-color: wheat;
+            border-radius: 12px;
+            border-left: 16px #a0b4ff;
+            min-width: 10em;
+            max-width: 17em;
+            max-height: 5rem;
+            box-shadow: 0 5px 8px rgba(36, 245, 10, 0.08);
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.3s;
+        }
+    </style>
+    <!-- Thư viện Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+
 </head>
-<body>
+<body class="hold-transition sidebar-mini">
 
+<div class="wrapper">
 
+    <nav th:replace="/layout :: navbar"></nav>
+    <aside th:replace="/layout :: sidebar"></aside>
 
-<h1 class="bg-primary " style="text-align: center">Employee List</h1>
-<p style="color: #4CAF50" th:text="${message}"></p>
-<div class="col-12 d-flex">
-    <!--Create-->
-    <div style="height: 50%">
-        <button class="bg-primary" style="height: 38px;width: 200px"><a style="color: white" th:href="@{/employee/create}">Create New Employee</a></button>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Employee List</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/logout}">Logout</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Viết bảng ở đây -->
+        <section class="content">
+
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"></h3>
+                    <span th:if="${message}!=null" th:text="${message}" id="success"
+                          class="tin"
+                          style="float: left; background-color: #4CAF50;font-size: 30px"></span>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p th:if="${message}!=null" th:text="${message}" class="alert alert-info"></p>
+                    <!--                    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"-->
+                    <!--                                                                               th:href="@{/customer/create}"><i-->
+                    <!--                            class="fa-solid fa-plus"></i></a></button>-->
+                    <form action="/employee/search" method="post">
+                        <div class="form-group row">
+                            <div class="col-md-3">
+                                <input type="text" placeholder="Input name" name="name" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" placeholder="Input phone number" name="phoneNumber"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" placeholder="Input citizenId " name="citizenId" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <button title="Create Employee" class="btn-primary"><a style="color: white"
+                                                                               th:href="@{/employee/create}"><i
+                            class="fa-solid fa-plus"></i></a></button>
+                    <!--          viet bảng ở đây-->
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Citizen ID</th>
+                            <th>Phone</th>
+                            <th>Day Of Birth</th>
+                            <th>Email</th>
+                            <th>Detail</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="employee : ${employees}" th:if="${!employee.flagDelete}">
+                            <td th:text="${employee.id}"></td>
+                            <td>
+                                <img th:src="${employee.image}"
+                                     alt=""
+                                     style="width: 45px; height: 45px"
+                                     class="rounded-circle"
+                                />
+                            </td>
+                            <td th:text="${employee.name}"></td>
+                            <td th:text="${employee.gender ? 'Nam' : 'Nữ'}"></td>
+                            <td th:text="${employee.citizenId}"></td>
+                            <td th:text="${employee.phoneNumber}"></td>
+                            <td th:text="${employee.dayOfBirth}"></td>
+                            <td th:text="${employee.email}"></td>
+                            <td>
+                                <a th:href="@{/employee/detail/{id}(id=${employee.id})}" class="btn btn-primary"><i
+                                        class="fa-solid fa-circle-info"></i></a>
+                            </td>
+                            <td>
+                                <a sec:authorize="hasAnyRole('Director','HR')" th:href="@{/employee/edit/{id}(id=${employee.id})}" class="btn btn-primary"><i
+                                        class="fa-regular fa-pen-to-square"></i></a>
+                            </td>
+                            <td>
+                                <a sec:authorize="hasAnyRole('Director','HR')" href="#" class="btn btn-danger" data-toggle="modal"
+                                   th:data-target="'#deleteCustomerModal-' + ${employee.id}"><i
+                                        class="fa-regular fa-trash-can"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <ul>
+                            <li th:if="${employees.hasPrevious()}">
+                                <a th:href="@{${url}(page=${employees.previousPageable().pageNumber})}">Trang trước</a>
+                            </li>
+                            <li th:if="${employees.hasNext()}">
+                                <a th:href="@{${url}(page=${employees.nextPageable().pageNumber})}">Trang sau</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    Footer
+                </div>
+                <!-- /.card-footer-->
+            </div>
+            <!-- /.card -->
+        </section>
     </div>
-    <!--search-->
-    <form th:action="@{/employee/search}" method="post" th:object="${employeeDto}">
-        <div class="input-group "style="border-radius:25px;height: 50% ">
-            <button name="search" type="submit" class="bg-primary" >Search</button>
-            <!--search by name-->
-            <input type="text" class="form-control" id="name" name="name" placeholder="Input Name">
-            <!--search by Citizen Id-->
-            <input type="text" class="form-control" id="citizenId" name="citizenId" placeholder="Input Citizen Id ">
-            <!--search by Phone Number-->
-            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Input Phone Number ">
-        </div>
-    </form>
 
 
-</div>
-<table class="table align-middle mb-0 bg-white">
-    <thead class="bg-light">
-    <tr class="bg-success">
-        <!--        <th>STT</th>-->
-        <th>Name</th>
-        <th>ID/BirthOfDay</th>
-        <th>Number Phone</th>
-        <th>Position</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="employee,look: ${employees}">
-        <!--Name & mail & Image-->
-        <td>
-            <div class="d-flex align-items-center">
-                <img th:src="${employee.image}"
-                     alt=""
-                     style="width: 45px; height: 45px"
-                     class="rounded-circle"
-                />
-                <!--name and mail-->
-                <div class="ms-3">
-                    <p class="fw-bold mb-1" th:text="${employee.name}"></p>
-                    <!--                    <td th:text="${employee.employeeName}"></td>-->
-                    <p class="text-muted mb-0" th:text="${employee.email}"></p>
+    <footer th:replace="/layout::footer"></footer>
+    <!-- Modal Delete Customer -->
+    <div th:each="employee : ${employees}" class="modal fade"
+         th:id="'deleteCustomerModal-' + ${employee.id}"
+         tabindex="-1" role="dialog"
+         th:attr="aria-labelledby='deleteCustomerModalLabel-' + ${employee.id}"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        th:attr="id='deleteCustomerModalLabel-' + ${employee.id}">Xóa khách
+                        hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>Bạn có chắc chắn muốn xóa khách hàng: </p> <span style="color: red"
+                                                                            th:text="${employee.name}"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng
+                    </button>
+                    <form th:action="@{/employee/delete/{id}(id=${employee.id})}" method="post">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
                 </div>
             </div>
-        </td>
-        <!--Id & birth day-->
-        <td>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
-            <!--citizenId-->
-            <p class="fw-normal mb-1" th:text="${employee.citizenId}"></p>
-            <!--dayOfBirth-->
-            <p class="text-muted mb-0" th:text="${employee.dayOfBirth}">IT department</p>
-        </td>
-        <!--Phone-->
-        <td th:text="${employee.phoneNumber}">
-        </td>
-        <!--Position-->
-        <td th:text="${employee.position.name}"></td>
-        <!--Action-->
-        <td>
-            <button type="button" class="btn btn-link btn-sm btn-rounded">
-                <a th:href="@{/employee/edit/{id}(id = ${employee.id})}">Edit</a>
-            </button>
-            <button type="button" class="btn btn-link btn-sm btn-rounded">
-                <a th:href="@{/employee/delete/{id}(id = ${employee.id})}"> Delete</a>
-            </button>
-        </td>
-    </tr>
-    </tbody>
-
-</table>
-<tr>
-    <a th:if="${employees.hasPrevious()}"
-       th:href="@{/employee(page=${employees.number-1})}">Previous</a>
-
-    <a th:if="${employees.hasNext()}"
-       th:href="@{/employee(page=${employees.number+1})}">Next</a>
-</tr>
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/js/demo.js"></script>
 </body>
 </html>

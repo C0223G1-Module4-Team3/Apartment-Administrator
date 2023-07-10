@@ -148,11 +148,11 @@
                                         class="fa-solid fa-circle-info"></i></a>
                             </td>
                             <td>
-                                <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
+                                <a sec:authorize="hasAnyRole('Director','SaleManager')" th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
                                         class="fa-regular fa-pen-to-square"></i></a>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-danger" data-toggle="modal"
+                                <a sec:authorize="hasAnyRole('Director','SaleManager')" href="#" class="btn btn-danger" data-toggle="modal"
                                    th:data-target="'#deleteCustomerModal-' + ${customer.id}"><i
                                         class="fa-regular fa-trash-can"></i></a>
                             </td>

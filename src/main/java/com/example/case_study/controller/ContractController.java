@@ -2,11 +2,16 @@ package com.example.case_study.controller;
 
 import com.example.case_study.dto.ContractCreationDto;
 import com.example.case_study.model.Contract;
+import com.example.case_study.model.Employee;
 import com.example.case_study.service.IContractService;
 import com.example.case_study.service.IKindContractService;
+import com.example.case_study.service.employee.IEmployeeService;
+import com.example.case_study.untils.WebUltils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 
 @Controller
@@ -23,10 +29,17 @@ public class ContractController {
     private IContractService contractService;
     @Autowired
     private IKindContractService kindContractService;
+    @Autowired
+    private IEmployeeService employeeService;
 
     @GetMapping("")
-    String displayContractList(Pageable pageable, Model model) {
+    String displayContractList(Principal principal,Pageable pageable, Model model) {
         model.addAttribute("list", contractService.displayList(pageable));
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "/displayContractList";
     }
 
@@ -63,7 +76,12 @@ public class ContractController {
     }
 
     @GetMapping("/accountant")
-    String displayContractList() {
+    String displayContractList(Principal principal,Model model) {
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "acountant";
     }
 
