@@ -197,14 +197,11 @@
                                 th:if="${!detailRooms.getFlagDelete()}">
                                 <td th:text="${iterStats.count}"></td>
                                 <td th:text="${detailRooms.getFacility().name}"></td>
+                                <td th:text="${detailRooms.getAmount()}"></td>
                                 <td>
-<!--                                    <button th:onclick="plus(${detailRooms.getFacility().getId()})">plus</button>-->
-                                    <input th:id="${detailRooms.getFacility().getId()}"
-                                           th:value="${detailRooms.getAmount()}">
-                                </td>
-                                <td>
-                                    <a th:href="@{/room/facility/update/{id}(id=${detailRooms.getId()})}"
-                                       class="btn btn-primary-save" title="Update Facility">
+                                    <a href="#"
+                                       class="btn btn-primary-save" data-toggle="modal" title="Update Facility"
+                                       th:data-target="'#updateModal-' + ${detailRooms.getId()}">
                                         <i
                                                 class="fa-regular fa-pen-to-square"></i>
                                     </a>
@@ -212,7 +209,7 @@
                                 <td>
                                     <a href="#" class="btn btn-danger delete-btn" data-toggle="modal"
                                        title="Delete Facility"
-                                       th:data-target="'#deleteCustomerModal-' + ${detailRooms.getId()}"><i
+                                       th:data-target="'#deleteModal-' + ${detailRooms.getId()}"><i
                                             class="fa-regular fa-trash-can"></i></a>
                                 </td>
                             </tr>
@@ -247,26 +244,25 @@
 </div>
 </div>
 </div>
-<!-- Đặt modal bên ngoài phần tử <table> -->
+<!--modal delete-->
 <div th:each="detailRooms : ${detailRoomByIdRoom}" class="modal fade"
-     th:id="'deleteCustomerModal-' + ${detailRooms.getId()}"
+     th:id="'deleteModal-' + ${detailRooms.getId()}"
      tabindex="-1" role="dialog"
-     th:attr="aria-labelledby='deleteCustomerModalLabel-' + ${detailRooms.getId()}"
+     th:attr="aria-labelledby='deleteModalLabel-' + ${detailRooms.getId()}"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"
-                    th:attr="id='deleteCustomerModalLabel-' + ${detailRooms.getId()}">Xóa khách
-                    hàng</h5>
+                    th:attr="id='deleteModalLabel-' + ${detailRooms.getId()}">Delete this facility in room</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>
                     Are you sure want to delete this room:</p> <span style="color: red"
-                                                                    th:text="${detailRooms.getFacility().getName()}"></span>
+                                                                     th:text="${detailRooms.getFacility().getName()}"></span>
                 </p>
-                <h2 style="color:red;">This operation cannot be undone!  </h2>
+                <h2 style="color:red;">This operation cannot be undone! </h2>
             </div>
             <div class="modal-footer">
                 <form th:action="@{/room/facility/delete/{id}(id=${detailRooms.getId()})}" method="post">
@@ -278,6 +274,7 @@
         </div>
     </div>
 </div>
+
 <!--modall create-->
 <div class="modal fade" id="createFacilityModal" tabindex="-1" aria-labelledby="createFacilityModalLabel"
      aria-hidden="true">
@@ -299,10 +296,10 @@
                             </select>
                         </div>
                     </div>
-<!--                    <input th:field="*{isFlagDelete()}" th:value="${detailRoomDto.isFlagDelete()}" hidden>-->
+                    <!--                    <input th:field="*{isFlagDelete()}" th:value="${detailRoomDto.isFlagDelete()}" hidden>-->
                     <input th:field="*{roomId}" th:value="${detailRoomDto.roomId}" hidden>
                     <div class="form-group row">
-                        <label for="count" class="col-sm-3 col-form-label"><strong>Count of facility:</strong></label>
+                        <label for="count" class="col-sm-3 col-form-label"><strong>Amount of facility:</strong></label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="number" class="form-control" id="count" th:field="*{amount}" min="0"
@@ -319,6 +316,42 @@
                     </div>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
+
+<!--modal update-->
+<div th:each="updateRoom : ${detailRoomByIdRoom}" class="modal fade"
+     th:id="'updateModal-' + ${updateRoom.getId()}"
+     tabindex="-1" role="dialog"
+     th:attr="aria-labelledby='updateModalLabel-' + ${updateRoom.getId()}"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"
+                    th:attr="id='updateModalLabel-' + ${updateRoom.getId()}">Update amount facility</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form th:action="@{/room/facility/update}" method="post">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h2 th:text="${updateRoom.facility.getName()}"></h2>
+                            <input th:name="id" th:value="${updateRoom.id}" hidden>
+                            <input th:name="roomId" th:value="${updateRoom.getRoom().getId()}" hidden>
+                            <input th:name="facilityId" th:value="${updateRoom.getFacility().getId()}" hidden>
+                            <strong>Amount of facility: </strong> <input type="number" class="form-control" id="amount" th:name="amount">
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <button type="submit" class="btn btn-primary-save">Save</button>
+                            <button type="button" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </div>
+                </form>
         </div>
     </div>
 </div>
