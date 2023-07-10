@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface IContractService {
     Page<Contract> displayList(Pageable pageable);
 
+    Page<Contract> displayListForDirector(Pageable pageable);
+
     String addContract(Contract contract);
 
     void deleteContract(Integer id);

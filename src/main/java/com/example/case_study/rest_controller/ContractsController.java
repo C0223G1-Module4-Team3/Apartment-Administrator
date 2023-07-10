@@ -29,6 +29,15 @@ public class ContractsController {
         return new ResponseEntity<>(pages, HttpStatus.OK);
     }
 
+    @GetMapping("/director/{page}")
+    ResponseEntity<Page<Contract>> displayContractListForDirector(@PageableDefault(size = 3) Pageable pageable, @PathVariable int page) {
+        Page<Contract> pages = contractService.displayListForDirector(pageable.withPage(page));
+        if (pages == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(pages, HttpStatus.OK);
+    }
+
     @PostMapping("/manager-confirm/{id}")
     public ResponseEntity<?> confirmByManager(@PathVariable int id) {
         if (contractService.getContractToManager(id)) {
