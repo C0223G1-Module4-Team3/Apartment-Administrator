@@ -33,21 +33,21 @@ public class ContractController {
     private IEmployeeService employeeService;
 
     @GetMapping("")
-    String displayContractList(Principal principal,Pageable pageable, Model model) {
+    String displayContractList(Principal principal, Pageable pageable, Model model) {
         model.addAttribute("list", contractService.displayList(pageable));
         String userName = principal.getName();
         Employee employee = employeeService.findByPhone(userName);
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUltils.toString(loginedUser);
         model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
-        return "/displayContractList";
+        return "/contract/displayContractList";
     }
 
     @GetMapping("/create")
     String addContract(Model model) {
         model.addAttribute("contractCreationDto", new ContractCreationDto());
         model.addAttribute("kindContracts", kindContractService.getList());
-        return "/createContract";
+        return "/contract/createContract";
     }
 
     @PostMapping("/create")
@@ -69,7 +69,7 @@ public class ContractController {
     String detailContract(@RequestParam Integer id, Model model, RedirectAttributes redirectAttributes) {
         if (contractService.getContractById(id).isPresent()) {
             model.addAttribute("contract", contractService.getContractById(id).get());
-            return "/detailContract";
+            return "/contract/detailContract";
         }
         redirectAttributes.addFlashAttribute("msg", "can't find");
         return "redirect:/contract";
@@ -82,7 +82,7 @@ public class ContractController {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUltils.toString(loginedUser);
         model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
-        return "acountant";
+        return "/contract/accountant";
     }
 
 

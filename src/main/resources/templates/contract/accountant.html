@@ -65,8 +65,9 @@
               <td>Date</td>
               <td>Kind contract</td>
               <td>Period</td>
-              <td></td>
-              <td></td>
+              <td>Deadline next</td>
+              <td>Detail</td>
+              <td>Pay</td>
             </tr>
             <tbody id="listContract"></tbody>
           </table>
@@ -77,7 +78,7 @@
             let page = 0;
 
 
-            function getContractList() {
+            function getContractLists() {
               $.ajax({
                 url: 'http://localhost:8080/contracts/accountant/' + page,
                 type: 'GET',
@@ -98,13 +99,16 @@
         <td id="dateStart${c.id}">${c.date_start}</td>
         <td>${c.kindContract.name}</td>
         <td>${c.period}</td>
+        <td id="deadline${c.id}"></td>
         <td>
             <form method="post" action="/contract/detail">
                 <input name="id" value="${c.id}" hidden>
                 <button type="submit">Detail</button>
             </form>
         </td>
-        <td id="deadline${c.id}"></td>
+        <td>
+           <button type="button" onclick="pay(${c.id})">Pay</button>
+        </td>
     </tr>
                 `;
 
@@ -147,22 +151,36 @@
 
             }
 
+
+            function pay(id){
+              $.ajax({
+                url: 'http://localhost:8080/payments/pay/' + id,
+                type: 'POST',
+                success: function (data) {
+                  getContractLists();
+                },
+                error: function (error) {
+                  getContractLists(page);
+                }
+              })
+            }
+
             function getPreviousPage() {
               if (page == 0) {
                 return;
               }
               page--;
-              getContractList(page);
+              getContractLists(page);
 
             }
 
             function getNextPage() {
               page++;
-              getContractList(page);
+              getContractLists(page);
             }
 
             $(document).ready(function () {
-              getContractList(page);
+              getContractLists(page);
             })
 
           </script>
