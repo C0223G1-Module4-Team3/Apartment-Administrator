@@ -19,35 +19,21 @@
         </div>
     </div>
     <form th:action="@{/employee/create}" method="post" th:object="${employeeDto}">
-        <!--        Name : <input type="text" th:field="*{name}">-->
-        <!--        Gender : <input type="checkbox" th:field="*{gender}">-->
-        <!--        citizenId : <input type="text" th:field="*{citizenId}">-->
-        <!--        PhoneNumber : <input type="text" th:field="*{phoneNumber}">-->
-        <!--        image : <input type="text" th:field="*{image}">-->
-        <!--        dayOfBirth : <input type="text" th:field="*{dayOfBirth}">-->
-        <!--        <select th:field="*{roles}" >-->
-        <!--            <option th:each="roles, iterStats : ${rolesList}"-->
-        <!--                    th:text="${roles.position}" th:value="${roles.id}"></option>-->
-        <!--        </select>-->
-
         <div class="container">
             <div class="row justify-content-lg-center">
                 <div class="col-12 col-lg-9">
                     <div class="bg-white border rounded shadow-sm overflow-hidden">
-
-                        <!--                    <form th:action="@{employee/create}" method="post" th:object="">-->
                         <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
 
                             <!--                            full name-->
 
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-3">
                                 <label for="fullname" class="form-label">Full Name <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="fullname" value="" required
                                        th:field="*{name}">
                                 <span style="color: darkred" th:if="${#fields.hasErrors('name')}"
                                       th:errors="*{name}"></span>
-                                <!--                                Singer : <input type="text" th:field="*{singer}">-->
                             </div>
 
                             <!--                            age-->
@@ -56,22 +42,19 @@
                                         class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="dayOfBirth" value="" required
                                        th:field="*{dayOfBirth}">
+                                <span style="color: darkred" th:if="${#fields.hasErrors('dayOfBirth')}"
+                                      th:errors="*{dayOfBirth}"></span>
                             </div>
                             <!--                            gender-->
                             <div class="col-12 col-md-3">
                                 <label class="form-label">Gender <span class="text-danger">*</span></label><br>
-                                <input type="radio" name="gender" value="true"
-                                       th:field="*{gender}">Nu<br>
-                                <input type="radio" name="gender" value="false" th:field="*{gender}">Nam
+                                <input type="radio" name="gender" value="false"
+                                       th:field="*{gender}">Nu
+                                <input type="radio" name="gender" value="true" th:field="*{gender}">Nam
                             </div>
-                            <!--                            Address-->
-                            <!--                            <div class="col-12 col-md-6">-->
-                            <!--                                <label for="address" class="form-label">Address <span-->
-                            <!--                                        class="text-danger">*</span></label>-->
-                            <!--                                <input type="text" class="form-control" id="address" value="" required>-->
-                            <!--                            </div>-->
-                            <!--                            part-->
-                            <div class="col-12 col-md-6">
+                            <!--                            citizenId-->
+
+                            <div class="col-12 col-md-3">
                                 <label for="citizenId" class="form-label">Citizen Id <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="citizenId" value="" required
@@ -80,11 +63,10 @@
                                       th:errors="*{citizenId}"></span>
                             </div>
                             <!--                            position-->
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-3">
                                 <label for="position" class="form-label">Position<span
                                         class="text-danger">*</span></label><br>
-                                <!--                            <input type="text" class="form-control" id="position" value="" required>-->
-                                <select th:field="*{position}" id="position">
+                                <select th:field="*{position}" id="position" class="form-control">
                                     <option th:each="position, iterStats : ${positionList}"
                                             th:text="${position.name}" th:value="${position.id}"></option>
                                 </select>
@@ -92,7 +74,7 @@
                             </div>
                             <!--                            email-->
 
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-3">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                                 <div class="input-group">
                   <span class="input-group-text">
@@ -108,7 +90,7 @@
 
                             <!--                            phone-->
 
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-3">
                                 <label for="phone" class="form-label">Phone Number</label>
                                 <div class="input-group">
                   <span class="input-group-text">
@@ -123,18 +105,30 @@
                                           th:errors="*{phoneNumber}"></span>
                                 </div>
                             </div>
-                            <!--citizen id-->
-                            <!--                            <div class="col-12 col-md-3">-->
-                            <!--                                <label for="id" class="form-label">ID<span class="text-danger">*</span></label>-->
-                            <!--                                <input type="text" class="form-control" id="id" value="" required>-->
-                            <!--                            </div>-->
                             <!--                            Image-->
 
-                            <div class="form-group">
+                            <div class="form-group col-12 col-md-3">
                                 <label for="thumbnailURL">Up Image:</label>
                                 <input type="hidden" id="thumbnailURL" th:field="*{image}"/>
-                                <input id="btnThumbnailURL" type="file" class="form-control"/>
+                                <input id="btnThumbnailURL" type="file" name="file" class="form-control"/>
                                 <progress id="uploader" value="0" max="100">0%</progress>
+                            </div>
+<!--                            Image review-->
+                            <div>
+                                <!--                                <input type="file" name="file" />-->
+                                <img src="" id="prev"/>
+                                <script>
+
+                                    var reader = new FileReader();
+                                    reader.onload = function (r_event) {
+                                        document.getElementById('prev').setAttribute('src', r_event.target.result);
+                                    }
+
+                                    document.getElementsByName('file')[0].addEventListener('change', function (event) {
+                                        reader.readAsDataURL(this.files[0]);
+                                    });
+
+                                </script>
                             </div>
                             <!--                            <input type="file" id="photo" th:field="*{image}" /></br>-->
                             <!--                            <button id="upload" onclick="uploadImage()">Upload Image</button>-->

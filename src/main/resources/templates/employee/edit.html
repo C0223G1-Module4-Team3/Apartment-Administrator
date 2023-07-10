@@ -61,9 +61,9 @@
                             <!--                            gender-->
                             <div class="col-12 col-md-3">
                                 <label class="form-label">Gender <span class="text-danger">*</span></label><br>
-                                <input type="radio" name="gender" value="true"
+                                <input type="radio" name="gender" value="false"
                                        th:field="*{gender}">Nu<br>
-                                <input type="radio" name="gender" value="false" th:field="*{gender}">Nam
+                                <input type="radio" name="gender" value="true" th:field="*{gender}">Nam
                             </div>
                             <!--                            Address-->
                             <!--                            <div class="col-12 col-md-6">-->
@@ -220,7 +220,11 @@
                             </div>
                             <div class="col-12 m-1">
                                 <div class="d-grid">
-                                    <button class="btn btn-primary btn-lg" type="submit">Back To Menu</button>
+                                    <button class="btn btn-primary btn-lg" type="submit">
+                                        <a th:href="@{/employee}" style="color: white">
+                                            Back To Menu
+                                        </a>
+                                       </button>
                                 </div>
                             </div>
                         </div>

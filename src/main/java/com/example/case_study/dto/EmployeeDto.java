@@ -7,6 +7,8 @@ import org.springframework.validation.Validator;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class EmployeeDto implements Validator {
     private Integer id;
@@ -140,7 +142,7 @@ public class EmployeeDto implements Validator {
             errors.rejectValue("name", "name", "This is not name");
         }
 //        can cuoc cong dan phai du 8 so
-        if (!employeeDto.getCitizenId().matches("^-?\\d{8}$")) {
+        if (!employeeDto.getCitizenId().matches("^-?\\d{12}$")) {
             errors.rejectValue("citizenId","citizenId","This is not citizen Id");
         }
 //        so dien thoai 10 so, so dau 03,05,07,08,09
@@ -151,5 +153,14 @@ public class EmployeeDto implements Validator {
 //      if (!employeeDto.getEmail().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
 //          errors.rejectValue("email","email","This is not email");
 //      }
+
+        Period age = Period.between(LocalDate.parse(employeeDto.getDayOfBirth()), LocalDate.now()); // Tính độ tuổi
+
+        int years = age.getYears(); // Lấy số năm từ kết quả Period
+
+        if (years < 18) {
+           errors.rejectValue("dayOfBirth","dayOfBirth","You are not old enough to work");
+        }
+
     }
 }

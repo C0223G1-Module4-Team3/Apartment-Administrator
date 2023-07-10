@@ -17,7 +17,7 @@ public interface IEmployeeService {
 
     void editEmployee(Employee employee);
 
-    List<Employee> searchEmployeeByName(String name);
+    Page<Employee> searchEmployeeByName(Pageable pageable,String name,String citizenId, String phoneNumber);
 
     Employee getEmployeeById(int id);
 }
