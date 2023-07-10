@@ -25,7 +25,7 @@ public class Schedule {
     @Autowired
     IPaymentRepository paymentRepository;
 
-    @Scheduled(cron = "0 55 17 * * ?")
+    @Scheduled(cron = "0 41 15 * * ?")
     public void sendWarningEmail() {
         List<Contract> list = new ArrayList<>();
         list = contractRepository.findAllByFlagDeleteIsFalseAndManagerConfirmIsTrueAndDirectorConfirmIsTrue().get();

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 
 @Controller
@@ -32,7 +33,7 @@ public class ContractController {
     private IEmployeeService employeeService;
 
     @GetMapping("")
-    String displayContractList(Principal principal,Pageable pageable, Model model) {
+    String displayContractList(Principal principal, Pageable pageable, Model model) {
         model.addAttribute("list", contractService.displayList(pageable));
         String userName = principal.getName();
         Employee employee = employeeService.findByPhone(userName);
@@ -81,7 +82,7 @@ public class ContractController {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUltils.toString(loginedUser);
         model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
-        return "/contract/acountant";
+        return "/contract/accountant";
     }
 
 

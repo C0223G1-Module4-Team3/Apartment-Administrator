@@ -21,6 +21,6 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
     List<Contract> findAllByFlagDeleteFalseAndManagerConfirmIsTrueAndDirectorConfirmIsTrue();
 
     List<Contract> findAllByFlagDeleteFalse();
- }
+
     Optional<List<Contract>> findAllByFlagDeleteIsFalseAndManagerConfirmIsTrueAndDirectorConfirmIsTrue();
 }
