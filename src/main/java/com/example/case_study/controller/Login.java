@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,13 +41,15 @@ public class Login {
     private IRoomService roomService;
 
     @GetMapping("/login")
-    public String formLogin(@RequestParam(value = "error",required = false) boolean error, Model model) {
-        if (error){
-           model.addAttribute("msg","Incorrect password or phone number");
-           return "login";
+    public String formLogin(@RequestParam(value = "error", required = false) boolean error, Model model) {
+        if (error) {
+            model.addAttribute("msg", "Incorrect password or phone number");
+            return "login";
         }
-        model.addAttribute("accountUser", new AccountUser());
-        model.addAttribute("accountDto",new AccountUserDto());
+        String authentication = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!"anonymousUser".equals(authentication)) {
+            return "redirect:/dashboard";
+        }
         return "login";
     }
 
@@ -56,14 +59,13 @@ public class Login {
     }
 
     @GetMapping("/dashboard")
-    public String userInfo(Model model, Principal principal, @PageableDefault Pageable pageable) {
+    public String userInfo(Model model, Principal principal) {
         // Sau khi user login thanh cong se co principal
         String userName = principal.getName();
-        System.out.println("User Name: " + userName);
-        Employee employee =employeeService.findByPhone(userName);
+        Employee employee = employeeService.findByPhone(userName);
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUltils.toString(loginedUser);
-        model.addAttribute("employeeDetails",this.employeeService.findByPhone(userName));
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         model.addAttribute("userInfo", userInfo);
         model.addAttribute("employee", this.employeeService.displayEmployeeHome());
         model.addAttribute("customer", this.customerService.displayListCustomer());

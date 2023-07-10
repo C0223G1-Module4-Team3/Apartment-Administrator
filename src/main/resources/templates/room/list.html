@@ -1,5 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,19 +86,19 @@
               <td th:text="${room.bedroom}"></td>
               <td th:text="${room.area}"></td>
               <td>
-                <a th:href="@{/room/detail/{id}(id=${room.getId()})}">
+                <a sec:authorize="hasAnyRole('Director','ApartmentManager')" th:href="@{/room/detail/{id}(id=${room.getId()})}">
                   Detail
                 </a>
               </td>
               <td>
-                <a th:href="@{/room/update/{id}(id=${room.getId()})}" class="btn btn-primary"
+                <a sec:authorize="hasAnyRole('Director','ApartmentManager')" th:href="@{/room/update/{id}(id=${room.getId()})}" class="btn btn-primary"
                    title="Edit">
                   <i
                           class="fa-regular fa-pen-to-square"></i>
                 </a>
               </td>
               <td>
-                <a th:href="@{/room/maintenance/{id}(id=${room.getId()})}"
+                <a sec:authorize="hasAnyRole('Director','ApartmentManager')" th:href="@{/room/maintenance/{id}(id=${room.getId()})}"
                    class="btn btn-danger" title="Maintenance">
                   <i class="fas fa-wrench"></i>
                 </a>
