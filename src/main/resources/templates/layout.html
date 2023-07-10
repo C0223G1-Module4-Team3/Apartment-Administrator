@@ -164,7 +164,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/contract}" class="nav-link">
+                        <a sec:authorize="hasRole('Director')" th:href="@{/contract/director}" class="nav-link">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <p>Contracts</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="hasRole('SaleManager')" th:href="@{/contract/manager}" class="nav-link">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <p>Contracts</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="hasAnyRole('Business','HR','ApartmentManager')" th:href="@{/contract}" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>Contracts</p>
                         </a>
