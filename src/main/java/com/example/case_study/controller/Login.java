@@ -68,7 +68,7 @@ public class Login {
         model.addAttribute("employee", this.employeeService.displayEmployeeHome());
         model.addAttribute("customer", this.customerService.displayListCustomer());
         model.addAttribute("contract", this.contractService.findContractHome());
-        model.addAttribute("room", this.roomService.display());
+        model.addAttribute("room", this.roomService.findAll());
         model.addAttribute("maleCustomer", this.customerService.showMaleCustomer());
         model.addAttribute("femaleCustomer", this.customerService.showFemaleCustomer());
         model.addAttribute("maleEmployee", this.employeeService.showMaleEmployee());
