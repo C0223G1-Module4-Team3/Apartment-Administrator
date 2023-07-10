@@ -17,12 +17,44 @@ public class DetailRoom {
     private Facility facility;
 
     private Integer amount;
+    @Column(name = "is_flag_delete", columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean isFlagDelete;
+
+    public DetailRoom(Integer id, Room room, Facility facility, Integer amount, Boolean isFlagDelete) {
+        this.id = id;
+        this.room = room;
+        this.facility = facility;
+        this.amount = amount;
+        this.isFlagDelete = isFlagDelete;
+    }
+
+    public DetailRoom(Room room, Facility facility, Integer amount, Boolean isFlagDelete) {
+        this.room = room;
+        this.facility = facility;
+        this.amount = amount;
+        this.isFlagDelete = isFlagDelete;
+    }
 
     public DetailRoom(Integer id, Room room, Facility facility, Integer amount) {
         this.id = id;
         this.room = room;
         this.facility = facility;
         this.amount = amount;
+    }
+
+    public boolean isFlagDelete() {
+        return isFlagDelete;
+    }
+
+    public void setFlagDelete(boolean flagDelete) {
+        isFlagDelete = flagDelete;
+    }
+
+    public DetailRoom(Room room, Facility facility, Integer amount, boolean isFlagDelete) {
+        this.room = room;
+        this.facility = facility;
+        this.amount = amount;
+        this.isFlagDelete = isFlagDelete;
     }
 
     public DetailRoom(Room room, Facility facility, Integer amount) {
@@ -69,6 +101,14 @@ public class DetailRoom {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getFlagDelete() {
+        return isFlagDelete;
+    }
+
+    public void setFlagDelete(Boolean flagDelete) {
+        isFlagDelete = flagDelete;
     }
 }
 

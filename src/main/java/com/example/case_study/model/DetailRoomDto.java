@@ -4,6 +4,14 @@ public class DetailRoomDto {
     private Integer roomId;
     private Integer facilityId;
     private Integer amount;
+    private boolean isFlagDelete;
+
+    public DetailRoomDto(Integer roomId, Integer facilityId, Integer amount, boolean isFlagDelete) {
+        this.roomId = roomId;
+        this.facilityId = facilityId;
+        this.amount = amount;
+        this.isFlagDelete = isFlagDelete;
+    }
 
     public DetailRoomDto() {
     }
@@ -12,6 +20,14 @@ public class DetailRoomDto {
         this.roomId = roomId;
         this.facilityId = facilityId;
         this.amount = amount;
+    }
+
+    public boolean isFlagDelete() {
+        return isFlagDelete;
+    }
+
+    public void setFlagDelete(boolean flagDelete) {
+        isFlagDelete = flagDelete;
     }
 
     public Integer getRoomId() {
