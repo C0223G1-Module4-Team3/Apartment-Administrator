@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
@@ -86,9 +86,9 @@
                 </div>
                 <div class="card-body">
                     <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
-                    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"
-                                                                               th:href="@{/customer/create}"><i
-                            class="fa-solid fa-plus"></i></a></button>
+<!--                    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"-->
+<!--                                                                               th:href="@{/customer/create}"><i-->
+<!--                            class="fa-solid fa-plus"></i></a></button>-->
                     <form action="/customer/search" method="get">
                         <div class="form-group row">
                             <div class="col-md-3">
@@ -120,7 +120,7 @@
                             <th>Gender</th>
                             <th>Citizen ID</th>
                             <th>Phone</th>
-                            <th>DayOfBirth</th>
+                            <th>Day Of Birth</th>
                             <th>Email</th>
                             <th></th>
                             <th></th>
@@ -148,12 +148,10 @@
                                         class="fa-solid fa-circle-info"></i></a>
                             </td>
                             <td>
-                                <a sec:authorize="hasAnyRole('Director','SaleManager')" th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
+                                <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i
                                         class="fa-regular fa-pen-to-square"></i></a>
-
                             </td>
                             <td>
-                                <a sec:authorize="hasAnyRole('Director','SaleManager')" th:href="@{/customer/delete/{id}(id=${customer.id})}" class="btn btn-danger"><i
                                 <a href="#" class="btn btn-danger" data-toggle="modal"
                                    th:data-target="'#deleteCustomerModal-' + ${customer.id}"><i
                                         class="fa-regular fa-trash-can"></i></a>
