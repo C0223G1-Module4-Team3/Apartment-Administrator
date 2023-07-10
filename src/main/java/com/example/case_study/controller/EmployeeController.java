@@ -6,6 +6,7 @@ import com.example.case_study.service.employee.IEmployeeService;
 import com.example.case_study.service.employee.IPositionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/employee")
@@ -31,7 +33,7 @@ public class EmployeeController {
                                    Model model) {
          model.addAttribute("employees", employeeService.displayListEmployee(pageable));
 
-        return "employee/list";
+        return "employee/el";
     }
 
     @GetMapping("create")
@@ -56,7 +58,7 @@ public class EmployeeController {
         redirectAttributes.addFlashAttribute("message","Create finish");
         return "redirect:/employee";
     }
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteEmployee(@PathVariable int id,RedirectAttributes redirectAttributes){
         if (employeeService.deleteEmployee(id)){
             redirectAttributes.addFlashAttribute("message", "Xoá Thành công");
@@ -89,5 +91,11 @@ public class EmployeeController {
         employeeService.editEmployee(employee);
         redirectAttributes.addFlashAttribute("message","Fixed");
                 return "redirect:/employee";
+    }
+    @PostMapping("/search")
+    public String search(@RequestParam("name") String name,@RequestParam("citizenId") String citizenId,@RequestParam("phoneNumber") String phoneNumber,Pageable pageable,Model model){
+        Page<Employee> employees = employeeService.searchEmployeeByName(pageable, name,citizenId,phoneNumber);
+        model.addAttribute("employees",employees);
+        return "employee/el";
     }
 }

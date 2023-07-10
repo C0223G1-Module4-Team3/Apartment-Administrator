@@ -2,42 +2,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Page Quản Trị</title>
+    <title>cinema</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-
-         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="/css/adminlte.min.css">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-<nav th:replace="/layout :: navbar"></nav>
-<aside th:replace="/layout :: sidebar"></aside>
-<div class="col-12 d-flex">
-    <div style="height: 50%">
-        <button class="bg-primary" style="height: 38px;width: 200px"><a style="color: white" th:href="@{/employee/create}">Create New Employee</a></button>
-    </div>
-    <!--search by name-->
-    <div class="input-group "style="border-radius:25px;height: 50% ">
-        <button name="search" type="submit" class="bg-primary" style="-moz-border-radius-bottomright: 25px;-moz-border-radius-topright: 25px">Search</button>
-        <input type="text" class="form-control" id="search" placeholder="Input Name">
 
-    </div>
-<!--    search by citizen id-->
-    <div class="input-group " style="border-radius:25px;height: 50% ">
-        <button name="searchId" type="submit" class="bg-primary" style="-moz-border-radius-bottomright: 25px;-moz-border-radius-topright: 25px">Search</button>
-        <input type="text" class="form-control" id="searchId" placeholder="Input Citizen Id ">
-
-    </div>
-</div>
 
 
 <h1 class="bg-primary " style="text-align: center">Employee List</h1>
 <p style="color: #4CAF50" th:text="${message}"></p>
+<div class="col-12 d-flex">
+    <!--Create-->
+    <div style="height: 50%">
+        <button class="bg-primary" style="height: 38px;width: 200px"><a style="color: white" th:href="@{/employee/create}">Create New Employee</a></button>
+    </div>
+    <!--search-->
+    <form th:action="@{/employee/search}" method="post" th:object="${employeeDto}">
+        <div class="input-group "style="border-radius:25px;height: 50% ">
+            <button name="search" type="submit" class="bg-primary" >Search</button>
+            <!--search by name-->
+            <input type="text" class="form-control" id="name" name="name" placeholder="Input Name">
+            <!--search by Citizen Id-->
+            <input type="text" class="form-control" id="citizenId" name="citizenId" placeholder="Input Citizen Id ">
+            <!--search by Phone Number-->
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Input Phone Number ">
+        </div>
+    </form>
+
+
+</div>
 <table class="table align-middle mb-0 bg-white">
     <thead class="bg-light">
     <tr class="bg-success">
@@ -51,14 +45,9 @@
     </thead>
     <tbody>
     <tr th:each="employee,look: ${employees}">
-        <!--        stt-->
-        <!--        <td th:text="${look.count}"></td>-->
-        <!--Name-->
+        <!--Name & mail & Image-->
         <td>
             <div class="d-flex align-items-center">
-                <!--image-->
-                <!--                src="https://mdbootstrap.com/img/new/avatars/8.jpg"-->
-
                 <img th:src="${employee.image}"
                      alt=""
                      style="width: 45px; height: 45px"
@@ -72,21 +61,19 @@
                 </div>
             </div>
         </td>
-        <!--tittle-->
+        <!--Id & birth day-->
         <td>
 
-            <!--part-->
+            <!--citizenId-->
             <p class="fw-normal mb-1" th:text="${employee.citizenId}"></p>
-            <!--specialize-->
+            <!--dayOfBirth-->
             <p class="text-muted mb-0" th:text="${employee.dayOfBirth}">IT department</p>
         </td>
         <!--Phone-->
         <td th:text="${employee.phoneNumber}">
-<!--                        <span class="badge badge-success rounded-pill d-inline bg-primary">Active</span>-->
-<!--                        <p th:text="${employee.employeeNumber}"></p>-->
         </td>
         <!--Position-->
-            <td th:text="${employee.position.name}"></td>
+        <td th:text="${employee.position.name}"></td>
         <!--Action-->
         <td>
             <button type="button" class="btn btn-link btn-sm btn-rounded">
@@ -98,7 +85,7 @@
         </td>
     </tr>
     </tbody>
-    <footer th:replace="/layout::footer"></footer>
+
 </table>
 <tr>
     <a th:if="${employees.hasPrevious()}"
@@ -107,12 +94,5 @@
     <a th:if="${employees.hasNext()}"
        th:href="@{/employee(page=${employees.number+1})}">Next</a>
 </tr>
-<script src="/js/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/js/demo.js"></script>
 </body>
 </html>
