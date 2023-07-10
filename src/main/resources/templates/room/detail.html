@@ -92,7 +92,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Thiết bị của phòng</h3>
+                    <h3 class="card-title">Facility in room</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -138,15 +138,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-12 col-md-12 col-lg-12"
-                                 style="background-color: #FFFFFF;text-align:right;position: relative;">
-                                <button class="btn btn-primary" title="Create or Update Facility" data-bs-toggle="modal"
-                                        data-bs-target="#createFacilityModal">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
                         <!--          viet bảng ở đây-->
                         <table class="table table-bordered" id="tableStudent"
                                style="width:100%;background-color: #dee6ee">
@@ -157,8 +148,6 @@
                                 <th>People Limit</th>
                                 <th>Bedroom</th>
                                 <th>Area</th>
-                                <th>Update</th>
-                                <th>Set Maintenance</th>
                             </tr>
                             </thead>
                             <tbody style="background-color: #F9F9FA">
@@ -168,22 +157,31 @@
                                 <td th:text="${detailRoom.maxPeople}"></td>
                                 <td th:text="${detailRoom.bedroom} +'pieces'"></td>
                                 <td th:text="${detailRoom.area} +'m²'"></td>
-                                <td>
-                                    <a th:href="@{/room/update/{id}(id=${detailRoom.getId()})}" class="btn btn-primary"
-                                       title="Edit">
-                                        <i
-                                                class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a th:href="@{/room/maintenance/{id}(id=${detailRoom.getId()})}"
-                                       class="btn btn-danger" title="Maintenance">
-                                        <i class="fas fa-wrench"></i>
-                                    </a>
-                                </td>
+<!--                                <td>-->
+<!--                                    <a th:href="@{/room/update/{id}(id=${detailRoom.getId()})}" class="btn btn-primary"-->
+<!--                                       title="Edit">-->
+<!--                                        <i-->
+<!--                                                class="fa-regular fa-pen-to-square"></i>-->
+<!--                                    </a>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <a th:href="@{/room/maintenance/{id}(id=${detailRoom.getId()})}"-->
+<!--                                       class="btn btn-danger" title="Maintenance">-->
+<!--                                        <i class="fas fa-wrench"></i>-->
+<!--                                    </a>-->
+<!--                                </td>-->
                             </tr>
                             </tbody>
                         </table>
+                        <div class="form-group row">
+                            <div class="col-12 col-md-12 col-lg-12"
+                                 style="background-color: #FFFFFF;text-align:right;position: relative;">
+                                <button class="btn btn-primary" title="Create or Update Facility" data-bs-toggle="modal"
+                                        data-bs-target="#createFacilityModal">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
                         <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
                             <thead style="background-color: #FFFFFF">
                             <th>STT</th>
