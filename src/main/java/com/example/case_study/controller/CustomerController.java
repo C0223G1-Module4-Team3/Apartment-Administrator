@@ -1,15 +1,14 @@
 package com.example.case_study.controller;
 
 import com.example.case_study.dto.CustomerDto;
+import com.example.case_study.dto.EmployeeDto;
 import com.example.case_study.model.Customer;
-import com.example.case_study.service.IAccountService;
 import com.example.case_study.service.customer.ICustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -78,6 +77,7 @@ public class CustomerController {
 
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("customer", customerDto);
             return "customer/add";
