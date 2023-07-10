@@ -2,12 +2,14 @@ package com.example.case_study.controller;
 
 import com.example.case_study.dto.CustomerDto;
 import com.example.case_study.model.Customer;
+import com.example.case_study.service.IAccountService;
 import com.example.case_study.service.customer.ICustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,13 +26,13 @@ public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
+
     @GetMapping("")
     public String display(Model model, @PageableDefault(size = 6, sort = "name") Pageable pageable) {
         Page<Customer> customers = customerService.display(pageable);
         model.addAttribute("customers", customers);
         return "/customer/list";
     }
-
     @GetMapping("/create")
     public String showFormCreate(Model model) {
         CustomerDto customer = new CustomerDto();

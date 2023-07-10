@@ -2,11 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>cinema</title>
+    <title>Page Quản Trị</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/adminlte.min.css">
 </head>
 <body>
+<nav th:replace="/layout :: navbar"></nav>
+<aside th:replace="/layout :: sidebar"></aside>
 <div class="col-12 d-flex">
     <div style="height: 50%">
         <button class="bg-primary" style="height: 38px;width: 200px"><a style="color: white" th:href="@{/employee/create}">Create New Employee</a></button>
@@ -76,7 +86,7 @@
 <!--                        <p th:text="${employee.employeeNumber}"></p>-->
         </td>
         <!--Position-->
-        <td th:text="${employee.position.name}"></td>
+            <td th:text="${employee.position.name}"></td>
         <!--Action-->
         <td>
             <button type="button" class="btn btn-link btn-sm btn-rounded">
@@ -88,7 +98,7 @@
         </td>
     </tr>
     </tbody>
-
+    <footer th:replace="/layout::footer"></footer>
 </table>
 <tr>
     <a th:if="${employees.hasPrevious()}"
@@ -97,5 +107,12 @@
     <a th:if="${employees.hasNext()}"
        th:href="@{/employee(page=${employees.number+1})}">Next</a>
 </tr>
+<script src="/js/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/js/demo.js"></script>
 </body>
 </html>

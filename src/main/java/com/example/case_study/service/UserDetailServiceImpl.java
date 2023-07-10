@@ -18,23 +18,24 @@ import java.util.List;
 public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     private IAccountRepository accountRepository;
+
     @Override
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
         AccountUser accountUser = this.accountRepository.findAccountUserByPhone(phone);
-        if (accountUser == null){
+        if (accountUser == null) {
             System.out.println("User not found " + phone);
-            throw new UsernameNotFoundException("User " + phone +" was not found in the database");
+            throw new UsernameNotFoundException("User was not found in the database");
         }
         System.out.println("Found User: " + phone);
         List<AccountUser> userList = this.accountRepository.findByPhone(phone);
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        if (userList != null){
+        if (userList != null) {
             for (AccountUser user : userList) {
-                GrantedAuthority authority = new SimpleGrantedAuthority(user.getRoleUser().getName());
+                GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRoleUser().getName());
                 authorityList.add(authority);
             }
         }
-        return (UserDetails) new User(accountUser.getPhone(),accountUser.getPassword(),authorityList);
+        return (UserDetails) new User(accountUser.getPhone(), accountUser.getPassword(), authorityList);
     }
 
 }

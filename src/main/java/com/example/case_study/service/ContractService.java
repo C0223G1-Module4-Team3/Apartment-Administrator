@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -94,5 +95,20 @@ public class ContractService implements IContractService {
     @Override
     public Page<Contract> getListToAccountant(Pageable pageable) {
         return contractRepository.findAllByFlagDeleteIsFalseAndManagerConfirmIsTrueAndDirectorConfirmIsTrue(pageable);
+    }
+
+    @Override
+    public List<Contract> findSuccessContract() {
+        return contractRepository.findAllByFlagDeleteFalseAndManagerConfirmIsTrueAndDirectorConfirmIsTrue();
+    }
+
+    @Override
+    public List<Contract> findNotSuccessContract() {
+        return contractRepository.findAllByFlagDeleteFalseAndManagerConfirmIsFalseOrDirectorConfirmIsFalse();
+    }
+
+    @Override
+    public List<Contract> findContractHome() {
+        return contractRepository.findAllByFlagDeleteFalse();
     }
 }

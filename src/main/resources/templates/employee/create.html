@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Page Quản Trị</title>
     <link rel="stylesheet" href="https://unpkg.com/bs-brain/bsb.css"/>
 </head>
 <body>
@@ -19,17 +19,6 @@
         </div>
     </div>
     <form th:action="@{/employee/create}" method="post" th:object="${employeeDto}">
-        <!--        Name : <input type="text" th:field="*{name}">-->
-        <!--        Gender : <input type="checkbox" th:field="*{gender}">-->
-        <!--        citizenId : <input type="text" th:field="*{citizenId}">-->
-        <!--        PhoneNumber : <input type="text" th:field="*{phoneNumber}">-->
-        <!--        image : <input type="text" th:field="*{image}">-->
-        <!--        dayOfBirth : <input type="text" th:field="*{dayOfBirth}">-->
-        <!--        <select th:field="*{roles}" >-->
-        <!--            <option th:each="roles, iterStats : ${rolesList}"-->
-        <!--                    th:text="${roles.position}" th:value="${roles.id}"></option>-->
-        <!--        </select>-->
-
         <div class="container">
             <div class="row justify-content-lg-center">
                 <div class="col-12 col-lg-9">
