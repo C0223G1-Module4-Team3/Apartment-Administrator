@@ -32,6 +32,11 @@ public class ContractService implements IContractService {
     }
 
     @Override
+    public Page<Contract> displayListForDirector(Pageable pageable) {
+        return contractRepository.findAllByFlagDeleteIsFalseAndManagerConfirmIsTrue(pageable);
+    }
+
+    @Override
     public String addContract(Contract contract) {
         contractRepository.save(contract);
         return "create contract successful";

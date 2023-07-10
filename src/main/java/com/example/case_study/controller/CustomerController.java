@@ -1,6 +1,7 @@
 package com.example.case_study.controller;
 
 import com.example.case_study.dto.CustomerDto;
+import com.example.case_study.dto.EmployeeDto;
 import com.example.case_study.model.Customer;
 import com.example.case_study.model.Employee;
 import com.example.case_study.service.IAccountService;
@@ -65,7 +66,12 @@ public class CustomerController {
         }
     }
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable int id, Model model) {
+    public String detail(@PathVariable int id, Model model,Principal principal) {
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         Customer customer = customerService.showCustomerEdit(id);
         if (customer == null) {
             model.addAttribute("msg", "ID not found.  ");
@@ -91,6 +97,7 @@ public class CustomerController {
 
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("customer", customerDto);
             return "customer/add";
@@ -145,12 +152,17 @@ public class CustomerController {
     }
 
     @GetMapping("/search")
-    public String search(Model model, @PageableDefault(size = 6) Pageable pageable,
+    public String search(Principal principal, Model model, @PageableDefault(size = 6) Pageable pageable,
                          @RequestParam(value = "name", defaultValue = "")
                          String name, @RequestParam(value = "phoneNumber", defaultValue = "") String phoneNumber,
                          @RequestParam(value = "citizenId", defaultValue = "") String citizenId) {
         Page<Customer> customers = customerService.search(pageable, name, phoneNumber, citizenId);
         model.addAttribute("customers", customers);
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "customer/list";
     }
 }
