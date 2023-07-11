@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Customer information</title>
@@ -70,7 +71,7 @@
             <div class="row">
                 <h4 class="col-9">Customer information</h4>
                 <div class="col-3">
-                    <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary">Update</a>
+                    <a sec:authorize="hasAnyRole('Director','SaleManager')" th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary">Update</a>
                 </div>
 
             </div>

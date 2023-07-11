@@ -3,10 +3,12 @@ package com.example.case_study.controller;
 import com.example.case_study.dto.AccountUserDto;
 import com.example.case_study.model.AccountUser;
 import com.example.case_study.model.Employee;
+import com.example.case_study.repository.IFacilityRepository;
 import com.example.case_study.service.IAccountService;
 import com.example.case_study.service.IContractService;
 import com.example.case_study.service.customer.ICustomerService;
 import com.example.case_study.service.employee.IEmployeeService;
+import com.example.case_study.service.facility.IFacilityService;
 import com.example.case_study.service.room.IRoomService;
 import com.example.case_study.untils.WebUltils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class Login {
 
     @Autowired
     private IRoomService roomService;
+
+    @Autowired
+    private IFacilityService facilityService;
 
     @GetMapping("/login")
     public String formLogin(@RequestParam(value = "error", required = false) boolean error, Model model) {
@@ -77,6 +82,8 @@ public class Login {
         model.addAttribute("femaleEmployee", this.employeeService.showFemaleEmployee());
         model.addAttribute("contractTrue", this.contractService.findSuccessContract());
         model.addAttribute("contractFail", this.contractService.findNotSuccessContract());
+        model.addAttribute("maintenance",this.roomService.findRoomByMaintenance());
+        model.addAttribute("facility",this.facilityService.display());
         return "home";
     }
 
