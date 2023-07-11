@@ -3,37 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <title>Update room</title>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .form-container {
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 50px;
+            margin-left: 10px;
+            width: 1000px;
+            height: 500px;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            margin-bottom: 10px;
+            margin-top: 50px;
+        }
+
+        #success {
+            position: fixed;
+            right: 1em;
+        }
+
+        .form-group label {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        .form-group .btn {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+            color: #fff;
+        }
+
+        .btn-default {
+            background-color: #fff;
+            border-color: #ccc;
+            color: #333;
+        }
+
+        .btn-default:hover {
+            background-color: #f5f5f5;
+            border-color: #adadad;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h2>Update Room</h2>
-    <form th:action="@{/room/update}" method="post" th:object="${room}">
-        <input type="text" th:field="*{id}" hidden>
-        <div class="form-group">
-            <label for="floor">Floor:</label>
-            <input type="number" class="form-control" id="floor" th:field="*{floor}" min="1">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="form-container">
+                <h2>Update Room</h2>
+                <form th:action="@{/room/update}" method="post" th:object="${room}">
+                    <input type="text" th:field="*{id}" hidden>
+                    <div class="form-group">
+                        <label for="floor">Floor:</label>
+                        <input type="number" class="form-control" id="floor" th:field="*{floor}" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        <input type="number" class="form-control" id="price" th:field="*{price}" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxPeople">Max People:</label>
+                        <input type="number" class="form-control" id="maxPeople" th:field="*{maxPeople}" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="bedroom">Bedroom:</label>
+                        <input type="number" class="form-control" id="bedroom" th:field="*{bedroom}" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="area">Area:</label>
+                        <input type="number" class="form-control" id="area" th:field="*{area}" min="1">
+                    </div>
+                    <div class="form-group">
+                        <a th:href="@{/room}" class="btn btn-default">Back</a>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="price">Price:</label>
-            <input type="number" class="form-control" id="price" th:field="*{price}" min="1">
-        </div>
-        <div class="form-group">
-            <label for="maxPeople">Max People:</label>
-            <input type="number" class="form-control" id="maxPeople" th:field="*{maxPeople}" min="1">
-        </div>
-        <div class="form-group">
-            <label for="bedroom">Bedroom:</label>
-            <input type="number" class="form-control" id="bedroom" th:field="*{bedroom}" min="1">
-        </div>
-        <div class="form-group">
-            <label for="area">Area:</label>
-            <input type="number" class="form-control" id="area" th:field="*{area}" min="1">
-        </div>
-        <a th:href="@{/room}" class="btn btn-default">Back</a>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>

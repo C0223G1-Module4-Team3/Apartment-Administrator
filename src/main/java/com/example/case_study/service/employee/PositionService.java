@@ -11,7 +11,7 @@ public class PositionService implements IPositionService {
     @Autowired
     private IPositionRepository positionRepository;
     @Override
-    public List<Position> displayListRole() {
+    public List<Position> displayListPosition() {
         return positionRepository.findAll();
     }
 }

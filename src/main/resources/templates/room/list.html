@@ -86,7 +86,7 @@
                             <td th:text="${room.bedroom}"></td>
                             <td th:text="${room.area}"></td>
                             <td>
-                                <a th:href="@{/room/detail/{id}(id=${room.getId()})}" class="btn btn-primary"
+                                <a sec:authorize="hasAnyRole('Director','ApartmentManager')" th:href="@{/room/detail/{id}(id=${room.getId()})}" class="btn btn-primary"
                                    title="Detail">
                                     <i
                                             class="fa-solid fa-circle-info"></i>
@@ -153,7 +153,6 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    Footer
                 </div>
                 <!-- /.card-footer-->
             </div>

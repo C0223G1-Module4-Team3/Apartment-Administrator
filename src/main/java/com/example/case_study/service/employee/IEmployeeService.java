@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IEmployeeService {
+    List<Employee>displayListEmployee();
     Page<Employee> displayListEmployee(Pageable pageable);
 
     void createEmployee(Employee employee);
@@ -28,4 +29,6 @@ public interface IEmployeeService {
     List<Employee> showFemaleEmployee();
 
     Employee findByPhone(String phone);
+
+    boolean deleteAccount(int id );
 }

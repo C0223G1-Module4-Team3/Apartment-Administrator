@@ -9,21 +9,36 @@ public class AccountUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String phone;
+    private String phoneNumber;
     @JsonIgnore
     private String password;
     @ManyToOne
     private RoleUser roleUser;
 
+    private boolean status;
+
     public AccountUser() {
     }
 
-    public AccountUser(Integer id, String email, String passwords, RoleUser roleUser) {
+    public AccountUser(Integer id, String phoneNumber, String password, RoleUser roleUser, boolean flagDatele) {
         this.id = id;
-        this.phone = email;
-        this.password = passwords;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
         this.roleUser = roleUser;
+        this.status = flagDatele;
+    }
 
+    public AccountUser(String phone, String password) {
+        this.phoneNumber = phone;
+        this.password = password;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean flagDatele) {
+        this.status = flagDatele;
     }
 
     public Integer getId() {
@@ -34,12 +49,12 @@ public class AccountUser {
         this.id = id;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String email) {
-        this.phone = email;
+    public void setPhoneNumber(String email) {
+        this.phoneNumber = email;
     }
 
     public String getPassword() {
