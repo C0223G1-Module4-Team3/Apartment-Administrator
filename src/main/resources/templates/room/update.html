@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update room</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Update Room</h2>
+    <form th:action="@{/room/update}" method="post" th:object="${room}">
+        <input type="text" th:field="*{id}" hidden>
+        <div class="form-group">
+            <label for="floor">Floor:</label>
+            <input type="number" class="form-control" id="floor" th:field="*{floor}" min="1">
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" class="form-control" id="price" th:field="*{price}" min="1">
+        </div>
+        <div class="form-group">
+            <label for="maxPeople">Max People:</label>
+            <input type="number" class="form-control" id="maxPeople" th:field="*{maxPeople}" min="1">
+        </div>
+        <div class="form-group">
+            <label for="bedroom">Bedroom:</label>
+            <input type="number" class="form-control" id="bedroom" th:field="*{bedroom}" min="1">
+        </div>
+        <div class="form-group">
+            <label for="area">Area:</label>
+            <input type="number" class="form-control" id="area" th:field="*{area}" min="1">
+        </div>
+        <a th:href="@{/room}" class="btn btn-default">Back</a>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

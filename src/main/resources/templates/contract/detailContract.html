@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page Quản Trị</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body class="hold-transition sidebar-mini">
+
+<div class="wrapper">
+
+    <nav th:replace="/layout :: navbar"></nav>
+    <aside th:replace="/layout :: sidebar"></aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/logout}">Logout</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+<div class="container" style="background-color: white">
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th colspan="2" style="text-align: center">Customer</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td th:text="${contract.customer.name}"></td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td id="genderC" th:text="${contract.customer.gender}"></td>
+                </tr>
+                <tr>
+                    <td>Citizen Id</td>
+                    <td th:text="${contract.customer.citizenId}"></td>
+                </tr>
+                <tr>
+                    <td>Day of birth</td>
+                    <td th:text="${contract.customer.dayOfBirth}"></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td th:text="${contract.customer.email}"></td>
+                </tr>
+                <tr>
+                    <td>Phone number</td>
+                    <td th:text="${contract.customer.phoneNumber}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th colspan="2" style="text-align: center">Contract</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Date start</td>
+                    <td id="dateStart" th:text="${contract.date_start}"></td>
+                </tr>
+                <tr>
+                    <td>Kind of contract</td>
+                    <td id="kindContract" th:text="${contract.kindContract.name}"></td>
+                </tr>
+                <tr>
+                    <td>Period</td>
+                    <td id="period" th:text="${contract.period}"></td>
+                </tr>
+                <tr>
+                    <td>Date end</td>
+                    <td id="dateEnd"></td>
+                </tr>
+                <tr>
+                    <td>Manager confirm</td>
+                    <td id="managerConfirm" th:text="${contract.managerConfirm}"></td>
+                </tr>
+                <tr>
+                    <td>Director confirm</td>
+                    <td id="directorConfirm" th:text="${contract.directorConfirm}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th colspan="2" style="text-align: center">Employee</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td th:text="${contract.employee.name}"></td>
+                </tr>
+                <tr>
+                    <td>Gender</td>
+                    <td id="genderE" th:text="${contract.employee.gender}"></td>
+                </tr>
+                <tr>
+                    <td>Citizen Id</td>
+                    <td th:text="${contract.employee.citizenId}"></td>
+                </tr>
+                <tr>
+                    <td>Day of birth</td>
+                    <td th:text="${contract.employee.dayOfBirth}"></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td th:text="${contract.employee.email}"></td>
+                </tr>
+                <tr>
+                    <td>Phone number</td>
+                    <td th:text="${contract.employee.phoneNumber}"></td>
+                </tr>
+                <tr>
+                    <td>Position</td>
+                    <td th:text="${contract.employee.position.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6" style="text-align: center">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th colspan="2" style="text-align: center">Room</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Room ID</td>
+                    <td th:text="${contract.room.id}"></td>
+                </tr>
+                <tr>
+                    <td>Price per month</td>
+                    <td th:text="${contract.room.price}"></td>
+                </tr>
+                <tr>
+                    <td>Area</td>
+                    <td th:text="${contract.room.area}"></td>
+                </tr>
+                <tr>
+                    <td>Numbers of bedroom</td>
+                    <td th:text="${contract.room.bedroom}"></td>
+                </tr>
+                <tr>
+                    <td>Floor</td>
+                    <td th:text="${contract.room.floor}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>

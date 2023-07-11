@@ -6,6 +6,8 @@ import org.springframework.validation.Validator;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class CustomerDto implements Validator {
     private Integer id;
@@ -126,6 +128,11 @@ public class CustomerDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+        CustomerDto customerDto= (CustomerDto) target;
+        Period age = Period.between(LocalDate.parse(customerDto.getDayOfBirth()), LocalDate.now()); // Tính độ tuổi
+        int years = age.getYears(); // Lấy số năm từ kết quả Period
+        if (years < 16) {
+            errors.rejectValue("dayOfBirth","dayOfBirth","Customers must be 16 years or older! ");
+        }
     }
 }

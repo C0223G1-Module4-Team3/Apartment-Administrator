@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+
 @Controller
-public class FacilityService implements IFacilityService{
+public class FacilityService implements IFacilityService {
     @Autowired
     private IFacilityRepository facilityRepository;
+
     @Override
     public List<Facility> display() {
         return facilityRepository.findAll();
@@ -17,17 +19,17 @@ public class FacilityService implements IFacilityService{
 
     @Override
     public void save(Facility facility) {
-
+        facilityRepository.save(facility);
     }
 
     @Override
     public void edit(Facility facility) {
-
+        facilityRepository.save(facility);
     }
 
     @Override
     public void delete(Integer id) {
-
+        facilityRepository.isDelete(id);
     }
 
     @Override

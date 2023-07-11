@@ -13,8 +13,18 @@ public class Facility {
     private Integer id;
 
     private String name;
+    @Column(name = "is_flag_delete", columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean isFlagDelete;
 
     public Facility() {
+    }
+
+    public boolean isFlagDelete() {
+        return isFlagDelete;
+    }
+
+    public void setFlagDelete(boolean flagDelete) {
+        isFlagDelete = flagDelete;
     }
 
     public Facility(Integer id, String name) {
