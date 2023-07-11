@@ -131,7 +131,8 @@
     <aside th:fragment="sidebar" class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a th:href="@{/dashboard}" class="brand-link">
-            <span style="text-align: center" class="brand-text font-weight-light">Dream Apartment</span>
+            <img src="/images/img.png" height="50px" width="50px"/>
+            <span style="text-align: center" class="brand-text font-weight-light">Apartment Business</span>
         </a>
 
         <!-- Sidebar -->
@@ -139,7 +140,7 @@
             <!-- Sidebar user (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="info">
-<!--                    <h4 style="color: white"  th:text="${employeeDetails.name}"></h4>-->
+                    <h4 class="brand-text font-weight-light" style="color: white; text-align: center"  th:text="${employeeDetails.name}"></h4>
                 </div>
             </div>
 
@@ -163,7 +164,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/contract}" class="nav-link">
+                        <a sec:authorize="hasRole('Director')" th:href="@{/contract/director}" class="nav-link">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <p>Contracts</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="hasRole('SaleManager')" th:href="@{/contract/manager}" class="nav-link">
+                            <i class="fas fa-circle nav-icon"></i>
+                            <p>Contracts</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="hasAnyRole('Business','HR','ApartmentManager')" th:href="@{/contract}" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>Contracts</p>
                         </a>
@@ -195,8 +208,8 @@
                             <p>Revenue</p>
                         </a>
                     </li>
-                    <li class="nav-header">Users & Permission</li>
-                    <li class="nav-item">
+                    <li sec:authorize="hasRole('Director')" class="nav-header">Users & Permission</li>
+                    <li sec:authorize="hasRole('Director')" class="nav-item">
                         <a th:href="@{/account}" class="nav-link">
                             <i class="fas fa-circle nav-icon"></i>
                             <p>Users</p>

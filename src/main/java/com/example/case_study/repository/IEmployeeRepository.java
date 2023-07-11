@@ -15,7 +15,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
     Employee findById(int id);
 
-    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNull();
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNullAndAccountUserStatusIsFalse();
 
     List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNull();
 

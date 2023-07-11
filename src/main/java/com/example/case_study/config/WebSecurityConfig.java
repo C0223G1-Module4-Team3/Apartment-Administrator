@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .defaultSuccessUrl("/dashboard")//
                 .failureUrl("/login?error=true")//
-                .usernameParameter("phone")//
+                .usernameParameter("phoneNumber")//
                 .passwordParameter("password")
                 // Cấu hình cho Logout Page.
                 .and().logout().logoutUrl("/logout")
