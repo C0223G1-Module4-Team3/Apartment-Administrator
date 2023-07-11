@@ -82,8 +82,8 @@ public class ContractController {
         }
         Contract contract = new Contract();
         BeanUtils.copyProperties(contractCreationDto, contract);
-        contractService.addContract(contract);
-        redirectAttributes.addFlashAttribute("msg", "create successful");
+        String msg = contractService.addContract(contract);
+        redirectAttributes.addFlashAttribute("msg", msg);
         return "redirect:/contract/create";
     }
 

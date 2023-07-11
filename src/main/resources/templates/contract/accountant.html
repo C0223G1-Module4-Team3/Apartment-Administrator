@@ -107,7 +107,41 @@
             </form>
         </td>
         <td>
-           <button type="button" onclick="pay(${c.id})">Pay</button>
+
+            <a href="#" class="btn btn-danger" data-toggle="modal"
+       data-target="#deleteModal-${c.id}">Pay</a>
+
+           <div class="modal fade"
+         id="deleteModal-${c.id}"
+         tabindex="-1" role="dialog"
+         attr="aria-labelledby='deleteCustomerModalLabel-' + ${c.id}"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        attr="id='deleteCustomerModalLabel-' + ${c.id}">Pay</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>Please double check the information before paying, this cannot be undone</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                    </button>
+
+                    <button type="button" onclick="pay(${c.id})" class="btn btn-danger">Pay</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
         </td>
     </tr>
                 `;
@@ -125,6 +159,7 @@
 
             }
             function getPayment(id){
+              $('.modal-backdrop').css("display", "none");
               $.ajax({
                 url: 'http://localhost:8080/payments/'+id,
                 type: 'GET',
@@ -157,6 +192,8 @@
                 url: 'http://localhost:8080/payments/pay/' + id,
                 type: 'POST',
                 success: function (data) {
+                  $('#manager-' + id).modal('toggle');
+                  $('.modal-backdrop').css("display", "none");
                   getContractLists();
                 },
                 error: function (error) {
