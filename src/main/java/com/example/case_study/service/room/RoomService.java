@@ -29,12 +29,12 @@ public class RoomService implements IRoomService{
 
     @Override
     public void edit(Room room) {
-
+        roomRepository.save(room);
     }
 
     @Override
     public void maintenance(Integer id) {
-
+        roomRepository.isDelete(id);
     }
 
     @Override
