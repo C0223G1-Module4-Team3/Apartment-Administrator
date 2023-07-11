@@ -13,4 +13,6 @@ public interface IRoomService {
     void edit(Room room);
     void maintenance(Integer id);
     void maintenanceFinished(Integer id);
+
+    List<Room> findRoomByMaintenance();
 }

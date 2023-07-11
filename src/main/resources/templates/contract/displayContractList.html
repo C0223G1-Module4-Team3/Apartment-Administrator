@@ -75,15 +75,15 @@
 
         <!-- Viết bảng ở đây -->
         <section class="content">
-            <button title="Add new customer" class="btn-primary"><a style="color: white"
-                                                                    th:href="@{/contract/create}"><i
-                    class="fa-solid fa-plus"></i></a></button>
 
 
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-
+                    <button sec:authorize="hasAnyRole('Director','Business','SaleManager')" class="btn btn-primary"
+                            th:href="@{/contract/create}">
+                        <i class="fas fa-plus"></i>
+                    </button>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -210,7 +210,6 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    Footer
                 </div>
                 <!-- /.card-footer-->
             </div>
