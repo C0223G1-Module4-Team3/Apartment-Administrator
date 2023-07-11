@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/employee")
@@ -49,6 +50,29 @@ public class EmployeeController {
             model.addAttribute("positionList", positionService.displayListPosition());
 //            model.addAttribute("employeeDto",employeeDto);
             return "employee/create";
+        }
+        if (employeeDto == null){
+            redirectAttributes.addAttribute("message","Object does not exist. ");
+            return "employee/create";
+        }else {
+            List<Employee>employees = employeeService.displayListEmployee();
+            for (int i = 0; i < employees.size(); i++) {
+                if (employeeDto.getCitizenId().equals(employees.get(i).getCitizenId())){
+                    model.addAttribute("employee",employeeDto);
+                    model.addAttribute("message","ID card already exists");
+                    return "employee/create";
+                }
+                if (employeeDto.getPhoneNumber().equals(employees.get(i).getPhoneNumber())){
+                    model.addAttribute("employee",employeeDto);
+                    model.addAttribute("message","Phone number already exists. ");
+                    return "employee/create";
+                }
+                if (employeeDto.getEmail().equals(employees.get(i).getEmail())){
+                    model.addAttribute("employee",employeeDto);
+                    model.addAttribute("message","Email already exists. ");
+                    return "employee/create";
+                }
+            }
         }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
