@@ -36,6 +36,14 @@
             animation: slideInLeft ease 2s, fadeOut linear 2s 3s forwards;
             transition: all linear 3s;
         }
+        .myButton {
+            border: none;
+            background-color: transparent;
+            padding:10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -103,8 +111,10 @@
                         </tr>
                         <tbody id="listContract"></tbody>
                     </table>
-                    <button onclick="getPreviousPage()">Previous page</button>
-                    <button onclick="getNextPage()">Next page</button>
+
+                    <button class="myButton" onclick="getPreviousPage()">Previous</button>
+                    <button class="myButton" onclick="getNextPage()">Next</button>
+
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
                             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
                             crossorigin="anonymous"></script>
@@ -141,7 +151,7 @@
         <td>
             <form method="post" action="/contract/detail">
                 <input name="id" value="${c.id}" hidden>
-                <button type="submit">Detail</button>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></button>
             </form>
         </td>
 
@@ -167,13 +177,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <p>Do you want to confirm</p>
+                        <p>Please double check the information before confirming, this cannot be undone</p>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
                     </button>
-                    <button onclick="managerConfirm(${c.id})" type="button">Manager confirm</button>
+                    <button onclick="managerConfirm(${c.id})" class="btn btn-danger" type="button" >Manager confirm</button>
 
                 </div>
             </div>
@@ -199,15 +209,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"
-                        attr="id='deleteCustomerModalLabel-' + ${c.id}">Xóa khách
-                        hàng</h5>
+                        attr="id='deleteCustomerModalLabel-' + ${c.id}">Delete contract</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <p>Bạn có chắc chắn muốn xóa khách hàng: </p>
+                        <p>Please double check the information before deleting, this cannot be undone</p>
                     </div>
                 </div>
                 <div class="modal-footer">

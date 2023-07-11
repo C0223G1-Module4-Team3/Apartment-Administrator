@@ -7,12 +7,15 @@ import com.example.case_study.model.Room;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.Min;
+
 public class ContractCreationDto implements Validator {
     private Integer id;
     private Room room;
     private Customer customer;
     private Employee employee;
     private KindContract kindContract;
+    @Min(value = 1, message = "period must > 0")
     private Integer period;
     private String date_start;
     private boolean directorConfirm;
