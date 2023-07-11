@@ -38,7 +38,7 @@ public class CustomerController {
 
 
     @GetMapping("")
-    public String display(Principal principal, Model model, @PageableDefault(size = 6, sort = "name") Pageable pageable) {
+    public String display(Principal principal, Model model, @PageableDefault(size = 6, sort = "id") Pageable pageable) {
         Page<Customer> customers = customerService.display(pageable);
         model.addAttribute("customers", customers);
         String userName = principal.getName();
