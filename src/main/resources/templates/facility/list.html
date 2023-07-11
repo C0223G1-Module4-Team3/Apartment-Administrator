@@ -79,7 +79,7 @@
                             <th>Id</th>
                             <th>Name Facility</th>
                             <th>Update</th>
-                            <th>Set Maintenance</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody style="background-color: #F9F9FA">
@@ -157,23 +157,23 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header"  >
                     <h5 class="modal-title"
                         th:attr="id='deleteModalLabel-' + ${facilityDelete.getId()}">Delete this facility</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure want to delete this facility in room ? </p>
+                <div class="modal-body" style="text-align: center">
+                    <h6>
+                        Are you sure want to delete this facility in room ? </h6>
 
-                    <p style="color: red"
-                       th:text="${facilityDelete.getName()}"></p>
+                    <h5 style="color: red"
+                       th:text="${facilityDelete.getName()}"></h5>
                     </p>
-                    <h2 style="color:red;">This operation cannot be undone! </h2>
+                    <h4 style="color:red;">This operation cannot be undone! </h4>
                 </div>
                 <div class="modal-footer">
                     <form th:action="@{/facility/delete/{id}(id=${facilityDelete.getId()})}" method="post">
-                        <button type="submit" class="btn btn-primary">Delete</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
                     </button>

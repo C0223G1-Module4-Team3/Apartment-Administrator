@@ -130,18 +130,18 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" style="text-align: center">
                                     <p>
                                         Are you sure want to maintenance this room ? </p>
-                                  <span>Have id : </span>
-                                    <h3 style="color: red"
-                                       th:text="${room.getId()}"></h3>
+                                  <h5>Have id : </h5>
+                                    <h5 style="color: red"
+                                       th:text="${room.getId()}"></h5>
                                     </p>
-                                    <h2 style="color:red;">This operation cannot be undone! </h2>
+                                    <h4 style="color:red;">This operation cannot be undone! </h4>
                                 </div>
                                 <div class="modal-footer">
                                     <form th:action="@{/room/maintenance/{id}(id=${room.getId()})}" method="post">
-                                        <button type="submit" class="btn btn-primary">Accept</button>
+                                        <button type="submit" class="btn btn-danger">Accept</button>
                                     </form>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
                                     </button>

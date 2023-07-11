@@ -171,25 +171,24 @@
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" >
                     <h5 class="modal-title"
                         th:attr="id='deleteCustomerModalLabel-' + ${customer.id}">Delete customer</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <p>Are you sure you want to delete the customer: <span style="color: red" th:text="${customer.name}">
-                        </span> id is <span style="color: red" th:text="${customer.id}"> </span> or not?</p>
-                        <p style="color:red;">This operation cannot be undone! </p>
-                    </div>
+                <div class="modal-body" style="text-align: center">
+                        <h6>Are you sure you want to delete the customer:</h6>
+                            <h5 style="color: red" th:text="${customer.name}"></h5>
+                        <h4 style="color:red;">This operation cannot be undone! </h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
-                    </button>
+
                     <form th:action="@{/customer/delete/{id}(id=${customer.id})}" method="post">
                         <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                        </button>
                     </form>
                 </div>
             </div>

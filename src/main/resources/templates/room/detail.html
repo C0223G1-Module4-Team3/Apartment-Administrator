@@ -59,6 +59,7 @@
             background-color: #5f9af3;
             color: #5f9af3;
         }
+
         #showRoom .modal-content {
             width: 60%; /* Change the width of the modal */
             max-height: 80%; /* Change the maximum height of the modal */
@@ -113,7 +114,7 @@
                 <div class="card-body">
                     <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
                     <div class="form-group row">
-                        <div class="col-12 col-md-12 col-lg-12" style="text-align:right" >
+                        <div class="col-12 col-md-12 col-lg-12" style="text-align:right">
                             <a href="#"
                                class="btn btn-primary" data-toggle="modal" title="Show information this room"
                                th:data-target="'#showRoom'">
@@ -167,13 +168,18 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <p><strong>Floor:</strong> <span th:text="${detailRoom.floor}"></span></p>
-                                                <p><strong>Price:</strong> <span th:text="${detailRoom.price}+' VND'"></span></p>
-                                                <p><strong>People Limit:</strong> <span th:text="${detailRoom.maxPeople}"></span></p>
+                                                <p><strong>Floor:</strong> <span th:text="${detailRoom.floor}"></span>
+                                                </p>
+                                                <p><strong>Price:</strong> <span
+                                                        th:text="${detailRoom.price}+' VND'"></span></p>
+                                                <p><strong>People Limit:</strong> <span
+                                                        th:text="${detailRoom.maxPeople}"></span></p>
                                             </div>
                                             <div class="col-sm-6">
-                                                <p><strong>Bedroom:</strong> <span th:text="${detailRoom.bedroom} +' pieces'"></span></p>
-                                                <p><strong>Area:</strong> <span th:text="${detailRoom.area} +' m²'"></span></p>
+                                                <p><strong>Bedroom:</strong> <span
+                                                        th:text="${detailRoom.bedroom} +' pieces'"></span></p>
+                                                <p><strong>Area:</strong> <span
+                                                        th:text="${detailRoom.area} +' m²'"></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -246,22 +252,22 @@
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" >
                 <h5 class="modal-title"
                     th:attr="id='deleteModalLabel-' + ${detailRooms.getId()}">Delete this facility in room</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p>
-                    Are you sure want to delete this room:</p> <span style="color: red"
-                                                                     th:text="${detailRooms.getFacility().getName()}"></span>
+            <div class="modal-body" style="text-align: center">
+                <h6>
+                    Are you sure want to delete facility in this room:</h6>
+                <h5 style="color: red" th:text="${detailRooms.getFacility().getName()}"></h5>
                 </p>
-                <h2 style="color:red;">This operation cannot be undone! </h2>
+                <h4 style="color:red;">This operation cannot be undone! </h4>
             </div>
             <div class="modal-footer">
                 <form th:action="@{/room/facility/delete/{id}(id=${detailRooms.getId()})}" method="post">
                     <input th:name="idRoom" th:value="${detailRooms.getRoom().getId()}" type="hidden">
-                    <button type="submit" class="btn btn-primary">Delete</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </form>
             </div>
@@ -345,7 +351,7 @@
                     <div class="col-sm-12 text-center">
                         <button type="submit" class="btn btn-primary-save">Save</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
-                    </button>
+                        </button>
                     </div>
                 </div>
             </form>
