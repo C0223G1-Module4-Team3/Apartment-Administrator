@@ -31,12 +31,12 @@ public class EmployeeController {
     private IPositionService positionService;
 
     @GetMapping()
-    public String showListEmployee(Principal principal,@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+    public String showListEmployee(Principal principal, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                    Model model) {
          model.addAttribute("employees", employeeService.displayListEmployee(pageable));
         String userName = principal.getName();
         Employee employee = employeeService.findByPhone(userName);
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        org.springframework.security.core.userdetails.User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUltils.toString(loginedUser);
         model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "employee/list";
@@ -45,7 +45,7 @@ public class EmployeeController {
     @GetMapping("create")
     public String showFormCreate(Model model) {
       model.addAttribute("employeeDto",new EmployeeDto());
-      model.addAttribute("positionList",positionService.displayListRole());
+      model.addAttribute("positionList",positionService.displayListPosition());
         return "employee/create";
     }
 
@@ -54,7 +54,7 @@ public class EmployeeController {
                                     Model model, RedirectAttributes redirectAttributes) {
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("positionList",positionService.displayListRole());
+            model.addAttribute("positionList",positionService.displayListPosition());
 //            model.addAttribute("employeeDto",employeeDto);
                 return "employee/create";
         }
@@ -82,7 +82,7 @@ public class EmployeeController {
             EmployeeDto employeeDto = new EmployeeDto();
             BeanUtils.copyProperties(employeeService.getEmployeeById(id),employeeDto);
             model.addAttribute("employeeDto",employeeDto);
-            model.addAttribute("positionList",positionService.displayListRole());
+            model.addAttribute("positionList",positionService.displayListPosition());
             return "employee/edit";
         }
     }

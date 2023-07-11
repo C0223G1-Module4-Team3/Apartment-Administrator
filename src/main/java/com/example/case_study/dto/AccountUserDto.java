@@ -1,36 +1,65 @@
 package com.example.case_study.dto;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.executable.ExecutableValidator;
-import javax.validation.metadata.BeanDescriptor;
-import java.util.Set;
+import com.example.case_study.model.RoleUser;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 
 public class AccountUserDto implements Validator {
-    @NotBlank(message = "Phone Number is required")
-    @Min(value = 10, message = "Phone number must be 10 numbers")
-    private String phone;
-    @NotBlank(message = "Password is required" )
-    @Min(value = 6,message = "Password must be 6 characters")
+
+    private String phoneNumber;
+
     private String password;
+
+    private RoleUser rule;
+
+    private boolean status;
+
+
+
+    public AccountUserDto(String phone, String password, boolean status) {
+        this.phoneNumber = phone;
+        this.password = password;
+        this.status = status;
+    }
+
+    public AccountUserDto(String phoneNumber, String password, RoleUser rule, boolean status) {
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.rule = rule;
+        this.status = status;
+    }
 
     public AccountUserDto() {
     }
 
+    public RoleUser getRule() {
+        return rule;
+    }
+
+    public void setRule(RoleUser rule) {
+        this.rule = rule;
+    }
+
     public AccountUserDto(String phone, String password) {
-        this.phone = phone;
+        this.phoneNumber = phone;
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {
@@ -42,32 +71,18 @@ public class AccountUserDto implements Validator {
     }
 
     @Override
-    public <T> Set<ConstraintViolation<T>> validate(T object, Class<?>... groups) {
-        return null;
+    public boolean supports(Class<?> clazz) {
+        return false;
     }
 
     @Override
-    public <T> Set<ConstraintViolation<T>> validateProperty(T object, String propertyName, Class<?>... groups) {
-        return null;
-    }
-
-    @Override
-    public <T> Set<ConstraintViolation<T>> validateValue(Class<T> beanType, String propertyName, Object value, Class<?>... groups) {
-        return null;
-    }
-
-    @Override
-    public BeanDescriptor getConstraintsForClass(Class<?> clazz) {
-        return null;
-    }
-
-    @Override
-    public <T> T unwrap(Class<T> type) {
-        return null;
-    }
-
-    @Override
-    public ExecutableValidator forExecutables() {
-        return null;
+    public void validate(Object target, Errors errors) {
+        AccountUserDto accountUserDto = (AccountUserDto) target;
+        if (!accountUserDto.getPhoneNumber().matches("^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$")){
+            errors.rejectValue("phone","phone","Phone number must be 10 numbers");
+        }
+        if (!accountUserDto.getPassword().matches("^([A-Z])[a-zA-Z0-9]{5,}$")){
+            errors.rejectValue("password","password","Password must be capitalized and at least 6 characters");
+        }
     }
 }

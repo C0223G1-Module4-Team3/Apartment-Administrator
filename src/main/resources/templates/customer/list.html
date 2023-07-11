@@ -103,9 +103,11 @@
                             </div>
                         </div>
                     </form>
-                    <button title="Add new customer" class="btn-primary"><a style="color: white"
+                    <button sec:authorize="hasAnyRole('Director','SaleManager','Business')" title="Add new customer" class="btn-primary"><a style="color: white"
                                                                                th:href="@{/customer/create}"><i
                             class="fa-solid fa-plus"></i></a></button>
+                    <br>
+                    <br>
                     <!--          viet bảng ở đây-->
                     <div class="table-responsive">
                         <table class="table table-bordered table-sm">
@@ -127,11 +129,11 @@
 <!--                                <td th:text="${customer.gender ? 'Male' : 'Female'}"></td>-->
                                 <td th:text="${customer.citizenId}"></td>
                                 <td>
-                                    <a th:href="@{/customer/detail/{id}(id=${customer.id})}" class="btn btn-primary"><i
+                                    <a  th:href="@{/customer/detail/{id}(id=${customer.id})}" class="btn btn-primary"><i
                                             class="fa-solid fa-circle-info"></i></a>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-danger" data-toggle="modal"
+                                    <a sec:authorize="hasAnyRole('Director','SaleManager')" href="#" class="btn btn-danger" data-toggle="modal"
                                        th:data-target="'#deleteCustomerModal-' + ${customer.id}"><i
                                             class="fa-regular fa-trash-can"></i></a>
                                 </td>
@@ -152,7 +154,6 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    Footer
                 </div>
                 <!-- /.card-footer-->
             </div>
