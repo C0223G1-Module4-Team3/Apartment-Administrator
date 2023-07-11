@@ -15,6 +15,11 @@ public class EmployeeSevice implements IEmployeeService {
     private IEmployeeRepository employeeRepository;
 
     @Override
+    public List<Employee> displayListEmployee() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
     public Page<Employee> displayListEmployee(Pageable pageable) {
 //        return employeeRepository.findAll(pageable);
         return employeeRepository.findAllByFlagDeleteIsFalseAndAccountUserIsNull(pageable);
