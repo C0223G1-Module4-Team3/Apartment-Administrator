@@ -66,9 +66,14 @@ public class ContractController {
     }
 
     @PostMapping("/detail")
-    String detailContract(@RequestParam Integer id, Model model, RedirectAttributes redirectAttributes) {
+    String detailContract(Principal principal,@RequestParam Integer id, Model model, RedirectAttributes redirectAttributes) {
         if (contractService.getContractById(id).isPresent()) {
             model.addAttribute("contract", contractService.getContractById(id).get());
+            String userName = principal.getName();
+            Employee employee = employeeService.findByPhone(userName);
+            User loginedUser = (User) ((Authentication) principal).getPrincipal();
+            String userInfo = WebUltils.toString(loginedUser);
+            model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
             return "/contract/detailContract";
         }
         redirectAttributes.addFlashAttribute("msg", "can't find");
