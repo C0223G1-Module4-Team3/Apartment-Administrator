@@ -3,23 +3,112 @@
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Page Quản Trị</title>
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain/bsb.css"/>
 </head>
 <body>
-<a th:if="${msg}" th:text="${msg}"></a>
-<form action="/contract/create" method="post" th:object="${contractCreationDto}">
-Input room id: <input th:field="*{room.id}" type="number"><button type="button">Detail room</button><br>
-Input customer id: <input th:field="*{customer.id}"><button type="button">Detail customer</button><br>
-Input employee id: <input th:field="*{employee.id}"><button type="button">Detail employee</button><br>
-   <select th:field="*{kindContract.id}">
-        <option th:each="kc, iterStats : ${kindContracts}" th:text="${kc.name}" th:value="${kc.id}"></option>
-   </select>
-Input period <input th:field="*{period}" type="number">
-    Input date <input th:field="*{date_start}" type="date">
-    <input th:field="*{managerConfirm}" th:value="false" hidden>
-    <input th:field="*{directorConfirm}" th:value="false" hidden>
-    <input th:field="*{flagDelete}" th:value="false" hidden>
+<!--<a th:if="${msg}" th:text="${msg}"></a>-->
+<!--<form action="/contract/create" method="post" th:object="${contractCreationDto}">-->
+<!--Input room id: <input th:field="*{room.id}" type="number"><button type="button">Detail room</button><br>-->
+<!--Input customer id: <input th:field="*{customer.id}"><button type="button">Detail customer</button><br>-->
+<!--Input employee id: <input th:field="*{employee.id}"><button type="button">Detail employee</button><br>-->
+<!--   <select th:field="*{kindContract.id}">-->
+<!--        <option th:each="kc, iterStats : ${kindContracts}" th:text="${kc.name}" th:value="${kc.id}"></option>-->
+<!--   </select>-->
+<!--Input period <input th:field="*{period}" type="number">-->
+<!--    Input date <input th:field="*{date_start}" type="date">-->
+<!--    <input th:field="*{managerConfirm}" th:value="false" hidden>-->
+<!--    <input th:field="*{directorConfirm}" th:value="false" hidden>-->
+<!--    <input th:field="*{flagDelete}" th:value="false" hidden>-->
 
-    <button type="submit">CREATE</button>
+<!--    <button type="submit">CREATE</button>-->
+<a th:if="${msg}" th:text="${msg}"></a>
+<section class="bg-light py-5 py-xl-8">
+    <div class="container mb-5 mb-md-6">
+        <div class="row justify-content-md-center">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6 text-center">
+                <h2 class="mb-4 display-5">New Contract    </h2>
+                <p class="text-secondary mb-4 mb-md-5">You warrant to us that the information below is completely
+                    true</p>
+                <hr class="w-50 mx-auto mb-0 text-secondary">
+            </div>
+        </div>
+    </div>
+    <form action="/contract/create" method="post" th:object="${contractCreationDto}">
+        <div class="container">
+            <div class="row justify-content-lg-center">
+                <div class="col-12 col-lg-9">
+                    <div class="bg-white border rounded shadow-sm overflow-hidden">
+                        <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
+
+
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Input room id <span
+                                        class="text-danger">*</span></label>
+
+                                <input th:field="*{room.id}" type="number" class="form-control" required>
+
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Input customer id <span
+                                        class="text-danger">*</span></label>
+
+                                <input th:field="*{customer.id}"  class="form-control" required>
+
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Input employee id <span
+                                        class="text-danger">*</span></label>
+
+                                <input th:field="*{employee.id}" type="number" class="form-control" required>
+
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Chose kind contract <span
+                                        class="text-danger">*</span></label>
+
+                                   <select th:field="*{kindContract.id}">
+                                        <option th:each="kc, iterStats : ${kindContracts}" th:text="${kc.name}" th:value="${kc.id}"></option>
+                                   </select>
+
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Input period <span
+                                        class="text-danger">*</span></label>
+
+                                <input th:field="*{period}" type="number" class="form-control" required>
+
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Input date start <span
+                                        class="text-danger">*</span></label>
+
+                                <input th:field="*{date_start}" type="date" class="form-control" required>
+                                    <input th:field="*{managerConfirm}" th:value="false" hidden>
+                                    <input th:field="*{directorConfirm}" th:value="false" hidden>
+                                    <input th:field="*{flagDelete}" th:value="false" hidden>
+
+                            </div>
+
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" type="submit">Create</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+
 </form>
+</section>
 </body>
 </html>

@@ -57,7 +57,7 @@ public class Schedule {
         }
     }
 
-    public String addMonthsToLocalDateString(String dateString, int monthsToAdd) {
+    public static String addMonthsToLocalDateString(String dateString, int monthsToAdd) {
         LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE);
         LocalDate result = date.plus(monthsToAdd, ChronoUnit.MONTHS);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

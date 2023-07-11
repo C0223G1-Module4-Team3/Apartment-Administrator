@@ -130,11 +130,9 @@ public class CustomerDto implements Validator {
     public void validate(Object target, Errors errors) {
         CustomerDto customerDto= (CustomerDto) target;
         Period age = Period.between(LocalDate.parse(customerDto.getDayOfBirth()), LocalDate.now()); // Tính độ tuổi
-
         int years = age.getYears(); // Lấy số năm từ kết quả Period
-
-        if (years < 18) {
-            errors.rejectValue("dayOfBirth","dayOfBirth","You are not old enough to work");
+        if (years < 16) {
+            errors.rejectValue("dayOfBirth","dayOfBirth","Customers must be 16 years or older! ");
         }
     }
 }

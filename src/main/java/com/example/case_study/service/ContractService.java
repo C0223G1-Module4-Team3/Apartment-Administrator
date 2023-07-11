@@ -2,6 +2,7 @@ package com.example.case_study.service;
 
 import com.example.case_study.model.*;
 import com.example.case_study.repository.*;
+import com.example.case_study.schedule.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,39 @@ public class ContractService implements IContractService {
 
     @Override
     public String addContract(Contract contract) {
+        if (!customerRepository.findCustomerById(contract.getCustomer().getId()).isPresent()) {
+            return "can't find customer";
+        }
+        if (!employeeRepository.findEmployeeByIdAndPositionIs5(contract.getEmployee().getId()).isPresent()) {
+            return "can't find sale";
+        }
+        if (!roomRepository.findById(contract.getRoom().getId()).isPresent()) {
+            return "can't find room";
+        }
+        if (contractRepository.findContractByRoom(contract.getRoom().getId()).isPresent()) {
+            Contract contract1 = contractRepository.findContractByRoom(contract.getRoom().getId()).get();
+            int month = 0;
+            switch (contract1.getKindContract().getId()) {
+                case 1:
+                    month = 1 * contract1.getPeriod();
+                    break;
+                case 2:
+                    month = 3 * contract1.getPeriod();
+                    break;
+                case 3:
+                    month = 12 * contract1.getPeriod();
+                    break;
+                default:
+                    break;
+            }
+            String dateEnd = Schedule.addMonthsToLocalDateString(contract1.getDate_start(),month);
+            LocalDate localDate1 = LocalDate.parse(dateEnd);
+            LocalDate localDate = LocalDate.parse(contract.getDate_start());
+            int result = localDate.compareTo(localDate1);
+            if(result<=0){
+                return "This room was still under contract at the time your new contract started";
+            }
+        }
         contractRepository.save(contract);
         return "create contract successful";
 
@@ -110,8 +145,8 @@ public class ContractService implements IContractService {
         int pageSize = originalPage.getSize();
         List<Contract> originalList = originalPage.getContent();
         List<Contract> modifiedList = new ArrayList<>(originalList);
-        for (int i =0;i<modifiedList.size();i++) {
-            if(!paymentRepository.getPayMentById(modifiedList.get(i).getId()).isPresent()){
+        for (int i = 0; i < modifiedList.size(); i++) {
+            if (!paymentRepository.getPayMentById(modifiedList.get(i).getId()).isPresent()) {
                 modifiedList.remove(i);
                 i--;
             }

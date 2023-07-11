@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 
@@ -18,6 +19,8 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     List<Customer> findAllByFlagDeleteFalseAndGenderIsFalse();
 
     List<Customer> findAllByFlagDeleteFalseAndGenderIsTrue();
+
+    Optional<Customer> findCustomerById(Integer id);
     @Modifying
     @Transactional
     @Query(value = "update customer as c set flag_delete = 1 where c.id = :id ", nativeQuery = true)
