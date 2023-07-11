@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee information</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/adminlte.min.css">
+    <style>
+        .div {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .form-container {
+            position: relative;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 50px;
+            margin-left: 10px;
+            width: 800px;
+            height: 400px;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            margin-bottom: 10px;
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+
+<div class="wrapper">
+
+    <nav th:replace="/layout :: navbar"></nav>
+    <aside th:replace="/layout :: sidebar"></aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active"><a th:href="@{/logout}">Logout</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <div style="background-color: white">
+            <br>
+        <div class="row">
+            <h4 class="col-9">Employee information</h4>
+            <div class="col-3">
+                <a th:href="@{/employee/edit/{id}(id=${employee.id})}" class="btn btn-primary">Update</a>
+            </div>
+
+        </div>
+
+        <hr>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="image-container">
+                        <img id="imagePreview" th:src="${employee.image}" alt="">
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3"> Name</dt>
+                            <dd class="col-sm-9" th:text="${employee.name}"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-3"> Gender</dt>
+                            <dd class="col-sm-9" th:text="${employee.gender ? 'Male' : 'Female'}">  <!---->
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-3 text-truncate"> Email</dt>
+                            <dd class="col-sm-9" th:text="${employee.email}">  <!---->
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-3">Birthday</dt>
+                            <dd class="col-sm-9" th:text="${employee.dayOfBirth}"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-3"> Phone number</dt>
+                            <dd class="col-sm-9" th:text="${employee.phoneNumber}"></dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-sm-3"> Citizen Id</dt>
+                            <dd class="col-sm-9" th:text="${employee.citizenId}"></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        <footer th:replace="/layout::footer"></footer>-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                crossorigin="anonymous"></script>
+
+        <!-- jQuery -->
+        <script src="/js/jquery.min.js"></script>
+        <!-- Bootstrap 4 -->
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="/js/adminlte.min.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="/js/demo.js"></script>
+</body>
+</html>
