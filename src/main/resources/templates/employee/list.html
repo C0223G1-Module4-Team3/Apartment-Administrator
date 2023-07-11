@@ -71,7 +71,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Employee List</h3>
+                    <h3 class="card-title"></h3>
                     <span th:if="${message}!=null" th:text="${message}" id="success"
                           class="tin"
                           style="float: left; background-color: #4CAF50;font-size: 30px"></span>
@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     </form>
-                    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"
+                    <button sec:authorize="hasAnyRole('Director','HR')" title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"
                                                                                th:href="@{/employee/create}"><i
                             class="fa-solid fa-plus"></i></a></button>
                     <!--          viet bảng ở đây-->
@@ -145,7 +145,7 @@
                             <td th:text="${employee.email}"></td>
                             <td th:text="${employee.position.name}"></td>
                             <td>
-                                <a th:href="@{/employee/detail/{id}(id=${employee.id})}" class="btn btn-primary"><i
+                                <a  th:href="@{/employee/detail/{id}(id=${employee.id})}" class="btn btn-primary"><i
                                         class="fa-solid fa-circle-info"></i></a>
                             </td>
 <!--                            <td>-->
@@ -153,7 +153,7 @@
 <!--                                        class="fa-regular fa-pen-to-square"></i></a>-->
 <!--                            </td>-->
                             <td>
-                                <a href="#" class="btn btn-danger" data-toggle="modal"
+                                <a sec:authorize="hasAnyRole('Director','HR')" href="#" class="btn btn-danger" data-toggle="modal"
                                    th:data-target="'#deleteCustomerModal-' + ${employee.id}"><i
                                         class="fa-regular fa-trash-can"></i></a>
                             </td>
@@ -173,7 +173,6 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    Footer
                 </div>
                 <!-- /.card-footer-->
             </div>

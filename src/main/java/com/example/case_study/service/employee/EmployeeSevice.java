@@ -34,7 +34,16 @@ public class EmployeeSevice implements IEmployeeService {
     @Override
     public boolean deleteEmployee(int id) {
         Employee employee = getEmployeeById(id);
+
         employee.setFlagDelete(true);
+        employeeRepository.save(employee);
+        return true;
+    }
+
+    @Override
+    public boolean deleteAccount(int id){
+        Employee employee = getEmployeeById(id);
+        employee.getAccountUser().setStatus(true);
         employeeRepository.save(employee);
         return true;
     }
@@ -56,7 +65,7 @@ public class EmployeeSevice implements IEmployeeService {
 
     @Override
     public List<Employee> displayListEmployeeHaveAccount() {
-        return employeeRepository.findAllByFlagDeleteFalseAndAccountUserIsNotNull();
+        return employeeRepository.findAllByFlagDeleteFalseAndAccountUserIsNotNullAndAccountUserStatusIsFalse();
     }
 
     @Override

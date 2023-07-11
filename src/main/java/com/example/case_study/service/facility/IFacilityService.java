@@ -10,4 +10,5 @@ public interface IFacilityService {
     void edit(Facility facility);
     void delete(Integer id);
     Facility detailFacility(Integer id);
+
 }

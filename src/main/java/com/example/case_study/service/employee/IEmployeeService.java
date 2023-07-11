@@ -29,4 +29,6 @@ public interface IEmployeeService {
     List<Employee> showFemaleEmployee();
 
     Employee findByPhone(String phone);
+
+    boolean deleteAccount(int id );
 }

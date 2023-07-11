@@ -8,13 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
     Page<Employee> findAllByFlagDeleteIsFalseAndAccountUserIsNull(Pageable pageable);
 
     Employee findById(int id);
 
-    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNull();
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNullAndAccountUserStatusIsFalse();
 
     List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNull();
 
@@ -27,4 +28,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query(value = "select * from employee as c where (c.name like concat('%', :name ,'%') or c.name='') and( c.phone_number like concat('%', :phoneNumber ,'%') or c.phone_number='')and (c.citizen_id like concat('%', :citizenId ,'%') or c.citizen_id='')", nativeQuery = true)
     Page<Employee> findAllByNameOrPhoneNumberOrCitizenId
             (Pageable pageable, @Param(value = "name") String name, @Param(value = "citizenId") String citizenId, @Param(value = "phoneNumber") String phoneNumber);
+
+    @Query(value = "select * from employee as c where(c.id=:id and c.position_id=5)", nativeQuery = true)
+    Optional<Employee> findEmployeeByIdAndPositionIs5(@Param(value = "id") int id);
 }

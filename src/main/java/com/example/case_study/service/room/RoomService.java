@@ -41,4 +41,9 @@ public class RoomService implements IRoomService{
     public void maintenanceFinished(Integer id) {
 
     }
+
+    @Override
+    public List<Room> findRoomByMaintenance() {
+        return roomRepository.findAllByMaintenanceIsTrue();
+    }
 }

@@ -4,6 +4,8 @@ import com.example.case_study.model.Contract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +27,7 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
     List<Contract> findAllByFlagDeleteFalse();
 
     Optional<List<Contract>> findAllByFlagDeleteIsFalseAndManagerConfirmIsTrueAndDirectorConfirmIsTrue();
+
+    @Query(value = "select * from contracts where (room_id = :id and flag_delete = 0) order by date_start desc limit 1",nativeQuery = true)
+    Optional<Contract> findContractByRoom(@Param(value = "id") int id);
 }
