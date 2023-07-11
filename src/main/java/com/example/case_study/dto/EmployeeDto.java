@@ -1,5 +1,6 @@
 package com.example.case_study.dto;
 
+import com.example.case_study.model.AccountUser;
 import com.example.case_study.model.Position;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -29,9 +30,14 @@ public class EmployeeDto implements Validator {
     @ManyToOne
     private Position position;
 
+    @ManyToOne
+    private AccountUser accountUser;
+
     private String email;
 
     private boolean flagDelete;
+
+    private String password;
 
     public EmployeeDto() {
     }
@@ -47,6 +53,51 @@ public class EmployeeDto implements Validator {
         this.position = position;
         this.email = email;
         this.flagDelete = flagDelete;
+    }
+
+    public EmployeeDto(Integer id, String name, boolean gender, String citizenId, String phoneNumber, String image, String dayOfBirth, Position position, AccountUser accountUser, String email, boolean flagDelete, String password) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.citizenId = citizenId;
+        this.phoneNumber = phoneNumber;
+        this.image = image;
+        this.dayOfBirth = dayOfBirth;
+        this.position = position;
+        this.accountUser = accountUser;
+        this.email = email;
+        this.flagDelete = flagDelete;
+        this.password = password;
+    }
+
+    public EmployeeDto(Integer id, String name, boolean gender, String citizenId, String phoneNumber, String image, String dayOfBirth, Position position, AccountUser accountUser, String email, boolean flagDelete) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.citizenId = citizenId;
+        this.phoneNumber = phoneNumber;
+        this.image = image;
+        this.dayOfBirth = dayOfBirth;
+        this.position = position;
+        this.accountUser = accountUser;
+        this.email = email;
+        this.flagDelete = flagDelete;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public AccountUser getAccountUser() {
+        return accountUser;
+    }
+
+    public void setAccountUser(AccountUser accountUser) {
+        this.accountUser = accountUser;
     }
 
     public Integer getId() {
@@ -138,9 +189,9 @@ public class EmployeeDto implements Validator {
     public void validate(Object target, Errors errors) {
         EmployeeDto employeeDto = (EmployeeDto) target;
 //        tieng co dau
-        if (!employeeDto.getName().matches("^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+(?: [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*)*")) {
-            errors.rejectValue("name", "name", "This is not name");
-        }
+//        if (!employeeDto.getName().matches("^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+(?: [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*)*")) {
+//            errors.rejectValue("name", "name", "This is not name");
+//        }
 //        can cuoc cong dan phai du 8 so
         if (!employeeDto.getCitizenId().matches("^-?\\d{12}$")) {
             errors.rejectValue("citizenId","citizenId","This is not citizen Id");

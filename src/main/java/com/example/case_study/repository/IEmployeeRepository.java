@@ -13,7 +13,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee,Integer> {
     Page<Employee> findAllByFlagDeleteIsFalseAndAccountUserIsNull(Pageable pageable);
     Employee findById(int id);
 
-    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNull();
+    List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNotNullAndAccountUserStatusIsFalse();
 
     List<Employee> findAllByFlagDeleteFalseAndAccountUserIsNull();
 
