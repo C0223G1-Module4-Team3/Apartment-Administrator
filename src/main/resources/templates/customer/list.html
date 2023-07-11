@@ -85,10 +85,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
-<!--                    <button title="Thêm mới khách hàng" class="btn-primary"><a style="color: white"-->
-<!--                                                                               th:href="@{/customer/create}"><i-->
-<!--                            class="fa-solid fa-plus"></i></a></button>-->
                     <form action="/customer/search" method="get">
                         <div class="form-group row">
                             <div class="col-md-3">
@@ -111,48 +107,45 @@
                                                                                th:href="@{/customer/create}"><i
                             class="fa-solid fa-plus"></i></a></button>
                     <!--          viet bảng ở đây-->
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>STT</th>
-
-                            <th>Name</th>
-                            <th>Gender</th>
-                            <th>Citizen ID</th>
-                            <th>Detail</th>
-<!--                            <th>Edit</th>-->
-                            <th>Delete</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="customer : ${customers}" th:if="${!customer.flagDelete}">
-                            <td th:text="${customer.id}"></td>
-                            <td th:text="${customer.name}"></td>
-                            <td th:text="${customer.gender ? 'Male' : 'Female'}"></td>
-                            <td th:text="${customer.citizenId}"></td>
-                            <td>
-                                <a th:href="@{/customer/detail/{id}(id=${customer.id})}" class="btn btn-primary"><i
-                                        class="fa-solid fa-circle-info"></i></a>
-                            </td>
-<!--                            <td>-->
-<!--                                <a th:href="@{/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary"><i-->
-<!--                                        class="fa-regular fa-pen-to-square"></i></a>-->
-<!--                            </td>-->
-                            <td>
-                                <a href="#" class="btn btn-danger" data-toggle="modal"
-                                   th:data-target="'#deleteCustomerModal-' + ${customer.id}"><i
-                                        class="fa-regular fa-trash-can"></i></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Name</th>
+                                <th>Phone number</th>
+                                <th>Citizen ID</th>
+                                <th>Detail</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="customer : ${customers}" th:if="${!customer.flagDelete}">
+                                <td th:text="${customer.id}"></td>
+                                <td th:text="${customer.name}"></td>
+                                <td th:text="${customer.phoneNumber}"></td>
+<!--                                <td th:text="${customer.gender ? 'Male' : 'Female'}"></td>-->
+                                <td th:text="${customer.citizenId}"></td>
+                                <td>
+                                    <a th:href="@{/customer/detail/{id}(id=${customer.id})}" class="btn btn-primary"><i
+                                            class="fa-solid fa-circle-info"></i></a>
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-danger" data-toggle="modal"
+                                       th:data-target="'#deleteCustomerModal-' + ${customer.id}"><i
+                                            class="fa-regular fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div>
                         <ul>
                             <li th:if="${customers.hasPrevious()}">
-                                <a th:href="@{${url}(page=${customers.previousPageable().pageNumber})}">Trang trước</a>
+                                <a th:href="@{${url}(page=${customers.previousPageable().pageNumber})}">Previous page</a>
                             </li>
                             <li th:if="${customers.hasNext()}">
-                                <a th:href="@{${url}(page=${customers.nextPageable().pageNumber})}">Trang sau</a>
+                                <a th:href="@{${url}(page=${customers.nextPageable().pageNumber})}">Next page</a>
                             </li>
                         </ul>
                     </div>

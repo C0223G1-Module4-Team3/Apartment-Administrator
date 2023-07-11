@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,7 +38,7 @@ public class CustomerController {
 
 
     @GetMapping("")
-    public String display(Principal principal,Model model, @PageableDefault(size = 6, sort = "name") Pageable pageable) {
+    public String display(Principal principal, Model model, @PageableDefault(size = 6, sort = "name") Pageable pageable) {
         Page<Customer> customers = customerService.display(pageable);
         model.addAttribute("customers", customers);
         String userName = principal.getName();
@@ -47,6 +48,7 @@ public class CustomerController {
         model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "/customer/list";
     }
+
     @GetMapping("/create")
     public String showFormCreate(Model model) {
         CustomerDto customer = new CustomerDto();
@@ -65,8 +67,9 @@ public class CustomerController {
             return "customer/edit";
         }
     }
+
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable int id, Model model,Principal principal) {
+    public String detail(@PathVariable int id, Model model, Principal principal) {
         String userName = principal.getName();
         Employee employee = employeeService.findByPhone(userName);
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
@@ -96,10 +99,9 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String create(@Validated @ModelAttribute(name = "customer") CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("customer", customerDto);
             return "customer/add";
         }
         if (customerDto == null) {
@@ -135,6 +137,7 @@ public class CustomerController {
     @PostMapping("/edit")
     public String edit(@ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model,
                        RedirectAttributes redirectAttributes) {
+        new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("customer", customerDto);
             return "customer/edit";

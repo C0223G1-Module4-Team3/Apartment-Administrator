@@ -29,6 +29,7 @@
             width: 800px;
             height: 400px;
         }
+
         #imagePreview {
             max-width: 100%;
             max-height: 100%;
@@ -37,10 +38,10 @@
             margin-top: 50px;
         }
 
-         #success {
-             position: fixed;
-             right: 1em;
-         }
+        #success {
+            position: fixed;
+            right: 1em;
+        }
 
         .tin {
             contain: layout;
@@ -80,7 +81,8 @@
                             <input type="text" class="form-control" id="name" th:field="*{name}"
                                    placeholder="Enter your first and last name"
                                    pattern="^[\p{Lu}][\p{Ll}]{1,8}(\s([\p{Lu}]|[\p{Lu}][\p{Ll}]{1,10})){0,5}$"
-                                   required title="The name must start with an uppercase letter followed by a lowercase letter">
+                                   required
+                                   title="The name must start with an uppercase letter followed by a lowercase letter">
                             <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -90,7 +92,8 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="form-check col-1">
-                                        <input class="form-check-input" type="radio" name="gender" id="male" th:value="true"
+                                        <input class="form-check-input" type="radio" name="gender" id="male"
+                                               th:value="true"
                                                th:field="*{gender}">
                                         <label class="form-check-label" for="male">Male</label>
                                     </div>
@@ -115,7 +118,8 @@
                                   th:errors="*{citizenId}"></span>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="phoneNumber"><strong>Phone number:<span style="color:red;">*</span></strong></label>
+                            <label for="phoneNumber"><strong>Phone number:<span
+                                    style="color:red;">*</span></strong></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -174,6 +178,8 @@
         </div>
     </div>
 </div>
+
+
 <!-- Add Bootstrap JS scripts -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -193,9 +199,9 @@
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
 <script>
-    document.getElementById('btnThumbnailURL').addEventListener('change', function() {
+    document.getElementById('btnThumbnailURL').addEventListener('change', function () {
         var reader = new FileReader();
-        reader.onload = function() {
+        reader.onload = function () {
             var preview = document.getElementById('imagePreview');
             preview.src = reader.result;
         };
