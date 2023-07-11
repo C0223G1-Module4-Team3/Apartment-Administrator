@@ -142,7 +142,8 @@
                     <div class="row">
                         <div class="col-sm-12 text-center">
                             <button type="submit" class="btn btn-primary-save">Save</button>
-                            <button type="button" class="btn btn-secondary">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -175,7 +176,8 @@
                     <form th:action="@{/facility/delete/{id}(id=${facilityDelete.getId()})}" method="post">
                         <button type="submit" class="btn btn-primary">Delete</button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                    </button>
                 </div>
             </div>
         </div>
@@ -212,7 +214,8 @@
                         <div class="form-group row">
                             <div class="col-sm-12 text-center">
                                 <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal-dialog">Cancel
+                                </button>
                             </div>
                         </div>
                     </form>

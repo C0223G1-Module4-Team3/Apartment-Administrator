@@ -235,16 +235,6 @@
 
 
     <footer th:replace="/layout::footer"></footer>
-    <!--                <div class="pagination">-->
-    <!--                    <ul>-->
-    <!--                        <li th:if="${detailRoomByIdRoom.hasPrevious()}">-->
-    <!--                            <a th:href="@{${url}(page=${detailRoomByIdRoom.previousPageable().pageNumber})}">Previous</a>-->
-    <!--                        </li>-->
-    <!--                        <li th:if="${detailRoomByIdRoom.hasNext()}">-->
-    <!--                            <a th:href="@{${url}(page=${detailRoomByIdRoom.nextPageable().pageNumber})}">Next</a>-->
-    <!--                        </li>-->
-    <!--                    </ul>-->
-    <!--                </div>-->
 </div>
 </div>
 </div>
@@ -273,8 +263,8 @@
                 <form th:action="@{/room/facility/delete/{id}(id=${detailRooms.getId()})}" method="post">
                     <input th:name="idRoom" th:value="${detailRooms.getRoom().getId()}" type="hidden">
                     <button type="submit" class="btn btn-primary">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -316,7 +306,8 @@
                     <div class="form-group row">
                         <div class="col-sm-12 text-center">
                             <button type="submit" class="btn btn-primary-save">Save</button>
-                            <button type="button" class="btn btn-secondary">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -354,7 +345,8 @@
                 <div class="row">
                     <div class="col-sm-12 text-center">
                         <button type="submit" class="btn btn-primary-save">Save</button>
-                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                    </button>
                     </div>
                 </div>
             </form>
