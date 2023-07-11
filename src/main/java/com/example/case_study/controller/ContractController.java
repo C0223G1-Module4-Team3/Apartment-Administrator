@@ -34,13 +34,35 @@ public class ContractController {
 
     @GetMapping("")
     String displayContractList(Principal principal, Pageable pageable, Model model) {
-        model.addAttribute("list", contractService.displayList(pageable));
+
         String userName = principal.getName();
         Employee employee = employeeService.findByPhone(userName);
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUltils.toString(loginedUser);
         model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "/contract/displayContractList";
+    }
+
+    @GetMapping("/manager")
+    String displayContractListForManager(Principal principal, Pageable pageable, Model model) {
+        model.addAttribute("list", contractService.displayList(pageable));
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
+        return "/contract/displayContractListManager";
+    }
+
+    @GetMapping("/director")
+    String displayContractListForDirector(Principal principal, Pageable pageable, Model model) {
+        model.addAttribute("list", contractService.displayList(pageable));
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
+        return "/contract/displayContractListDirector";
     }
 
     @GetMapping("/create")

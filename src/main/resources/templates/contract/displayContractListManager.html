@@ -98,7 +98,8 @@
                             <td>Kind contract</td>
                             <td>Period</td>
                             <td></td>
-
+                            <td sec:authorize="hasRole('SaleManager')"></td>
+                            <td sec:authorize="hasAnyRole('Director','SaleManager')"></td>
                         </tr>
                         <tbody id="listContract"></tbody>
                     </table>
@@ -143,6 +144,85 @@
                 <button type="submit">Detail</button>
             </form>
         </td>
+
+        <td>
+
+
+<a id="mc${c.id}" href="#" class="btn btn-danger" data-toggle="modal"
+       data-target="#manager-${c.id}">Manager Confirm</a>
+
+           <div class="modal fade"
+         id="manager-${c.id}"
+         tabindex="-1" role="dialog"
+         attr="aria-labelledby='managerModalLabel-' + ${c.id}"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        attr="id='managerModalLabel-' + ${c.id}">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>Do you want to confirm</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng
+                    </button>
+                    <button onclick="managerConfirm(${c.id})" type="button">Manager confirm</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </td>
+
+
+
+        <td>
+         <a href="#" class="btn btn-danger" data-toggle="modal"
+       data-target="#deleteModal-${c.id}"><i
+            class="fa-regular fa-trash-can"></i></a>
+
+           <div class="modal fade"
+         id="deleteModal-${c.id}"
+         tabindex="-1" role="dialog"
+         attr="aria-labelledby='deleteCustomerModalLabel-' + ${c.id}"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        attr="id='deleteCustomerModalLabel-' + ${c.id}">Xóa khách
+                        hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>Bạn có chắc chắn muốn xóa khách hàng: </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                    </button>
+                     <button type="button" class="btn btn-danger" onclick="deleteContract(${c.id})">Delete
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </td>
     </tr>
                 `;
 
@@ -152,12 +232,11 @@
 
                                     for (let c of data.content) {
                                         if (c.managerConfirm) {
-
+                                            document.getElementById("mc" + c.id).style.display = "none"
                                             document.getElementById(c.id).style.backgroundColor = "blue"
 
                                         }
                                         if (c.directorConfirm) {
-
                                             document.getElementById(c.id).style.backgroundColor = "yellow"
                                         }
 
@@ -189,7 +268,41 @@
                             getContractList(page);
                         })
 
+                        function managerConfirm(id) {
+                            $.ajax({
+                                url: 'http://localhost:8080/contracts/manager-confirm/' + id,
+                                type: 'POST',
+                                success: function (data) {
+                                    $('#manager-' + id).modal('toggle');
+                                    $('.modal-backdrop').css("display", "none");
+                                    getContractList(page);
+                                    $("#success").text("confirm success");
+                                },
+                                error: function (error) {
+                                    getContractList(page);
+                                }
+                            })
 
+                        }
+
+
+
+                        function deleteContract(id) {
+                            $.ajax({
+                                url: 'http://localhost:8080/contracts/delete/' + id,
+                                type: 'POST',
+                                success: function (data) {
+                                    $('#deleteModal-' + id).modal('toggle');
+                                    $('.modal-backdrop').css("display", "none");
+                                    getContractList(page);
+                                    $("#success").text("delete success");
+                                },
+                                error: function (error) {
+                                    getContractList(page);
+                                }
+                            })
+
+                        }
 
                     </script>
 

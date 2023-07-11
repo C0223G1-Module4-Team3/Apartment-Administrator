@@ -59,6 +59,13 @@
             background-color: #5f9af3;
             color: #5f9af3;
         }
+        #showRoom .modal-content {
+            width: 60%; /* Change the width of the modal */
+            max-height: 80%; /* Change the maximum height of the modal */
+            margin: auto; /* Center the modal horizontally */
+            top: 10%; /* Position the modal 10% from the top of the viewport */
+            overflow-y: auto; /* Add scrollbars to the modal if its content is too long */
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -92,7 +99,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Thiết bị của phòng</h3>
+                    <h3 class="card-title">Facility in room</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -105,6 +112,15 @@
                 </div>
                 <div class="card-body">
                     <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
+                    <div class="form-group row">
+                        <div class="col-12 col-md-12 col-lg-12" style="text-align:right" >
+                            <a href="#"
+                               class="btn btn-primary" data-toggle="modal" title="Show information this room"
+                               th:data-target="'#showRoom'">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </a>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="row" style="margin-top:30px">
                             <div class="col-4 col-md-4 col-lg-4"
@@ -138,6 +154,32 @@
                                 </div>
                             </div>
                         </div>
+                        <!--          viet bảng ở đây-->
+                        <!-- The modal -->
+                        <div id="showRoom" class="modal hidden">
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <!-- Table goes here -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        Room Details
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p><strong>Floor:</strong> <span th:text="${detailRoom.floor}"></span></p>
+                                                <p><strong>Price:</strong> <span th:text="${detailRoom.price}+' VND'"></span></p>
+                                                <p><strong>People Limit:</strong> <span th:text="${detailRoom.maxPeople}"></span></p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p><strong>Bedroom:</strong> <span th:text="${detailRoom.bedroom} +' pieces'"></span></p>
+                                                <p><strong>Area:</strong> <span th:text="${detailRoom.area} +' m²'"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <div class="col-12 col-md-12 col-lg-12"
                                  style="background-color: #FFFFFF;text-align:right;position: relative;">
@@ -147,43 +189,6 @@
                                 </button>
                             </div>
                         </div>
-                        <!--          viet bảng ở đây-->
-                        <table class="table table-bordered" id="tableStudent"
-                               style="width:100%;background-color: #dee6ee">
-                            <thead style="background-color: #FFFFFF">
-                            <tr>
-                                <th>Floor</th>
-                                <th>Price</th>
-                                <th>People Limit</th>
-                                <th>Bedroom</th>
-                                <th>Area</th>
-                                <th>Update</th>
-                                <th>Set Maintenance</th>
-                            </tr>
-                            </thead>
-                            <tbody style="background-color: #F9F9FA">
-                            <tr th:object="${detailRoom}">
-                                <td th:text="${detailRoom.floor}"></td>
-                                <td th:text="${detailRoom.price}+'VND'"></td>
-                                <td th:text="${detailRoom.maxPeople}"></td>
-                                <td th:text="${detailRoom.bedroom} +'pieces'"></td>
-                                <td th:text="${detailRoom.area} +'m²'"></td>
-                                <td>
-                                    <a th:href="@{/room/update/{id}(id=${detailRoom.getId()})}" class="btn btn-primary"
-                                       title="Edit">
-                                        <i
-                                                class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <a th:href="@{/room/maintenance/{id}(id=${detailRoom.getId()})}"
-                                       class="btn btn-danger" title="Maintenance">
-                                        <i class="fas fa-wrench"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
                         <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
                             <thead style="background-color: #FFFFFF">
                             <th>STT</th>
@@ -230,16 +235,6 @@
 
 
     <footer th:replace="/layout::footer"></footer>
-    <!--                <div class="pagination">-->
-    <!--                    <ul>-->
-    <!--                        <li th:if="${detailRoomByIdRoom.hasPrevious()}">-->
-    <!--                            <a th:href="@{${url}(page=${detailRoomByIdRoom.previousPageable().pageNumber})}">Previous</a>-->
-    <!--                        </li>-->
-    <!--                        <li th:if="${detailRoomByIdRoom.hasNext()}">-->
-    <!--                            <a th:href="@{${url}(page=${detailRoomByIdRoom.nextPageable().pageNumber})}">Next</a>-->
-    <!--                        </li>-->
-    <!--                    </ul>-->
-    <!--                </div>-->
 </div>
 </div>
 </div>
@@ -268,8 +263,8 @@
                 <form th:action="@{/room/facility/delete/{id}(id=${detailRooms.getId()})}" method="post">
                     <input th:name="idRoom" th:value="${detailRooms.getRoom().getId()}" type="hidden">
                     <button type="submit" class="btn btn-primary">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -311,7 +306,8 @@
                     <div class="form-group row">
                         <div class="col-sm-12 text-center">
                             <button type="submit" class="btn btn-primary-save">Save</button>
-                            <button type="button" class="btn btn-secondary">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -333,25 +329,27 @@
                     th:attr="id='updateModalLabel-' + ${updateRoom.getId()}">Update amount facility</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-                <form th:action="@{/room/facility/update}" method="post">
-                    <div class="row">
-                        <div class="col-sm-9">
-                            <h2 th:text="${updateRoom.facility.getName()}"></h2>
-                            <input th:name="id" th:value="${updateRoom.id}" hidden>
-                            <input th:name="roomId" th:value="${updateRoom.getRoom().getId()}" hidden>
-                            <input th:name="facilityId" th:value="${updateRoom.getFacility().getId()}" hidden>
-                            <strong>Amount of facility: </strong> <input type="number" class="form-control" id="amount" th:name="amount">
-                        </div>
+            <form th:action="@{/room/facility/update}" method="post">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h2 th:text="${updateRoom.facility.getName()}"></h2>
+                        <input th:name="id" th:value="${updateRoom.id}" hidden>
+                        <input th:name="roomId" th:value="${updateRoom.getRoom().getId()}" hidden>
+                        <input th:name="facilityId" th:value="${updateRoom.getFacility().getId()}" hidden>
+                        <strong>Amount of facility: </strong> <input type="number" class="form-control" id="amount"
+                                                                     th:name="amount">
                     </div>
-                    <br>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-12 text-center">
-                            <button type="submit" class="btn btn-primary-save">Save</button>
-                            <button type="button" class="btn btn-secondary">Cancel</button>
-                        </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-primary-save">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                    </button>
                     </div>
-                </form>
+                </div>
+            </form>
         </div>
     </div>
 </div>
