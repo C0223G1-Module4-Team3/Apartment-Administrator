@@ -25,6 +25,30 @@
             animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
             transition: all linear 0.3s;
         }
+        @media (max-width: 768px) {
+            /* Điều chỉnh các style cho kích thước màn hình nhỏ hơn hoặc bằng 768px */
+            body {
+                font-size: 14px;
+            }
+
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+
+            /* Ẩn dropdown menu và hiển thị icon menu */
+            .navbar-collapse {
+                display: none;
+            }
+
+            .navbar-toggler {
+                display: block;
+            }
+        }
     </style>
     <!-- Thư viện Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
