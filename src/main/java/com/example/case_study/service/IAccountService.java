@@ -1,6 +1,7 @@
 package com.example.case_study.service;
 
 import com.example.case_study.model.AccountUser;
+import com.example.case_study.model.Employee;
 import com.example.case_study.model.RoleUser;
 import jdk.nashorn.internal.runtime.options.Option;
 
@@ -16,5 +17,7 @@ public interface IAccountService {
     List<AccountUser> findAll();
     Optional<AccountUser> findById(int id);
 
+    AccountUser getAccountById(int id);
 
+    void editAccount(AccountUser accountUser);
 }

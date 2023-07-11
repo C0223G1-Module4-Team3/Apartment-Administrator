@@ -47,4 +47,14 @@ public class AccountServiceImpl implements IAccountService {
     public Optional<AccountUser> findById(int id) {
         return accountRepository.findById(id);
     }
+
+    @Override
+    public AccountUser getAccountById(int id) {
+        return accountRepository.getAccountById(id);
+    }
+
+    @Override
+    public void editAccount(AccountUser accountUser) {
+        accountRepository.save(accountUser);
+    }
 }

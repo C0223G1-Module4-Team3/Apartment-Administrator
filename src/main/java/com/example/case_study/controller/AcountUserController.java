@@ -115,11 +115,14 @@ public class AcountUserController {
 
     @GetMapping("/account/{option}")
     public String optionStatus(@PathVariable("option") String option) {
+        System.out.println(option);
         String[] arrStr = option.split(",");
-        Employee employee = employeeService.getEmployeeById(Integer.parseInt(arrStr[1]));
-        Optional<AccountUser> accountUsers = accountService.findById(Integer.parseInt(arrStr[1]));
-        employee.getAccountUser().getRoleUser().setId(Integer.parseInt(arrStr[0]));
+        Employee employee = employeeService.getEmployeeById(Integer.parseInt(arrStr[0]));
+        AccountUser accountUsers = accountService.getAccountById(Integer.parseInt(arrStr[0]));
+        employee.getAccountUser().getRoleUser().setId(Integer.parseInt(arrStr[1]));
         employeeService.editEmployee(employee);
+        accountUsers.getRoleUser().setId(Integer.parseInt(arrStr[1]));
+        accountService.editAccount(accountUsers);
         return "redirect:/account";
     }
 }

@@ -11,4 +11,5 @@ public interface IAccountRepository extends JpaRepository<AccountUser,Integer>{
     AccountUser findAccountUserByPhoneNumber(String phone);
     List<AccountUser> findByPhoneNumber(String phone);
 
+    AccountUser getAccountById(int id);
 }

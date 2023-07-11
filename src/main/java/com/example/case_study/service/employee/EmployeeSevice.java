@@ -49,6 +49,12 @@ public class EmployeeSevice implements IEmployeeService {
     }
 
     @Override
+    public void setEmployee(int user, int id) {
+        employeeRepository.setEmployee(user,id);
+
+    }
+
+    @Override
     public void editEmployee(Employee employee) {
         employeeRepository.save(employee);
     }

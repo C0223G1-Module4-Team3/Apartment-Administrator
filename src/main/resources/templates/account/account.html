@@ -88,23 +88,23 @@
                             <td th:text="${accounts.dayOfBirth}"></td>
                             <td th:text="${accounts.email}"></td>
                             <td>
-                                <select class="mySelect" style="border-radius: 5px;">
-                                    <option th:value="'1,'+${accounts.getAccountUser().getId()}"
+                                <select th:id="${accounts.id}" id="th:id" class="mySelect"  onchange="abc(this.id)" style="border-radius: 5px;">
+                                    <option  th:value="1" value="1"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'Director'}">
                                         Director
                                     </option>
-                                    <option th:value="'2,'+${accounts.getAccountUser().getId()}"
+                                    <option  th:value="2" value="2"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'HR'}">HR
                                     </option>
-                                    <option th:value="'3'+${accounts.getAccountUser().getId()}"
+                                    <option th:value="3" value="3"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'SaleManager'}">
                                         SaleManager
                                     </option>
-                                    <option th:value="'4,'+${accounts.getAccountUser().getId()}"
+                                    <option  th:value="4" value="4"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'ApartmentManager'}">
                                         ApartmentManager
                                     </option>
-                                    <option th:value="'5,'+${accounts.getAccountUser().getId()}"
+                                    <option th:value="5" value="5"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'Business'}">
                                         Business
                                     </option>
@@ -148,14 +148,14 @@
                 <div class="modal-body">
                     <div class="row">
                         <p>Are you sure delete Account : </p> <span style="color: red"
-                                                                    th:text="${accounts.name}"></span>
+                                                                    th:text="${accounts.name}"> ? </span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
                     </button>
                     <form th:action="@{/account/delete/{id}(id=${accounts.id})}" method="post">
-                        <button type="submit" class="btn btn-danger">Xóa</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </div>
             </div>
@@ -166,23 +166,43 @@
 
 </div>
 <script>
-    $(function () {
-        $('.mySelect').on('change', function () {
+    function abc(id){
+        // let option = $(this).val();
+        console.log("123")
+        let option = document.getElementById(id).value
+        console.log(id)
+        console.log(option)
+        let a = id.toString()+','+option.toString();
+        console.log(a)
 
-            let option = $(this).val();
-            console.log("123")
-            $.ajax({
-                url: 'http://localhost:8080/account/' + option,
-                type: "GET",
-                success: function () {
-                    window.location.href = 'http://localhost:8080/account';
-                },
-                error: function (error) {
-                    //TODO
-                }
-            })
+        $.ajax({
+            url: 'http://localhost:8080/account/account/' + a,
+            type: "GET",
+            success: function () {
+                window.location.href = 'http://localhost:8080/account';
+            },
+            error: function (error) {
+                //TODO
+            }
         })
-    })
+    }
+    // $(function () {
+    //     $('.mySelect').on('change', function () {
+    //
+    //         let option = $(this).val();
+    //         console.log("123")
+    //         $.ajax({
+    //             url: 'http://localhost:8080/account/' + option,
+    //             type: "GET",
+    //             success: function () {
+    //                 window.location.href = 'http://localhost:8080/account';
+    //             },
+    //             error: function (error) {
+    //                 //TODO
+    //             }
+    //         })
+    //     })
+    // })
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
