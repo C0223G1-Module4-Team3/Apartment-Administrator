@@ -18,7 +18,22 @@
     <link rel="stylesheet" href="/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="/css/adminlte.min.css">
-
+    <style>
+        .tin {
+            contain: layout;
+            display: flex;
+            align-items: center;
+            background-color: wheat;
+            border-radius: 12px;
+            border-left: 16px #a0b4ff;
+            min-width: 50px;
+            max-width: 200px;
+            max-height: 70px;
+            box-shadow: 0 5px 8px rgba(36, 245, 10, 0.08);
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.3s;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -61,6 +76,9 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
+                    <span th:if="${msg}!=null" th:text="${msg}" id="success"
+                          class="tin"
+                          style="float: right; background-color: rgba(97,139,234,0.87);font-size: 20px"></span>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
@@ -86,7 +104,8 @@
                             <td th:text="${room.bedroom}"></td>
                             <td th:text="${room.area}"></td>
                             <td>
-                                <a sec:authorize="hasAnyRole('Director','ApartmentManager')" th:href="@{/room/detail/{id}(id=${room.getId()})}" class="btn btn-primary"
+                                <a sec:authorize="hasAnyRole('Director','ApartmentManager')"
+                                   th:href="@{/room/detail/{id}(id=${room.getId()})}" class="btn btn-primary"
                                    title="Detail">
                                     <i
                                             class="fa-solid fa-circle-info"></i>
@@ -110,11 +129,20 @@
                         </tbody>
                     </table>
                     <tr>
-                        <a th:if="${roomList.hasPrevious()}"
-                           th:href="@{/room(page=${roomList.number-1})}">Previous</a>
-
-                        <a th:if="${roomList.hasNext()}"
-                           th:href="@{/room(page=${roomList.number+1})}">Next</a>
+                        <td>
+                            <a th:if="${roomList.hasPrevious()}"
+                               th:href="@{/room(page=${roomList.number-1})}"
+                               class="btn btn-outline-primary">
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </a>
+                        </td>
+                        <td>
+                            <a th:if="${roomList.hasNext()}"
+                               th:href="@{/room(page=${roomList.number+1})}"
+                               class="btn btn-outline-primary">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </td>
                     </tr>
                     <!--          modall maintence -->
                     <div th:each="room : ${roomList}" class="modal fade"
@@ -130,18 +158,16 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" style="text-align: center">
                                     <p>
                                         Are you sure want to maintenance this room ? </p>
-                                  <span>Have id : </span>
-                                    <h3 style="color: red"
-                                       th:text="${room.getId()}"></h3>
-                                    </p>
-                                    <h2 style="color:red;">This operation cannot be undone! </h2>
+                                    <h5>Have id : <span style="color: red;font-size: 20px"
+                                                        th:text="${room.getId()}"></span></h5>
+                                    <h4 style="color:red;">This operation cannot be undone! </h4>
                                 </div>
                                 <div class="modal-footer">
                                     <form th:action="@{/room/maintenance/{id}(id=${room.getId()})}" method="post">
-                                        <button type="submit" class="btn btn-primary">Accept</button>
+                                        <button type="submit" class="btn btn-danger">Accept</button>
                                     </form>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
                                     </button>

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/adminlte.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
     <style>
         #success {
@@ -40,7 +41,7 @@
         .myButton {
             border: none;
             background-color: transparent;
-            padding: 10px;
+            padding:10px;
             font-size: 16px;
             cursor: pointer;
         }
@@ -109,7 +110,7 @@
                     <form action="/find" method="post">
                     </form>
 
-                    <table class="table table-bordered table-sm">
+                    <table class="table table-striped">
                         <tr>
                             <td>Room</td>
                             <td>Customer</td>
@@ -123,6 +124,18 @@
                         </tr>
                         <tbody id="listContract"></tbody>
                     </table>
+                    <tr>
+                        <td>
+                            <button class="myButton btn btn-outline-primary" onclick="getPreviousPage()">
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                        </td>
+                        <td>
+                            <button class="myButton btn btn-outline-primary" onclick="getNextPage()">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </td>
+                    </tr>
                     <a id="buttons"></a>
 
 
@@ -306,6 +319,7 @@
                             })
 
                         }
+
 
 
                         function deleteContract(id) {

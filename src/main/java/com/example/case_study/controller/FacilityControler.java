@@ -11,6 +11,8 @@ import com.example.case_study.service.facility.IFacilityService;
 import com.example.case_study.service.room.IRoomService;
 import com.example.case_study.untils.WebUltils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -32,8 +34,8 @@ public class FacilityControler {
     @Autowired
     private IEmployeeService employeeService;
     @GetMapping("")
-    public String displayRoom(Principal principal, Model model){
-        model.addAttribute("facilityList",facilityService.display());
+    public String displayRoom(@PageableDefault(size = 5) Pageable pageable,Principal principal, Model model){
+        model.addAttribute("facilityList",facilityService.findAll(pageable));
         model.addAttribute("facilityCreate",new Facility());
         String userName = principal.getName();
         Employee employee = employeeService.findByPhone(userName);

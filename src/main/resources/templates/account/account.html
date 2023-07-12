@@ -63,12 +63,15 @@
                     <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
                     <!--          viet bảng ở đây-->
                     <div class="form-group row">
-                        <button title="Add new customer" class="btn-primary"><a style="color: white"
-                                                                                th:href="@{/account/create}"><i
-                                class="fa-solid fa-plus"></i></a></button>
+                        <div class="col-12 col-md-12 col-lg-12"
+                             style="background-color: #FFFFFF;text-align:right;position: relative;">
+                            <button title="Add new customer" class="btn btn-primary"><a style="color: white"
+                                                                                        th:href="@{/account/create}"><i
+                                    class="fa-solid fa-plus"></i></a></button>
+                        </div>
                     </div>
-                    <table class="table table-striped">
-                        <thead>
+                    <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
+                        <thead style="background-color: #FFFFFF">
                         <tr>
                             <th>STT</th>
                             <th>Name</th>
@@ -81,8 +84,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="accounts, ac : ${account}">
-                            <td th:text="${ac.count}"></td>
+                        <tr th:each="accounts : ${account}">
+                            <td th:text="${accounts.id}"></td>
                             <td th:text="${accounts.name}"></td>
                             <td th:text="${accounts.gender ? 'Nam' : 'Nữ'}"></td>
                             <td th:text="${accounts.dayOfBirth}"></td>
@@ -145,17 +148,16 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <p>Are you sure delete Account : </p> <span style="color: red"
-                                                                    th:text="${accounts.name + ' with Role : ' + accounts.getAccountUser().getRoleUser().name + ' ?'}"> </span>
-                    </div>
+                <div class="modal-body" style="text-align: center">
+                    <h5>Are you sure delete Account : <span style="color: red"
+                                                            th:text="${accounts.name}"></span> ? </h5>
+                    <h4 style="color:red;">This operation cannot be undone! </h4>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                    </button>
                     <form th:action="@{/account/delete/{id}(id=${accounts.id})}" method="post">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng
+                        </button>
                     </form>
                 </div>
             </div>
@@ -185,24 +187,7 @@
                 //TODO
             }
         })
-    }
-    // $(function () {
-    //     $('.mySelect').on('change', function () {
-    //
-    //         let option = $(this).val();
-    //         console.log("123")
-    //         $.ajax({
-    //             url: 'http://localhost:8080/account/' + option,
-    //             type: "GET",
-    //             success: function () {
-    //                 window.location.href = 'http://localhost:8080/account';
-    //             },
-    //             error: function (error) {
-    //                 //TODO
-    //             }
-    //         })
-    //     })
-    // })
+    })
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

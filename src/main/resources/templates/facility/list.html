@@ -18,7 +18,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="bootstrap520/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="datatables/css/dataTables.bootstrap5.min.css"/>
-
+    <style>
+        .tin {
+            contain: layout;
+            display: flex;
+            align-items: center;
+            background-color: wheat;
+            border-radius: 12px;
+            border-left: 16px #a0b4ff;
+            min-width: 50px;
+            max-width: 200px;
+            max-height: 70px;
+            box-shadow: 0 5px 8px rgba(36, 245, 10, 0.08);
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.3s;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -52,7 +67,6 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title"></h3>
-
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -61,6 +75,9 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
+                    <span th:if="${msg}!=null" th:text="${msg}" id="success"
+                          class="tin"
+                          style="float: right; background-color: rgba(97,139,234,0.87);font-size: 20px"></span>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
@@ -79,7 +96,7 @@
                             <th>Id</th>
                             <th>Name Facility</th>
                             <th>Update</th>
-                            <th>Set Maintenance</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody style="background-color: #F9F9FA">
@@ -103,6 +120,18 @@
                         </tr>
                         </tbody>
                     </table>
+                    <tr>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Facility navigation">
+                                <a th:if="${facilityList.hasPrevious()}" th:href="@{/facility(page=${facilityList.number-1})}" class="btn btn-outline-primary">
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </a>
+                                <a th:if="${facilityList.hasNext()}" th:href="@{/facility(page=${facilityList.number+1})}" class="btn btn-outline-primary">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
@@ -157,23 +186,23 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header"  >
                     <h5 class="modal-title"
                         th:attr="id='deleteModalLabel-' + ${facilityDelete.getId()}">Delete this facility</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p>
-                        Are you sure want to delete this facility in room ? </p>
+                <div class="modal-body" style="text-align: center">
+                    <h6>
+                        Are you sure want to delete this facility in room ? </h6>
 
-                    <p style="color: red"
-                       th:text="${facilityDelete.getName()}"></p>
+                    <h5 style="color: red"
+                       th:text="${facilityDelete.getName()}"></h5>
                     </p>
-                    <h2 style="color:red;">This operation cannot be undone! </h2>
+                    <h4 style="color:red;">This operation cannot be undone! </h4>
                 </div>
                 <div class="modal-footer">
                     <form th:action="@{/facility/delete/{id}(id=${facilityDelete.getId()})}" method="post">
-                        <button type="submit" class="btn btn-primary">Delete</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
                     </button>

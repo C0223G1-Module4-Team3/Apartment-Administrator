@@ -84,7 +84,7 @@ public class RoomControler {
     @PostMapping("maintenance/{id}")
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         roomService.maintenance(id);
-        redirectAttributes.addFlashAttribute("msg", "Delete success");
+        redirectAttributes.addFlashAttribute("msg", "Maintenance success");
         return "redirect:/room";
     }
 }

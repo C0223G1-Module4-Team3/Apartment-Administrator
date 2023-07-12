@@ -31,12 +31,13 @@ public class EmployeeController {
     private IPositionService positionService;
 
     @GetMapping()
-    public String showListEmployee(Principal principal, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                   Model model) {
-         model.addAttribute("employees", employeeService.displayListEmployee(pageable));
+    public String showListEmployee(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                   Model model, Principal principal) {
+        model.addAttribute("employees", employeeService.displayListEmployee(pageable));
+//        model.addAttribute("positionList", positionService.displayListPosition());
         String userName = principal.getName();
         Employee employee = employeeService.findByPhone(userName);
-        org.springframework.security.core.userdetails.User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUltils.toString(loginedUser);
         model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "employee/list";
@@ -44,8 +45,8 @@ public class EmployeeController {
 
     @GetMapping("create")
     public String showFormCreate(Model model) {
-      model.addAttribute("employeeDto",new EmployeeDto());
-      model.addAttribute("positionList",positionService.displayListPosition());
+        model.addAttribute("employeeDto", new EmployeeDto());
+        model.addAttribute("positionList", positionService.displayListPosition());
         return "employee/create";
     }
 
@@ -54,61 +55,69 @@ public class EmployeeController {
                                     Model model, RedirectAttributes redirectAttributes) {
         new EmployeeDto().validate(employeeDto, bindingResult);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("positionList",positionService.displayListPosition());
+            model.addAttribute("positionList", positionService.displayListPosition());
 //            model.addAttribute("employeeDto",employeeDto);
-                return "employee/create";
+            return "employee/create";
         }
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDto, employee);
         employeeService.createEmployee(employee);
-        redirectAttributes.addFlashAttribute("message","Create finish");
+        redirectAttributes.addFlashAttribute("message", "Create finish");
         return "redirect:/employee";
     }
+
     @PostMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable int id,RedirectAttributes redirectAttributes){
-        if (employeeService.deleteEmployee(id)){
-            redirectAttributes.addFlashAttribute("message", "Xoá Thành công");
-        }else {
-            redirectAttributes.addFlashAttribute("message", "Không tìm thấy id");
+    public String deleteEmployee(@PathVariable int id, RedirectAttributes redirectAttributes) {
+        if (employeeService.deleteEmployee(id)) {
+            redirectAttributes.addFlashAttribute("message", "Delete success");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Not found id");
         }
         return "redirect:/employee";
     }
+
     @GetMapping("/edit/{id}")
-    public String showFormEditEmployee(@PathVariable int id,RedirectAttributes redirectAttributes,Model model){
-        if (employeeService.getEmployeeById(id) == null){
-            redirectAttributes.addFlashAttribute("message","Find not Found id");
+    public String showFormEditEmployee(@PathVariable int id, RedirectAttributes redirectAttributes, Model model) {
+        if (employeeService.getEmployeeById(id) == null) {
+            redirectAttributes.addFlashAttribute("message", "Find not Found id");
             return "redirect:/employee";
-        }else {
+        } else {
             EmployeeDto employeeDto = new EmployeeDto();
-            BeanUtils.copyProperties(employeeService.getEmployeeById(id),employeeDto);
-            model.addAttribute("employeeDto",employeeDto);
-            model.addAttribute("positionList",positionService.displayListPosition());
+            BeanUtils.copyProperties(employeeService.getEmployeeById(id), employeeDto);
+            model.addAttribute("employeeDto", employeeDto);
+            model.addAttribute("positionList", positionService.displayListPosition());
             return "employee/edit";
         }
     }
+
     @PostMapping("/edit")
-    public String editEmployee(@Valid @ModelAttribute EmployeeDto employeeDto,BindingResult bindingResult,Model model,RedirectAttributes redirectAttributes){
-        new EmployeeDto().validate(employeeDto,bindingResult);
-        if (bindingResult.hasErrors()){
+    public String editEmployee(@Valid @ModelAttribute EmployeeDto employeeDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        new EmployeeDto().validate(employeeDto, bindingResult);
+        if (bindingResult.hasErrors()) {
             return "employee/edit";
         }
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeDto,employee);
+        BeanUtils.copyProperties(employeeDto, employee);
         employeeService.editEmployee(employee);
-        redirectAttributes.addFlashAttribute("message","Fixed");
-                return "redirect:/employee";
+        redirectAttributes.addFlashAttribute("message", "Fixed");
+        return "redirect:/employee";
     }
+
     @PostMapping("/search")
-    public String search(@RequestParam("name") String name, @RequestParam("citizenId") String citizenId, @RequestParam("phoneNumber") String phoneNumber, Pageable pageable, Model model) {
+    public String search(@RequestParam("name") String name,Principal principal, @RequestParam("citizenId") String citizenId, @RequestParam("phoneNumber") String phoneNumber, Pageable pageable, Model model) {
         Page<Employee> employees = employeeService.searchEmployeeByName(pageable, name, citizenId, phoneNumber);
         model.addAttribute("employees", employees);
         model.addAttribute("positionList", positionService.displayListPosition());
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        org.springframework.security.core.userdetails.User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "employee/list";
     }
 
     @GetMapping("/detail/{id}")
-    public String showDetailEmployee(@PathVariable int id, RedirectAttributes redirectAttributes,
-                                     Principal principal,Model model) {
+    public String showDetailEmployee(@PathVariable int id, Principal principal, RedirectAttributes redirectAttributes, Model model) {
         if (employeeService.getEmployeeById(id) == null) {
             redirectAttributes.addFlashAttribute("message", "Find not Found id");
             return "redirect:/employee";
@@ -119,7 +128,7 @@ public class EmployeeController {
 //            model.addAttribute("positionList", positionService.displayListPosition());
             String userName = principal.getName();
             Employee employee = employeeService.findByPhone(userName);
-            org.springframework.security.core.userdetails.User loginedUser = (User) ((Authentication) principal).getPrincipal();
+            User loginedUser = (User) ((Authentication) principal).getPrincipal();
             String userInfo = WebUltils.toString(loginedUser);
             model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
             return "employee/detail";
