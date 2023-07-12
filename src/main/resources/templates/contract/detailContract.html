@@ -176,11 +176,11 @@
                                     </tr>
                                     <tr>
                                         <td>Price per month</td>
-                                        <td th:text="${contract.room.price}"></td>
+                                        <td th:text="${contract.room.price} + '$'"></td>
                                     </tr>
                                     <tr>
                                         <td>Area</td>
-                                        <td th:text="${contract.room.area}"></td>
+                                        <td th:text="${contract.room.area} + 'm²'"> </td>
                                     </tr>
                                     <tr>
                                         <td>Numbers of bedroom</td>

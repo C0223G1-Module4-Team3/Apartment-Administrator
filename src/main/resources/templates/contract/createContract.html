@@ -69,8 +69,8 @@
                             <div class="col-12 col-md-4">
                                 <label class="form-label">Chose kind contract <span
                                         class="text-danger">*</span></label>
-
-                                   <select th:field="*{kindContract.id}">
+<br>
+                                   <select th:field="*{kindContract.id}" class="form-control col-12 col-md-4">
                                         <option th:each="kc, iterStats : ${kindContracts}" th:text="${kc.name}" th:value="${kc.id}"></option>
                                    </select>
 

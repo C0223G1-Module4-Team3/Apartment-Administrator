@@ -45,7 +45,33 @@
             font-size: 16px;
             cursor: pointer;
         }
-
+        .search-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        #room {
+            margin: 0 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 150px;
+        }
+        button {
+            margin-left: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #0062CC;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -88,8 +114,10 @@
 
                     <!--nút tìm kiếm-->
 
-                    <p>Find by id room<input id="room" type="number" value="0">
-                        <button onclick="getConTractListByRoom1()">Search</button>
+                    <p class="search-form">
+                        Find by id room
+                        <input id="room" type="number" value="0">
+                        <button onclick="getConTractListByRoom1()" class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                     </p>
 
                     <div class="card-tools">
@@ -109,18 +137,19 @@
                     <form action="/find" method="post">
                     </form>
 
-                    <table class="table table-striped">
+                    <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
+                        <thead style="background-color: #FFFFFF">
                         <tr>
-                            <td>Room</td>
-                            <td>Customer</td>
-                            <td>Employee</td>
-                            <td>Date</td>
-                            <td>Kind contract</td>
-                            <td>Period</td>
-                            <td></td>
-
+                            <th>Room</th>
+                            <th>Customer</th>
+                            <th>Employee</th>
+                            <th>Date</th>
+                            <th>Kind contract</th>
+                            <th>Period</th>
+                            <th></th>
                         </tr>
-                        <tbody id="listContract"></tbody>
+                        </thead>
+                        <tbody id="listContract" style="background-color: #F9F9FA"></tbody>
                     </table>
 
                     <tr>
@@ -183,14 +212,13 @@
                                     $("#buttons").html(buttons);
 
                                     for (let c of data.content) {
-                                        if (c.managerConfirm) {
 
-                                            document.getElementById(c.id).style.backgroundColor = "blue"
+                                        if (!c.directorConfirm) {
 
+                                            document.getElementById(c.id).style.backgroundColor ="#9933CC"
                                         }
-                                        if (c.directorConfirm) {
-
-                                            document.getElementById(c.id).style.backgroundColor = "yellow"
+                                        if(!c.managerConfirm){
+                                            document.getElementById(c.id).style.backgroundColor ="Silver"
                                         }
 
 
@@ -221,6 +249,88 @@
                             getContractList();
                         })
 
+                        function getConTractListByRoom1() {
+                            page = 0
+                            getContractListByRoom();
+                        }
+
+                        function getContractListByRoom() {
+                            let room = document.getElementById("room").value * 1;
+                            if (room <= 0) {
+                                getContractList();
+                            }
+
+                            $('.modal-backdrop').css("display", "none");
+                            $.ajax({
+                                url: 'http://localhost:8080/contracts/room/' + room + '/' + page,
+                                type: 'GET',
+                                success: function (data) {
+                                    console.log(JSON.stringify(data))
+                                    if (data.content.length == 0) {
+                                        if (page == 0) {
+                                            return;
+                                        }
+                                        page--;
+                                        return
+                                    }
+
+                                    let contractStr = '';
+                                    for (let c of data.content) {
+                                        contractStr += `
+                 <tr id="${c.id}">
+        <td>${c.room.id}</td>
+        <td>${c.customer.name}</td>
+        <td>${c.employee.name}</td>
+        <td>${c.date_start}</td>
+        <td>${c.kindContract.name}</td>
+        <td>${c.period}</td>
+        <td>
+            <form method="post" action="/contract/detail">
+                <input name="id" value="${c.id}" hidden>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></button>
+            </form>
+        </td>
+    </tr>
+                `;
+
+                                    }
+                                    let buttons = `<button class="myButton" onclick="getPreviousPage()">Previous</button> <button class="myButton" onclick="getNextPage()">Next</button>`
+                                    $("#listContract").html(contractStr);
+                                    $("#buttons").html(buttons);
+
+                                    for (let c of data.content) {
+
+                                        if (!c.directorConfirm) {
+
+                                            document.getElementById(c.id).style.backgroundColor ="#9933CC"
+                                        }
+                                        if(!c.managerConfirm){
+                                            document.getElementById(c.id).style.backgroundColor ="Silver"
+                                        }
+
+
+                                    }
+
+                                },
+                                error: function (error) {
+                                }
+                            })
+
+                        }
+
+                        function getPreviousPageRoom() {
+                            if (page == 0) {
+                                return;
+                            }
+                            page--;
+                            getContractListByRoom();
+
+                        }
+
+                        function getNextPageRoom() {
+                            page++;
+                            getContractListByRoom();
+                        }
 
 
                     </script>

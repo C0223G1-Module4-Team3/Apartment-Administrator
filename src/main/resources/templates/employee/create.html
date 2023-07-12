@@ -168,12 +168,10 @@
                                     class="text-danger">*</span></label><br>
                             <select th:field="*{position}" id="position" class="form-control">
                                 <option th:each="position, iterStats : ${positionList}"
-                                        th:text="${position.name}" th:value="${position.id}"></option>
+                                       th:if="${position.id}!=1" th:text="${position.name}" th:value="${position.id}"></option>
                             </select>
-
                         </div>
                     </div>
-
                     <div class="div" style="margin: 3px">
                         <button type="submit" class="btn btn-primary mr-2">Save</button>
                         <a style="color: white" th:href="@{/employee}">

@@ -99,10 +99,10 @@
                         <tr th:each="room,iterStats : ${roomList}" th:if="${!room.isMaintenance()}">
                             <td th:text="${room.id}"></td>
                             <td th:text="${room.floor}"></td>
-                            <td th:text="${room.price}"></td>
+                            <td th:text="${room.price} +' $'"> </td>
                             <td th:text="${room.maxPeople}"></td>
                             <td th:text="${room.bedroom}"></td>
-                            <td th:text="${room.area}"></td>
+                            <td th:text="${room.area} + ' m²'"> </td>
                             <td>
                                 <a sec:authorize="hasAnyRole('Director','ApartmentManager')"
                                    th:href="@{/room/detail/{id}(id=${room.getId()})}" class="btn btn-primary"

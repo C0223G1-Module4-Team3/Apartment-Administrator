@@ -21,7 +21,7 @@ public class ContractsController {
 
 
     @GetMapping("/{page}")
-    ResponseEntity<Page<Contract>> displayContractList(@PageableDefault(size = 7) Pageable pageable, @PathVariable int page) {
+    ResponseEntity<Page<Contract>> displayContractList(@PageableDefault(size = 5) Pageable pageable, @PathVariable int page) {
         Page<Contract> pages = contractService.displayList(pageable.withPage(page));
         if (pages == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -30,7 +30,7 @@ public class ContractsController {
     }
 
     @GetMapping("room/{room}/{page}")
-    ResponseEntity<Page<Contract>> displayContractListRoom(@PageableDefault(size = 7) Pageable pageable,
+    ResponseEntity<Page<Contract>> displayContractListRoom(@PageableDefault(size = 5) Pageable pageable,
                                                            @PathVariable int page,@PathVariable int room) {
         Page<Contract> pages = contractService.displayListByRoom(room,pageable.withPage(page));
         if (pages == null) {
@@ -40,7 +40,7 @@ public class ContractsController {
     }
 
     @GetMapping("/director/room/{room}/{page}")
-    ResponseEntity<Page<Contract>> displayContractListForDirector(@PageableDefault(size = 7) Pageable pageable,
+    ResponseEntity<Page<Contract>> displayContractListForDirector(@PageableDefault(size = 5) Pageable pageable,
                                                                   @PathVariable int page, @PathVariable int room) {
         Page<Contract> pages = contractService.displayListByRoomToDirector(room,pageable.withPage(page));
         if (pages == null) {
@@ -50,7 +50,7 @@ public class ContractsController {
     }
 
     @GetMapping("/director/{page}")
-    ResponseEntity<Page<Contract>> displayContractListRoomForDirector(@PageableDefault(size = 7) Pageable pageable, @PathVariable int page) {
+    ResponseEntity<Page<Contract>> displayContractListRoomForDirector(@PageableDefault(size = 5) Pageable pageable, @PathVariable int page) {
         Page<Contract> pages = contractService.displayListForDirector(pageable.withPage(page));
         if (pages == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -86,7 +86,7 @@ public class ContractsController {
     }
 
     @GetMapping("/accountant/{page}")
-    ResponseEntity<Page<Contract>> displayContractListToAccountant(@PageableDefault(size = 3) Pageable pageable, @PathVariable int page) {
+    ResponseEntity<Page<Contract>> displayContractListToAccountant(@PageableDefault(size = 5) Pageable pageable, @PathVariable int page) {
         Page<Contract> pages = contractService.getListToAccountant(pageable.withPage(page));
         if (pages == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
