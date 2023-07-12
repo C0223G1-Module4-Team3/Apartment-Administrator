@@ -31,7 +31,9 @@
                                 <label for="fullname" class="form-label">Full Name <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="fullname" value="" required
-                                       th:field="*{name}">
+                                       th:field="*{name}"
+                                       pattern="^[\p{Lu}][\p{Ll}]{1,8}(\s([\p{Lu}]|[\p{Lu}][\p{Ll}]{1,10})){0,5}$"
+                                       title="The name must start with an uppercase letter followed by a lowercase letter">
                                 <span style="color: darkred" th:if="${#fields.hasErrors('name')}"
                                       th:errors="*{name}"></span>
                             </div>
@@ -49,14 +51,19 @@
                             <div class="col-12 col-md-3">
                                 <label class="form-label">Gender <span class="text-danger">*</span></label><br>
                                 <input type="radio" name="gender" value="false"
-                                       th:field="*{gender}">Nu
-                                <input type="radio" name="gender" value="true" th:field="*{gender}">Nam
+                                       th:field="*{gender}">Female
+                                <input type="radio" name="gender" value="true" th:field="*{gender}">Male
                             </div>
                             <!--password-->
                             <div class="col-12 col-md-3">
                                 <label class="form-label">Password <span class="text-danger">*</span></label><br>
                                 <input type="password" name="password" value="false"
-                                       th:field="*{password}">
+                                       th:field="*{password}"
+                                       pattern="^([A-Z])[a-zA-Z0-9]{5,}$"
+                                       required
+                                       title="Password must be capitalized and at least 6 characters">
+                                <span style="color: darkred" th:if="${#fields.hasErrors('password')}"
+                                      th:errors="*{password}"></span>
                             </div>
                             <!--                            citizenId-->
 
@@ -64,7 +71,9 @@
                                 <label for="citizenId" class="form-label">Citizen Id <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="citizenId" value="" required
-                                       th:field="*{citizenId}">
+                                       th:field="*{citizenId}"
+                                       placeholder="Enter citizen id"
+                                       pattern="^[0-9]{12}$" title="citizenId must be 12 number">
                                 <span style="color: darkred" th:if="${#fields.hasErrors('citizenId')}"
                                       th:errors="*{citizenId}"></span>
                             </div>
@@ -89,7 +98,10 @@
                       <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
                     </svg>
                   </span>
-                                    <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                                    <input  placeholder="Enter email"
+                                            required title="Email Invalidate"
+                                            type="email" class="form-control"
+                                            id="email" th:field="*{email}">
 
                                 </div>
                             </div>
@@ -106,7 +118,9 @@
                     </svg>
                   </span>
                                     <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
-                                           th:field="*{phoneNumber}">
+                                           th:field="*{phoneNumber}"
+                                           required pattern="^0[0-9]{9}$"
+                                           title="The phone number must start with 0 and be 10 digits">
                                     <span style="color: darkred" th:if="${#fields.hasErrors('phoneNumber')}"
                                           th:errors="*{phoneNumber}"></span>
                                 </div>

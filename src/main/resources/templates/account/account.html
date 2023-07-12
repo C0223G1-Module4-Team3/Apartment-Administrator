@@ -31,7 +31,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Admin List</h1>
+                        <h1>User List</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -81,8 +81,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="accounts : ${account}">
-                            <td th:text="${accounts.id}"></td>
+                        <tr th:each="accounts, ac : ${account}">
+                            <td th:text="${ac.count}"></td>
                             <td th:text="${accounts.name}"></td>
                             <td th:text="${accounts.gender ? 'Nam' : 'Nữ'}"></td>
                             <td th:text="${accounts.dayOfBirth}"></td>
@@ -148,7 +148,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <p>Are you sure delete Account : </p> <span style="color: red"
-                                                                    th:text="${accounts.name}"> ? </span>
+                                                                    th:text="${accounts.name + ' with Role : ' + accounts.getAccountUser().getRoleUser().name + ' ?'}"> </span>
                     </div>
                 </div>
                 <div class="modal-footer">
