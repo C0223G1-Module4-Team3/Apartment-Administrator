@@ -15,6 +15,11 @@ public class EmployeeSevice implements IEmployeeService {
     private IEmployeeRepository employeeRepository;
 
     @Override
+    public void setPositionEmployee(int id, int position) {
+        employeeRepository.setEmployee(position,id);
+    }
+
+    @Override
     public List<Employee> displayListEmployee() {
         return employeeRepository.findAll();
     }
@@ -46,6 +51,12 @@ public class EmployeeSevice implements IEmployeeService {
         employee.getAccountUser().setStatus(true);
         employeeRepository.save(employee);
         return true;
+    }
+
+    @Override
+    public void setEmployee(int user, int id) {
+        employeeRepository.setEmployee(user,id);
+
     }
 
     @Override
