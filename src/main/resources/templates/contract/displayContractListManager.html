@@ -36,10 +36,11 @@
             animation: slideInLeft ease 2s, fadeOut linear 2s 3s forwards;
             transition: all linear 3s;
         }
+
         .myButton {
             border: none;
             background-color: transparent;
-            padding:10px;
+            padding: 10px;
             font-size: 16px;
             cursor: pointer;
         }
@@ -80,6 +81,17 @@
             <div class="card">
                 <div class="card-header">
 
+                    <a sec:authorize="hasAnyRole('Director','Business','SaleManager')" class="btn btn-primary"
+                       th:href="@{/contract/create}">
+                        <i class="fas fa-plus"></i>
+                    </a>
+
+                    <!--nút tìm kiếm-->
+
+                    <p>Find by id room<input id="room" type="number" value="0">
+                        <button onclick="getConTractListByRoom1()">Search</button>
+                    </p>
+
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -97,7 +109,7 @@
                     <form action="/find" method="post">
                     </form>
 
-                    <table class="table table-striped">
+                    <table class="table table-bordered table-sm">
                         <tr>
                             <td>Room</td>
                             <td>Customer</td>
@@ -111,9 +123,8 @@
                         </tr>
                         <tbody id="listContract"></tbody>
                     </table>
+                    <a id="buttons"></a>
 
-                    <button class="myButton" onclick="getPreviousPage()">Previous</button>
-                    <button class="myButton" onclick="getNextPage()">Next</button>
 
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
                             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -237,7 +248,9 @@
 
                                     }
 
+                                    let buttons = `<button class="myButton" onclick="getPreviousPage()">Previous</button> <button class="myButton" onclick="getNextPage()">Next</button>`
                                     $("#listContract").html(contractStr);
+                                    $("#buttons").html(buttons);
 
                                     for (let c of data.content) {
                                         if (c.managerConfirm) {
@@ -295,7 +308,6 @@
                         }
 
 
-
                         function deleteContract(id) {
                             $.ajax({
                                 url: 'http://localhost:8080/contracts/delete/' + id,
@@ -311,6 +323,168 @@
                                 }
                             })
 
+                        }
+
+                        function getConTractListByRoom1() {
+                            page = 0
+                            getContractListByRoom();
+                        }
+
+                        function getContractListByRoom() {
+                            let room = document.getElementById("room").value * 1;
+                            if (room <= 0) {
+                                getContractList();
+                            }
+
+                            $('.modal-backdrop').css("display", "none");
+                            $.ajax({
+                                url: 'http://localhost:8080/contracts/room/' + room + '/' + page,
+                                type: 'GET',
+                                success: function (data) {
+                                    console.log(JSON.stringify(data))
+                                    if (data.content.length == 0) {
+                                        if (page == 0) {
+                                            return;
+                                        }
+                                        page--;
+                                        return
+                                    }
+
+                                    let contractStr = '';
+                                    for (let c of data.content) {
+                                        contractStr += `
+                 <tr id="${c.id}">
+        <td>${c.room.id}</td>
+        <td>${c.customer.name}</td>
+        <td>${c.employee.name}</td>
+        <td>${c.date_start}</td>
+        <td>${c.kindContract.name}</td>
+        <td>${c.period}</td>
+        <td>
+            <form method="post" action="/contract/detail">
+                <input name="id" value="${c.id}" hidden>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></button>
+            </form>
+        </td>
+
+        <td>
+
+
+<a id="mc${c.id}" href="#" class="btn btn-danger" data-toggle="modal"
+       data-target="#manager-${c.id}">Manager Confirm</a>
+
+           <div class="modal fade"
+         id="manager-${c.id}"
+         tabindex="-1" role="dialog"
+         attr="aria-labelledby='managerModalLabel-' + ${c.id}"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        attr="id='managerModalLabel-' + ${c.id}">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>Please double check the information before confirming, this cannot be undone</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                    </button>
+                    <button onclick="managerConfirm(${c.id})" class="btn btn-danger" type="button" >Manager confirm</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </td>
+
+
+
+        <td>
+         <a href="#" class="btn btn-danger" data-toggle="modal"
+       data-target="#deleteModal-${c.id}"><i
+            class="fa-regular fa-trash-can"></i></a>
+
+           <div class="modal fade"
+         id="deleteModal-${c.id}"
+         tabindex="-1" role="dialog"
+         attr="aria-labelledby='deleteCustomerModalLabel-' + ${c.id}"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        attr="id='deleteCustomerModalLabel-' + ${c.id}">Delete contract</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p>Please double check the information before deleting, this cannot be undone</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                    </button>
+                     <button type="button" class="btn btn-danger" onclick="deleteContract(${c.id})">Delete
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </td>
+    </tr>
+                `;
+
+                                    }
+
+                                    $("#listContract").html(contractStr);
+                                    $("#buttons").html('<button class="myButton" onclick="getPreviousPageRoom(' + room + ')">Previous</button>\n' +
+                                        '                    <button class="myButton" onclick="getNextPageRoom(' + room + ')">Next</button>');
+
+                                    for (let c of data.content) {
+                                        if (c.managerConfirm) {
+                                            document.getElementById("mc" + c.id).style.display = "none"
+                                            document.getElementById(c.id).style.backgroundColor = "blue"
+
+                                        }
+                                        if (c.directorConfirm) {
+                                            document.getElementById(c.id).style.backgroundColor = "yellow"
+                                        }
+
+
+                                    }
+
+                                },
+                                error: function (error) {
+                                }
+                            })
+
+                        }
+
+                        function getPreviousPageRoom() {
+                            if (page == 0) {
+                                return;
+                            }
+                            page--;
+                            getContractListByRoom();
+
+                        }
+
+                        function getNextPageRoom() {
+                            page++;
+                            getContractListByRoom();
                         }
 
                     </script>

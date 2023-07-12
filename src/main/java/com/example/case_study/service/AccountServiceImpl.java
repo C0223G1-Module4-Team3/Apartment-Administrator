@@ -21,6 +21,11 @@ public class AccountServiceImpl implements IAccountService {
     private IRoleUserRepository roleUser;
 
     @Override
+    public void setRoleAccount(int id, int role) {
+        accountRepository.setAccount(role, id);
+    }
+
+    @Override
     public AccountUser findByPhone(String phone) {
         if (accountRepository.findAccountUserByPhoneNumber(phone) == null ){
             return null;
@@ -46,5 +51,15 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Optional<AccountUser> findById(int id) {
         return accountRepository.findById(id);
+    }
+
+    @Override
+    public AccountUser getAccountById(int id) {
+        return accountRepository.getAccountById(id);
+    }
+
+    @Override
+    public void editAccount(AccountUser accountUser) {
+        accountRepository.save(accountUser);
     }
 }

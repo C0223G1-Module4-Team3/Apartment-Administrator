@@ -25,6 +25,34 @@
             animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
             transition: all linear 0.3s;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        @media screen and (max-width: 768px) {
+            th, td {
+                display: block;
+            }
+
+            th {
+                text-align: center;
+                font-weight: bold;
+            }
+
+            td:before {
+                content: attr(data-label);
+                float: left;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+        }
     </style>
     <!-- Thư viện Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
