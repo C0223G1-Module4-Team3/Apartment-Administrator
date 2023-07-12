@@ -80,10 +80,10 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <button sec:authorize="hasAnyRole('Director','Business','SaleManager')" class="btn btn-primary"
+                    <a sec:authorize="hasAnyRole('Director','Business','SaleManager')" class="btn btn-primary"
                             th:href="@{/contract/create}">
                         <i class="fas fa-plus"></i>
-                    </button>
+                    </a>
 
                     <!--nút tìm kiếm-->
 

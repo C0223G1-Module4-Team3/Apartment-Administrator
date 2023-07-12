@@ -81,6 +81,11 @@
             <div class="card">
                 <div class="card-header">
 
+                    <a sec:authorize="hasAnyRole('Director','Business','SaleManager')" class="btn btn-primary"
+                       th:href="@{/contract/create}">
+                        <i class="fas fa-plus"></i>
+                    </a>
+
                     <!--nút tìm kiếm-->
 
                     <p>Find by id room<input id="room" type="number" value="0">
