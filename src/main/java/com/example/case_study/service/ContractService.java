@@ -34,6 +34,16 @@ public class ContractService implements IContractService {
     }
 
     @Override
+    public Page<Contract> displayListByRoom(int id, Pageable pageable) {
+        return contractRepository.findContractsByRoom(id, pageable);
+    }
+
+    @Override
+    public Page<Contract> displayListByRoomToDirector(int id, Pageable pageable) {
+        return contractRepository.findContractsByRoomToDirector(id, pageable);
+    }
+
+    @Override
     public Page<Contract> displayListForDirector(Pageable pageable) {
         return contractRepository.findAllByFlagDeleteIsFalseAndManagerConfirmIsTrue(pageable);
     }

@@ -21,6 +21,11 @@ public class AccountServiceImpl implements IAccountService {
     private IRoleUserRepository roleUser;
 
     @Override
+    public void setRoleAccount(int id, int role) {
+        accountRepository.setAccount(role, id);
+    }
+
+    @Override
     public AccountUser findByPhone(String phone) {
         if (accountRepository.findAccountUserByPhoneNumber(phone) == null ){
             return null;

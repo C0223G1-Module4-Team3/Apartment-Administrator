@@ -15,6 +15,11 @@ public class EmployeeSevice implements IEmployeeService {
     private IEmployeeRepository employeeRepository;
 
     @Override
+    public void setPositionEmployee(int id, int position) {
+        employeeRepository.setEmployee(position,id);
+    }
+
+    @Override
     public List<Employee> displayListEmployee() {
         return employeeRepository.findAll();
     }

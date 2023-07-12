@@ -16,8 +16,8 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update employee set account_user_id=:user where id=:id",nativeQuery = true)
-    void setEmployee(@Param(value = "user") int user,@Param(value = "id") int id);
+    @Query(value = "update employee set position_id=:position where id=:id",nativeQuery = true)
+    void setEmployee(@Param(value = "position") int position,@Param(value = "id") int id);
     Page<Employee> findAllByFlagDeleteIsFalseAndAccountUserIsNull(Pageable pageable);
 
     Employee findById(int id);
