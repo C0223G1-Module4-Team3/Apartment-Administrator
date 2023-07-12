@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IEmployeeService {
+
+    void setPositionEmployee(int id, int position);
     List<Employee>displayListEmployee();
     Page<Employee> displayListEmployee(Pageable pageable);
 

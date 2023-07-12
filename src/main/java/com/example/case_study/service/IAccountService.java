@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAccountService {
+    void setRoleAccount(int id, int role);
 
     AccountUser findByPhone(String phone);
     RoleUser findRoleById(int id);

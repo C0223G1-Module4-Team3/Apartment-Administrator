@@ -16,7 +16,10 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
     Page<Contract> findAllByFlagDeleteIsFalse(Pageable pageable);
 
     @Query(value = "select * from contracts where (room_id = :id and flag_delete = 0)",nativeQuery = true)
-    Page<Contract> findContractByRoom(@Param(value = "id") int id,Pageable pageable);
+    Page<Contract> findContractsByRoom(@Param(value = "id") int id,Pageable pageable);
+
+    @Query(value = "select * from contracts where (room_id = :id and flag_delete = 0 and manager_confirm =1)",nativeQuery = true)
+    Page<Contract> findContractsByRoomToDirector(@Param(value = "id") int id,Pageable pageable);
     Optional<Contract> getContractByIdAndFlagDeleteIsFalse(Integer id);
     Optional<Contract> getContractByIdAndFlagDeleteIsFalseAndManagerConfirmIsFalse(Integer id);
     Optional<Contract> getContractByIdAndFlagDeleteIsFalseAndManagerConfirmIsTrueAndDirectorConfirmIsFalse(Integer id);

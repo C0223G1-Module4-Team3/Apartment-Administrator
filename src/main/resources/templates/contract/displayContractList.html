@@ -40,7 +40,7 @@
         .myButton {
             border: none;
             background-color: transparent;
-            padding:10px;
+            padding: 10px;
             font-size: 16px;
             cursor: pointer;
         }
@@ -84,6 +84,13 @@
                             th:href="@{/contract/create}">
                         <i class="fas fa-plus"></i>
                     </button>
+
+                    <!--nút tìm kiếm-->
+
+                    <p>Find by id room<input id="room" type="number" value="0">
+                        <button onclick="getConTractListByRoom1()">Search</button>
+                    </p>
+
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -114,9 +121,9 @@
                         </tr>
                         <tbody id="listContract"></tbody>
                     </table>
+                    <a id="buttons"></a>
 
-                    <button class="myButton" onclick="getPreviousPage()">Previous</button>
-                    <button class="myButton" onclick="getNextPage()">Next</button>
+
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
                             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
                             crossorigin="anonymous"></script>
@@ -126,7 +133,6 @@
                     <script src="/js/adminlte.min.js"></script>
                     <script>
                         let page = 0;
-
 
                         function getContractList() {
                             $('.modal-backdrop').css("display", "none");
@@ -160,8 +166,9 @@
                 `;
 
                                     }
-
+                                    let buttons = `<button class="myButton" onclick="getPreviousPage()">Previous</button> <button class="myButton" onclick="getNextPage()">Next</button>`
                                     $("#listContract").html(contractStr);
+                                    $("#buttons").html(buttons);
 
                                     for (let c of data.content) {
                                         if (c.managerConfirm) {
@@ -189,20 +196,103 @@
                                 return;
                             }
                             page--;
-                            getContractList(page);
+                            getContractList();
 
                         }
 
                         function getNextPage() {
                             page++;
-                            getContractList(page);
+                            getContractList();
                         }
 
                         $(document).ready(function () {
-                            getContractList(page);
+                            getContractList();
                         })
 
+                        function getConTractListByRoom1() {
+                            page = 0
+                            getContractListByRoom();
+                        }
 
+                        function getContractListByRoom() {
+                            let room = document.getElementById("room").value * 1;
+                            if (room <= 0) {
+                                getContractList();
+                            }
+
+                            $('.modal-backdrop').css("display", "none");
+                            $.ajax({
+                                url: 'http://localhost:8080/contracts/room/' + room + '/' + page,
+                                type: 'GET',
+                                success: function (data) {
+                                    console.log(JSON.stringify(data))
+                                    if (data.content.length == 0) {
+                                        if (page == 0) {
+                                            return;
+                                        }
+                                        page--;
+                                        return
+                                    }
+
+                                    let contractStr = '';
+                                    for (let c of data.content) {
+                                        contractStr += `
+                 <tr id="${c.id}">
+        <td>${c.room.id}</td>
+        <td>${c.customer.name}</td>
+        <td>${c.employee.name}</td>
+        <td>${c.date_start}</td>
+        <td>${c.kindContract.name}</td>
+        <td>${c.period}</td>
+        <td>
+            <form method="post" action="/contract/detail">
+                <input name="id" value="${c.id}" hidden>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></button>
+            </form>
+        </td>
+    </tr>
+                `;
+
+                                    }
+
+                                    $("#listContract").html(contractStr);
+                                    $("#buttons").html('<button class="myButton" onclick="getPreviousPageRoom(' + room + ')">Previous</button>\n' +
+                                        '                    <button class="myButton" onclick="getNextPageRoom(' + room + ')">Next</button>');
+
+                                    for (let c of data.content) {
+                                        if (c.managerConfirm) {
+
+                                            document.getElementById(c.id).style.backgroundColor = "blue"
+
+                                        }
+                                        if (c.directorConfirm) {
+
+                                            document.getElementById(c.id).style.backgroundColor = "yellow"
+                                        }
+
+
+                                    }
+
+                                },
+                                error: function (error) {
+                                }
+                            })
+
+                        }
+
+                        function getPreviousPageRoom() {
+                            if (page == 0) {
+                                return;
+                            }
+                            page--;
+                            getContractListByRoom();
+
+                        }
+
+                        function getNextPageRoom() {
+                            page++;
+                            getContractListByRoom();
+                        }
 
                     </script>
 
