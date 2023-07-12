@@ -4,12 +4,15 @@ import com.example.case_study.dto.EmployeeDto;
 import com.example.case_study.model.Employee;
 import com.example.case_study.service.employee.IEmployeeService;
 import com.example.case_study.service.employee.IPositionService;
+import com.example.case_study.untils.WebUltils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/employee")
@@ -28,8 +32,13 @@ public class EmployeeController {
 
     @GetMapping()
     public String showListEmployee(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                                   Model model) {
+                                   Model model, Principal principal) {
         model.addAttribute("employees", employeeService.displayListEmployee(pageable));
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
 //        model.addAttribute("positionList", positionService.displayListPosition());
         return "employee/list";
     }
@@ -103,7 +112,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/detail/{id}")
-    public String showDetailEmployee(@PathVariable int id, RedirectAttributes redirectAttributes, Model model) {
+    public String showDetailEmployee(@PathVariable int id, RedirectAttributes redirectAttributes, Model model,Principal principal) {
         if (employeeService.getEmployeeById(id) == null) {
             redirectAttributes.addFlashAttribute("message", "Find not Found id");
             return "redirect:/employee";
@@ -111,6 +120,11 @@ public class EmployeeController {
             Employee employeeDto = employeeService.getEmployeeById(id);
 //            BeanUtils.copyProperties(employeeService.getEmployeeById(id), employeeDto);
             model.addAttribute("employee", employeeDto);
+            String userName = principal.getName();
+            Employee employee = employeeService.findByPhone(userName);
+            User loginedUser = (User) ((Authentication) principal).getPrincipal();
+            String userInfo = WebUltils.toString(loginedUser);
+            model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
 //            model.addAttribute("positionList", positionService.displayListPosition());
             return "employee/detail";
         }
