@@ -80,7 +80,7 @@
                             <input type="text" class="form-control" id="name" th:field="*{name}"
                                    placeholder=" Enter full name"
                                    pattern="^[\p{Lu}][\p{Ll}]{1,8}(\s([\p{Lu}]|[\p{Lu}][\p{Ll}]{1,10})){0,5}$"
-                                   required title="Tên phải bắt đầu bằng chữ hoa và theo sau là chữ thường">
+                                   required title="The name must start with an uppercase letter followed by a lowercase letter">
                             <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -110,7 +110,7 @@
                             <label for="citizenId"><strong>Citizen Id:<span style="color:red;">*</span></strong></label>
                             <input type="text" class="form-control" id="citizenId" th:field="*{citizenId}"
                                    placeholder="Enter citizen id"
-                                   required pattern="^[0-9]{12}$" title="cmnd phải đủ 12 số">
+                                   required pattern="^[0-9]{12}$" title="citizenId must be 12 number">
                             <span style="color: red" th:if="${#fields.hasErrors('citizenId')}"
                                   th:errors="*{citizenId}"></span>
                         </div>
@@ -125,7 +125,7 @@
                                 <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"
                                        placeholder="Enter phone number"
                                        required pattern="^0[0-9]{9}$"
-                                       title="số điện thoại phải bắt đầu bằng 0 và đủ 10 số ">
+                                       title="The phone number must start with 0 and be 10 digits ">
                                 <span style="color: red" th:if="${#fields.hasErrors('phoneNumber')}"
                                       th:errors="*{phoneNumber}"></span>
                             </div>
@@ -150,7 +150,7 @@
                                 </div>
                                 <input type="email" class="form-control" id="email" th:field="*{email}"
                                        placeholder="Enter email"
-                                       required title="email không đúng định dạng">
+                                       required title="Email Invalidate">
                                 <span style="color: red" th:if="${#fields.hasErrors('email')}"
                                       th:errors="*{email}"></span>
                             </div>
