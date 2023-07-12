@@ -104,10 +104,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/search")
-    public String search(@RequestParam("name") String name, @RequestParam("citizenId") String citizenId, @RequestParam("phoneNumber") String phoneNumber, Pageable pageable, Model model) {
+    public String search(@RequestParam("name") String name,Principal principal, @RequestParam("citizenId") String citizenId, @RequestParam("phoneNumber") String phoneNumber, Pageable pageable, Model model) {
         Page<Employee> employees = employeeService.searchEmployeeByName(pageable, name, citizenId, phoneNumber);
         model.addAttribute("employees", employees);
         model.addAttribute("positionList", positionService.displayListPosition());
+        String userName = principal.getName();
+        Employee employee = employeeService.findByPhone(userName);
+        org.springframework.security.core.userdetails.User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        String userInfo = WebUltils.toString(loginedUser);
+        model.addAttribute("employeeDetails", this.employeeService.findByPhone(userName));
         return "employee/list";
     }
 

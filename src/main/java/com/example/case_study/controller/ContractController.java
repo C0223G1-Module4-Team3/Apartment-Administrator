@@ -85,6 +85,7 @@ public class ContractController {
         String msg = contractService.addContract(contract);
         redirectAttributes.addFlashAttribute("msg", msg);
         return "redirect:/contract/create";
+
     }
 
     @PostMapping("/detail")

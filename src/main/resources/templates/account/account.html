@@ -31,7 +31,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Admin List</h1>
+                        <h1>User List</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -83,7 +83,7 @@
                             <th>Delete</th>
                         </tr>
                         </thead>
-                        <tbody style="background-color: #F9F9FA">
+                        <tbody>
                         <tr th:each="accounts : ${account}">
                             <td th:text="${accounts.id}"></td>
                             <td th:text="${accounts.name}"></td>
@@ -91,23 +91,23 @@
                             <td th:text="${accounts.dayOfBirth}"></td>
                             <td th:text="${accounts.email}"></td>
                             <td>
-                                <select class="mySelect" style="border-radius: 5px;">
-                                    <option th:value="'1,'+${accounts.getAccountUser().getId()}"
+                                <select th:id="${accounts.id}" id="th:id" class="mySelect"  onchange="abc(this.id)" style="border-radius: 5px;">
+                                    <option  th:value="1" value="1"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'Director'}">
                                         Director
                                     </option>
-                                    <option th:value="'2,'+${accounts.getAccountUser().getId()}"
+                                    <option  th:value="2" value="2"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'HR'}">HR
                                     </option>
-                                    <option th:value="'3'+${accounts.getAccountUser().getId()}"
+                                    <option th:value="3" value="3"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'SaleManager'}">
                                         SaleManager
                                     </option>
-                                    <option th:value="'4,'+${accounts.getAccountUser().getId()}"
+                                    <option  th:value="4" value="4"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'ApartmentManager'}">
                                         ApartmentManager
                                     </option>
-                                    <option th:value="'5,'+${accounts.getAccountUser().getId()}"
+                                    <option th:value="5" value="5"
                                             th:selected="${accounts.getAccountUser().getRoleUser().name== 'Business'}">
                                         Business
                                     </option>
@@ -143,7 +143,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"
-                        th:attr="id='deleteCustomerModalLabel-' + ${accounts.id}">Delete account </h5>
+                        th:attr="id='deleteCustomerModalLabel-' + ${accounts.id}">Delete</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -168,21 +168,24 @@
 
 </div>
 <script>
-    $(function () {
-        $('.mySelect').on('change', function () {
+    function abc(id){
+        // let option = $(this).val();
+        console.log("123")
+        let option = document.getElementById(id).value
+        console.log(id)
+        console.log(option)
+        let a = id.toString()+','+option.toString();
+        console.log(a)
 
-            let option = $(this).val();
-            console.log("123")
-            $.ajax({
-                url: 'http://localhost:8080/account/' + option,
-                type: "GET",
-                success: function () {
-                    window.location.href = 'http://localhost:8080/account';
-                },
-                error: function (error) {
-                    //TODO
-                }
-            })
+        $.ajax({
+            url: 'http://localhost:8080/account/account/' + a,
+            type: "GET",
+            success: function () {
+                window.location.href = 'http://localhost:8080/account';
+            },
+            error: function (error) {
+                //TODO
+            }
         })
     })
 </script>

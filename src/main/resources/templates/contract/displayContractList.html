@@ -85,6 +85,13 @@
                             th:href="@{/contract/create}">
                         <i class="fas fa-plus"></i>
                     </a>
+
+                    <!--nút tìm kiếm-->
+
+                    <p>Find by id room<input id="room" type="number" value="0">
+                        <button onclick="getConTractListByRoom1()">Search</button>
+                    </p>
+
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -171,8 +178,9 @@
                 `;
 
                                     }
-
+                                    let buttons = `<button class="myButton" onclick="getPreviousPage()">Previous</button> <button class="myButton" onclick="getNextPage()">Next</button>`
                                     $("#listContract").html(contractStr);
+                                    $("#buttons").html(buttons);
 
                                     for (let c of data.content) {
                                         if (c.managerConfirm) {
@@ -200,17 +208,17 @@
                                 return;
                             }
                             page--;
-                            getContractList(page);
+                            getContractList();
 
                         }
 
                         function getNextPage() {
                             page++;
-                            getContractList(page);
+                            getContractList();
                         }
 
                         $(document).ready(function () {
-                            getContractList(page);
+                            getContractList();
                         })
 
 

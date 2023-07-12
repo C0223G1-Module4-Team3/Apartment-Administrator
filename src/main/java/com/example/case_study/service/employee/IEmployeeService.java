@@ -4,10 +4,13 @@ import com.example.case_study.model.Customer;
 import com.example.case_study.model.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface IEmployeeService {
+
+    void setPositionEmployee(int id, int position);
     List<Employee>displayListEmployee();
     Page<Employee> displayListEmployee(Pageable pageable);
 
@@ -31,4 +34,5 @@ public interface IEmployeeService {
     Employee findByPhone(String phone);
 
     boolean deleteAccount(int id );
+    void setEmployee(@Param(value = "user") int user, @Param(value = "id") int id);
 }
