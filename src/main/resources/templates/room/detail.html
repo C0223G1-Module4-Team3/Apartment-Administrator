@@ -31,19 +31,6 @@
             border-color: #28a745;
         }
 
-        .form-container {
-            border-radius: 10px;
-            /*border-top-left-radius: 20px;*/
-            /*border-bottom-right-radius: 30px;*/
-            /*border-top-right-radius: 10px;*/
-            /*border-bottom-left-radius: 5px;*/
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin-top: 50px;
-            margin-left: 10px;
-            width: 800px;
-            height: 400px;
-        }
 
         .btn-primary-save {
             background-color: blue;
@@ -55,17 +42,26 @@
             font-weight: bold;
         }
 
-        .pause-service:hover {
-            background-color: #5f9af3;
-            color: #5f9af3;
-        }
-
         #showRoom .modal-content {
             width: 60%; /* Change the width of the modal */
             max-height: 80%; /* Change the maximum height of the modal */
             margin: auto; /* Center the modal horizontally */
             top: 10%; /* Position the modal 10% from the top of the viewport */
             overflow-y: auto; /* Add scrollbars to the modal if its content is too long */
+        }
+        .tin {
+            contain: layout;
+            display: flex;
+            align-items: center;
+            background-color: wheat;
+            border-radius: 12px;
+            border-left: 16px #a0b4ff;
+            min-width: 50px;
+            max-width: 200px;
+            max-height: 70px;
+            box-shadow: 0 5px 8px rgba(36, 245, 10, 0.08);
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.3s;
         }
     </style>
 </head>
@@ -101,7 +97,6 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title"></h3>
-
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -110,9 +105,12 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
+                    <span th:if="${msg}!=null" th:text="${msg}" id="success"
+                          class="tin"
+                          style="float: right; background-color: rgba(97,139,234,0.87);font-size: 20px"></span>
                 </div>
                 <div class="card-body">
-                    <p th:if="${msg}!=null" th:text="${msg}" class="alert alert-info"></p>
+
                     <div class="form-group row">
                         <div class="col-12 col-md-12 col-lg-12" style="text-align:right">
                             <a href="#"
@@ -124,33 +122,31 @@
                     </div>
                     <div class="form-group row">
                         <div class="row" style="margin-top:30px">
-                            <div class="col-4 col-md-4 col-lg-4"
-                                 style="background-color: white;margin-left:20px;width:350px">
-                                <div class="row" style="border: 1px solid black">
-                                    <div class="col-8 col-md-8 col-lg-8">
-                                        <h1 th:text="${totalFacility}"></h1>
-                                        <h4>Total amount facility</h4>
-                                    </div>
-                                    <div class="col-4 col-md-4 col-lg-4">
-                                        <p></p>
-                                        <p style="text-align: center"><i class="fas fa-box" style="font-size:3rem"></i>
-                                        </p>
-                                        <p></p>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body d-flex align-items-center">
+                                            <div class="mr-3">
+                                                <i class="fas fa-box fa-3x"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="card-title">Total Facility</h4>
+                                                <h2 class="card-text" th:text="${totalFacility}"></h2>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-4 col-md-4 col-lg-4"
-                                 style="background-color: white;margin-left:60px;width:350px">
-                                <div class="row" style="border: 1px solid black">
-                                    <div class="col-8 col-md-8 col-lg-8">
-                                        <h2 style="text-align: center">Room Id</h2>
-                                        <h3 th:text="${detailRoom.id}" style="text-align: center"></h3>
-                                    </div>
-                                    <div class="col-4 col-md-4 col-lg-4">
-                                        <p></p>
-                                        <p style="text-align: center"><i class="fas fa-key" style="font-size:40px"></i>
-                                        </p>
-                                        <p></p>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body d-flex align-items-center">
+                                            <div class="mr-3">
+                                                <i class="fas fa-key fa-3x"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="card-title">ID Room</h4>
+                                                <h2 class="card-text" th:text="${detailRoom.id}"></h2>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +159,7 @@
                                 <!-- Table goes here -->
                                 <div class="card">
                                     <div class="card-header">
-                                        Room Details
+                                        <h5>Room Details</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">

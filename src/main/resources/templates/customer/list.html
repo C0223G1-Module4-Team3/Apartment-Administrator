@@ -18,9 +18,9 @@
             background-color: wheat;
             border-radius: 12px;
             border-left: 16px #a0b4ff;
-            min-width: 10em;
-            max-width: 17em;
-            max-height: 5rem;
+            min-width: 50px;
+            max-width: 200px;
+            max-height: 70px;
             box-shadow: 0 5px 8px rgba(36, 245, 10, 0.08);
             animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
             transition: all linear 0.3s;
@@ -74,7 +74,7 @@
                     <h3 class="card-title"></h3>
                     <span th:if="${msg}!=null" th:text="${msg}" id="success"
                           class="tin"
-                          style="float: left; background-color: #4CAF50;font-size: 30px"></span>
+                          style="float: left; background-color: rgba(97,139,234,0.87);font-size: 20px"></span>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -103,11 +103,16 @@
                             </div>
                         </div>
                     </form>
-                    <button sec:authorize="hasAnyRole('Director','SaleManager','Business')" title="Add new customer" class="btn-primary"><a style="color: white"
-                                                                               th:href="@{/customer/create}"><i
-                            class="fa-solid fa-plus"></i></a></button>
-                    <br>
-                    <br>
+                    <div class="form-group row">
+                        <div class="col-12 col-md-12 col-lg-12"
+                             style="background-color: #FFFFFF;text-align:right;position: relative;">
+                            <button sec:authorize="hasAnyRole('Director','SaleManager','Business')"
+                                    title="Add new customer"
+                                    class="btn btn-primary"><a style="color: white"
+                                                               th:href="@{/customer/create}"><i
+                                    class="fa-solid fa-plus"></i></a></button>
+                        </div>
+                    </div>
                     <!--          viet bảng ở đây-->
                     <div class="table-responsive">
                         <table class="table table-bordered table-sm">
@@ -126,14 +131,15 @@
                                 <td th:text="${customer.id}"></td>
                                 <td th:text="${customer.name}"></td>
                                 <td th:text="${customer.phoneNumber}"></td>
-<!--                                <td th:text="${customer.gender ? 'Male' : 'Female'}"></td>-->
+                                <!--                                <td th:text="${customer.gender ? 'Male' : 'Female'}"></td>-->
                                 <td th:text="${customer.citizenId}"></td>
                                 <td>
-                                    <a  th:href="@{/customer/detail/{id}(id=${customer.id})}" class="btn btn-primary"><i
+                                    <a th:href="@{/customer/detail/{id}(id=${customer.id})}" class="btn btn-primary"><i
                                             class="fa-solid fa-circle-info"></i></a>
                                 </td>
                                 <td>
-                                    <a sec:authorize="hasAnyRole('Director','SaleManager')" href="#" class="btn btn-danger" data-toggle="modal"
+                                    <a sec:authorize="hasAnyRole('Director','SaleManager')" href="#"
+                                       class="btn btn-danger" data-toggle="modal"
                                        th:data-target="'#deleteCustomerModal-' + ${customer.id}"><i
                                             class="fa-regular fa-trash-can"></i></a>
                                 </td>
@@ -141,16 +147,22 @@
                             </tbody>
                         </table>
                     </div>
-                    <div>
-                        <ul>
-                            <li th:if="${customers.hasPrevious()}">
-                                <a th:href="@{${url}(page=${customers.previousPageable().pageNumber})}">Previous page</a>
-                            </li>
-                            <li th:if="${customers.hasNext()}">
-                                <a th:href="@{${url}(page=${customers.nextPageable().pageNumber})}">Next page</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <tr>
+                        <td>
+                            <a th:if="${customers.hasPrevious()}"
+                               th:href="@{${url}(page=${customers.previousPageable().pageNumber})}"
+                               class="btn btn-outline-primary">
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </a>
+                        </td>
+                        <td>
+                            <a th:if="${customers.hasNext()}"
+                               th:href="@{${url}(page=${customers.nextPageable().pageNumber})}"
+                               class="btn btn-outline-primary">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </td>
+                    </tr>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
@@ -171,7 +183,7 @@
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" >
+                <div class="modal-header">
                     <h5 class="modal-title"
                         th:attr="id='deleteCustomerModalLabel-' + ${customer.id}">Delete customer</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -179,9 +191,10 @@
                     </button>
                 </div>
                 <div class="modal-body" style="text-align: center">
-                        <h6>Are you sure you want to delete the customer:</h6>
-                            <h5 style="color: red" th:text="${customer.name}"></h5>
-                        <h4 style="color:red;">This operation cannot be undone! </h4>
+                    <h6>Are you sure delete customer name <span style="color: red;font-size: 20px"
+                                                                th:text="${customer.getName()}"></span> ?</h6>
+                    <h6>Have id: <span style="color: red;font-size: 20px" th:text="${customer.getId()}"></span></h6>
+                    <h4 style="color:red;">This operation cannot be undone! </h4>
                 </div>
                 <div class="modal-footer">
 
