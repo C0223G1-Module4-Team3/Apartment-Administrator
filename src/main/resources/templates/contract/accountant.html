@@ -57,22 +57,34 @@
           </div>
         </div>
         <div class="card-body">
-          <table class="table table-striped">
+          <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
+            <thead style="background-color: #FFFFFF">
             <tr>
-              <td>Room</td>
-              <td>Customer</td>
-              <td>Employee</td>
-              <td>Date</td>
-              <td>Kind contract</td>
-              <td>Period</td>
-              <td>Deadline next</td>
-              <td>Detail</td>
-              <td>Pay</td>
+              <th>Room</th>
+              <th>Customer</th>
+              <th>Employee</th>
+              <th>Date</th>
+              <th>Kind contract</th>
+              <th>Period</th>
+              <th>Deadline next</th>
+              <th>Detail</th>
+              <th>Pay</th>
             </tr>
-            <tbody id="listContract"></tbody>
+            </thead>
+            <tbody id="listContract" style="background-color: #F9F9FA"></tbody>
           </table>
-          <button onclick="getPreviousPage()">Previous page</button>
-          <button onclick="getNextPage()">Next page</button>
+          <tr>
+            <td>
+              <button class="myButton btn btn-outline-primary" onclick="getPreviousPage()">
+                <i class="fas fa-chevron-left"></i> Previous
+              </button>
+            </td>
+            <td>
+              <button class="myButton btn btn-outline-primary" onclick="getNextPage()">
+                Next <i class="fas fa-chevron-right"></i>
+              </button>
+            </td>
+          </tr>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
           <script>
             let page = 0;
@@ -103,7 +115,8 @@
         <td>
             <form method="post" action="/contract/detail">
                 <input name="id" value="${c.id}" hidden>
-                <button type="submit">Detail</button>
+                <button type="submit" class="btn btn-primary"><i
+                                            class="fa-solid fa-circle-info"></i></button>
             </form>
         </td>
         <td>
@@ -177,7 +190,7 @@
                   let a = day.getMonth() * 1 + 1
                   document.getElementById("deadline"+id).innerText = day.getFullYear() + "-" + a + "-" + day.getDate();
                   if(day<new Date()){
-                    document.getElementById(id).style.backgroundColor="red";
+                    document.getElementById(id).style.backgroundColor="#F4A460";
                   }
                 },
                 error: function (error) {

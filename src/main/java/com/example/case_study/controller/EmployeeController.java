@@ -31,7 +31,7 @@ public class EmployeeController {
     private IPositionService positionService;
 
     @GetMapping()
-    public String showListEmployee(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+    public String showListEmployee(@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                    Model model, Principal principal) {
         model.addAttribute("employees", employeeService.displayListEmployee(pageable));
 //        model.addAttribute("positionList", positionService.displayListPosition());

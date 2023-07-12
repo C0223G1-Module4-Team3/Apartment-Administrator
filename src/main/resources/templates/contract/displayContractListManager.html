@@ -45,7 +45,33 @@
             font-size: 16px;
             cursor: pointer;
         }
-
+        .search-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        #room {
+            margin: 0 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 150px;
+        }
+        button {
+            margin-left: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #0062CC;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -89,8 +115,10 @@
 
                     <!--nút tìm kiếm-->
 
-                    <p>Find by id room<input id="room" type="number" value="0">
-                        <button onclick="getConTractListByRoom1()">Search</button>
+                    <p class="search-form">
+                        Find by id room
+                        <input id="room" type="number" value="0">
+                        <button onclick="getConTractListByRoom1()" class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                     </p>
 
                     <div class="card-tools">
@@ -110,19 +138,21 @@
                     <form action="/find" method="post">
                     </form>
 
-                    <table class="table table-striped">
+                    <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
+                        <thead style="background-color: #FFFFFF">
                         <tr>
-                            <td>Room</td>
-                            <td>Customer</td>
-                            <td>Employee</td>
-                            <td>Date</td>
-                            <td>Kind contract</td>
-                            <td>Period</td>
-                            <td></td>
-                            <td sec:authorize="hasRole('SaleManager')"></td>
-                            <td sec:authorize="hasAnyRole('Director','SaleManager')"></td>
+                            <th>Room</th>
+                            <th>Customer</th>
+                            <th>Employee</th>
+                            <th>Date</th>
+                            <th>Kind contract</th>
+                            <th>Period</th>
+                            <th></th>
+                            <th sec:authorize="hasRole('SaleManager')"></th>
+                            <th sec:authorize="hasAnyRole('Director','SaleManager')"></th>
                         </tr>
-                        <tbody id="listContract"></tbody>
+                        </thead>
+                        <tbody id="listContract" style="background-color: #F9F9FA"></tbody>
                     </table>
                     <tr>
                         <td>
@@ -268,11 +298,16 @@
                                     for (let c of data.content) {
                                         if (c.managerConfirm) {
                                             document.getElementById("mc" + c.id).style.display = "none"
-                                            document.getElementById(c.id).style.backgroundColor = "blue"
 
                                         }
-                                        if (c.directorConfirm) {
-                                            document.getElementById(c.id).style.backgroundColor = "yellow"
+
+
+                                        if (!c.directorConfirm) {
+
+                                            document.getElementById(c.id).style.backgroundColor ="#9933CC"
+                                        }
+                                        if(!c.managerConfirm){
+                                            document.getElementById(c.id).style.backgroundColor ="Silver"
                                         }
 
 
@@ -470,11 +505,16 @@
                                     for (let c of data.content) {
                                         if (c.managerConfirm) {
                                             document.getElementById("mc" + c.id).style.display = "none"
-                                            document.getElementById(c.id).style.backgroundColor = "blue"
 
                                         }
-                                        if (c.directorConfirm) {
-                                            document.getElementById(c.id).style.backgroundColor = "yellow"
+
+
+                                        if (!c.directorConfirm) {
+
+                                            document.getElementById(c.id).style.backgroundColor ="#9933CC"
+                                        }
+                                        if(!c.managerConfirm){
+                                            document.getElementById(c.id).style.backgroundColor ="Silver"
                                         }
 
 

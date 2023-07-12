@@ -143,8 +143,8 @@
                                     class="fa-solid fa-plus"></i></a></button>
                         </div>
                     </div>
-                    <table class="table table-bordered">
-                        <thead>
+                    <table class="table table-bordered" style="width:100%;background-color: #dee6ee">
+                        <thead style="background-color: #FFFFFF">
                         <tr>
                             <th>STT</th>
                             <th>Name</th>
@@ -159,9 +159,9 @@
                             <th>Delete</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr th:each="employee : ${employees}" th:if="${!employee.flagDelete}">
-                            <td th:text="${employee.id}"></td>
+                        <tbody style="background-color: #F9F9FA">
+                        <tr th:each="employee, emplo : ${employees}" th:if="${!employee.flagDelete}">
+                            <td th:text="${emplo.count}"></td>
                             <!--                            <td>-->
                             <!--                                <img th:src="${employee.image}"-->
                             <!--                                     alt=""-->

@@ -30,7 +30,7 @@ public class Schedule {
     @Autowired
     private static SpringTemplateEngine templateEngine;
 
-    @Scheduled(cron = "0 57 13 * * ?")
+    @Scheduled(cron = "0 21 11 * * ?")
     public void sendWarningEmail() {
         List<Contract> list = new ArrayList<>();
         list = contractRepository.findAllByFlagDeleteIsFalseAndManagerConfirmIsTrueAndDirectorConfirmIsTrue().get();
